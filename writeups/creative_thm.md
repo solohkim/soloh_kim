@@ -6,11 +6,11 @@ Hey, I am back with another write-up. Try this room and many more at TryHackMe!!
 
 
 
-\## NMAP Scan
+## NMAP Scan
 
 
 
-!\[scan](images/creative1.png)
+![scan](images/creative1.png)
 
 
 
@@ -28,7 +28,7 @@ Let’s visit port 80
 
 
 
-!\[scan](images/creative2.png)
+![scan](images/creative2.png)
 
 
 
@@ -38,7 +38,7 @@ Let’s do gobuster for directory enumeration
 
 
 
-!\[scan](images/creative3.png)
+![scan](images/creative3.png)
 
 
 
@@ -54,7 +54,7 @@ Let’s look for subdomains
 
 
 
-!\[scan](images/creative4.png)
+![scan](images/creative4.png)
 
 
 
@@ -74,7 +74,7 @@ Press enter or click to view image in full size
 
 
 
-!\[scan](images/creative5.png)
+![scan](images/creative5.png)
 
 
 
@@ -90,7 +90,7 @@ Testing it with http://creative.thm/, it returns the contents of the URL submitt
 
 
 
-!\[scan](images/creative6.png)
+![scan](images/creative6.png)
 
 
 
@@ -106,7 +106,7 @@ We can use this functionality to scan for internal web servers using wfuzz.
 
 
 
-!\[scan](images/creative7.png)
+![scan](images/creative7.png)
 
 
 
@@ -126,7 +126,7 @@ Let’s visit port 1337
 
 
 
-!\[scan](images/creative8.png)
+![scan](images/creative8.png)
 
 
 
@@ -138,7 +138,7 @@ let’s visit http://127.0.0.1/home
 
 
 
-!\[scan](images/creative9.png)
+![scan](images/creative9.png)
 
 
 
@@ -158,7 +158,7 @@ After having saved the key and changed it to the correct permission, we try to l
 
 
 
-!\[scan](images/creative11.png)
+![scan](images/creative11.png)
 
 
 
@@ -170,7 +170,7 @@ now we will use this passphrase and login and found the user.txt
 
 
 
-!\[scan](images/creative12.png)
+![scan](images/creative12.png)
 
 
 
@@ -180,7 +180,7 @@ Enumerating the user’s home directory, we find a .bash\_history with content. 
 
 
 
-!\[scan](images/creative13.png)
+![scan](images/creative13.png)
 
 
 
@@ -190,7 +190,7 @@ we will use sudo -l
 
 
 
-!\[scan](images/creative13.png)
+![scan](images/creative13.png)
 
 There is not much we can do with ping but there is one interesting thing about the sudo configuration: the env\_keep option on LD\_PRELOAD.
 
@@ -296,7 +296,7 @@ Press enter or click to view image in full size
 
 
 
-!\[scan](images/creative15.png)
+![scan](images/creative15.png)
 
 
 
