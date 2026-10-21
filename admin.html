@@ -11,6 +11,41 @@ body{background:var(--bg);color:#ddd;font-family:monospace}
 .nav-tab{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:#111;color:#888;cursor:pointer;margin:4px}
 .nav-tab.active{background:var(--green);color:#000;font-weight:800;border-color:var(--green)}
 </style></head><body>
+  <!-- ADMIN LOCK - hides panel unless you know the key -->
+<div id="adminLock" style="position:fixed;inset:0;background:#080808;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column">
+  <div style="background:#111;border:1px solid #1f1f1f;border-radius:14px;padding:30px;max-width:380px;width:90%;text-align:center;box-shadow:0 0 30px rgba(0,255,65,.15)">
+    <div style="color:#00FF41;font-weight:800;font-size:1.2rem;margin-bottom:10px">🔒 0xSoloh Admin</div>
+    <small style="color:#666;display:block;margin-bottom:15px">Enter private key to access</small>
+    <input type="password" id="adminPass" placeholder="Enter admin key" style="background:#0a0a0a;border:1px solid #222;border-radius:8px;color:#ddd;padding:12px;width:100%;margin-bottom:12px">
+    <button onclick="checkAdmin()" style="background:#00FF41;color:#000;font-weight:800;border:none;border-radius:8px;padding:10px;width:100%;cursor:pointer">Unlock</button>
+    <small id="lockMsg" style="color:#ff5f56;display:none;margin-top:10px">Wrong key</small>
+  </div>
+</div>
+<script>
+const ADMIN_KEY = "kimsec254"; // <-- CHANGE THIS TO YOUR SECRET
+function checkAdmin(){
+  const v = document.getElementById('adminPass').value;
+  if(v === ADMIN_KEY){
+    localStorage.setItem('0xSoloh_admin','ok');
+    document.getElementById('adminLock').style.display='none';
+  } else {
+    document.getElementById('lockMsg').style.display='block';
+  }
+}
+// auto-unlock if already entered before
+if(localStorage.getItem('0xSoloh_admin')==='ok'){
+  document.addEventListener('DOMContentLoaded',()=>{ 
+    const l=document.getElementById('adminLock');
+    if(l) l.style.display='none';
+  });
+}
+// Enter key support
+document.addEventListener('keydown', (e)=>{
+  if(e.key==='Enter' && document.getElementById('adminLock').style.display!=='none'){
+    checkAdmin();
+  }
+});
+</script>
 <div class="container py-4" style="max-width:800px">
 <h4 style="color:var(--green)"><i class="bi bi-shield-lock"></i> 0xSoloh Admin Panel</h4>
 <small class="text-muted">Add content without coding. Then click Export JSON.</small>
