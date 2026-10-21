@@ -44,6 +44,17 @@
     "image": ""
   },
   {
+    "file": "writeups/reset.md",
+    "title": "Reset",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "reset.md"
+    ],
+    "image": "writeups/images/reset.png"
+  },
+  {
     "file": "writeups/superspam.md",
     "title": "Superspam",
     "platform": "HackTheBox",
