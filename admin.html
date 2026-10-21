@@ -19,29 +19,48 @@ body{background:var(--bg);color:#ddd;font-family:monospace}
     <input type="password" id="adminPass" placeholder="Enter admin key" style="background:#0a0a0a;border:1px solid #222;border-radius:8px;color:#ddd;padding:12px;width:100%;margin-bottom:12px">
     <button onclick="checkAdmin()" style="background:#00FF41;color:#000;font-weight:800;border:none;border-radius:8px;padding:10px;width:100%;cursor:pointer">Unlock</button>
     <small id="lockMsg" style="color:#ff5f56;display:none;margin-top:10px">Wrong key</small>
+    <small style="color:#333;display:block;margin-top:12px;font-size:.65rem">Auto-locks on reload + 3 min idle</small>
   </div>
 </div>
 <script>
-const ADMIN_KEY = "kimsec254"; // <-- CHANGE THIS TO YOUR SECRET
+const ADMIN_KEY = "kimsec254";
+let idleTimer;
+
 function checkAdmin(){
   const v = document.getElementById('adminPass').value;
   if(v === ADMIN_KEY){
-    localStorage.setItem('0xSoloh_admin','ok');
     document.getElementById('adminLock').style.display='none';
+    document.getElementById('adminPass').value='';
+    document.getElementById('lockMsg').style.display='none';
+    startIdleTimer();
   } else {
     document.getElementById('lockMsg').style.display='block';
   }
 }
-// auto-unlock if already entered before
-if(localStorage.getItem('0xSoloh_admin')==='ok'){
-  document.addEventListener('DOMContentLoaded',()=>{ 
-    const l=document.getElementById('adminLock');
-    if(l) l.style.display='none';
-  });
+
+function lockAgain(){
+  document.getElementById('adminLock').style.display='flex';
+  clearTimeout(idleTimer);
 }
-// Enter key support
+
+function startIdleTimer(){
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(lockAgain, 180000); // 3 minutes = 180000ms
+}
+
+// Reset timer on activity
+['mousemove','keydown','click','scroll','touchstart'].forEach(evt=>{
+  document.addEventListener(evt, ()=>{
+    if(document.getElementById('adminLock').style.display==='none'){
+      startIdleTimer();
+    }
+  });
+});
+
+// Enter key
 document.addEventListener('keydown', (e)=>{
-  if(e.key==='Enter' && document.getElementById('adminLock').style.display!=='none'){
+  const lock = document.getElementById('adminLock');
+  if(e.key==='Enter' && lock && lock.style.display!=='none'){
     checkAdmin();
   }
 });
