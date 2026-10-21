@@ -1,36 +1,68 @@
-{
-  "file": "wingdata-htb.md",
-  "title": "Wingdata Htb",
-  "platform": "HackTheBox",
-  "level": "Medium",
-  "date": "2026-10-21",
-  "tags": ["wingdata"],
-  "image": "images/wingdata.png"
-},
-{
-  "file": "timelapse-ad.md",
-  "title": "Timelapse Ad",
-  "platform": "HackTheBox",
-  "level": "Medium",
-  "date": "2026-10-21",
-  "tags": ["timelapse"],
-  "image": "images/timelapse.png"
-},
-{
-  "file": "mr-robot-suid.md",
-  "title": "Mr Robot Suid",
-  "platform": "HackTheBox",
-  "level": "Medium",
-  "date": "2026-10-21",
-  "tags": ["mr"],
-  "image": "images/robot.png"
-},
-{
-  "file": "layover-htb.md",
-  "title": "Layover Htb",
-  "platform": "HackTheBox",
-  "level": "Medium",
-  "date": "2026-10-21",
-  "tags": ["layover"],
-  "image": "images/layover.png"
-}
+[
+  {
+    "file": "creative_thm.md",
+    "title": "Creative Thm",
+    "platform": "TryHackMe",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "creative_thm.md"
+    ],
+    "image": ""
+  },
+  {
+    "file": "layover-htb.md",
+    "title": "Layover Htb",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "layover"
+    ],
+    "image": ""
+  },
+  {
+    "file": "mr-robot-suid.md",
+    "title": "Mr Robot Suid",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "mr"
+    ],
+    "image": ""
+  },
+  {
+    "file": "timelapse-ad.md",
+    "title": "Timelapse Ad",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "timelapse"
+    ],
+    "image": ""
+  },
+  {
+    "file": "wingdata-htb.md",
+    "title": "Wingdata Htb",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "wingdata"
+    ],
+    "image": "writeups/images/wingdata.png"
+  },
+  {
+    "file": "xss-to-rce.md",
+    "title": "Xss To Rce",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "xss"
+    ],
+    "image": ""
+  }
+]
