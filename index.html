@@ -164,7 +164,7 @@ function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textConten
 <div class="card-m">
 <h6>Send me a message</h6>
 <small class="text-muted">For pentest, CTF collab, or PSB system audit.</small>
-<form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/#contact?success=true" id="contactForm">
+<form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" id="contactForm">
   <input type="hidden" name="form-name" value="contact" />
   <p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p>
 
@@ -360,9 +360,10 @@ function handleContact(e){
 if(window.location.search.includes('success=true')){
   const msgBox = document.getElementById('formSuccess');
   if(msgBox) msgBox.style.display='block';
-  // scroll to contact section
+  // show contact page in your SPA
+  if(typeof showPage === 'function'){ showPage('contact'); }
   setTimeout(()=>{
-    document.getElementById('contact')?.scrollIntoView({behavior:'smooth'});
+    document.getElementById('page-contact')?.scrollIntoView({behavior:'smooth'});
   }, 500);
 }
 </script></body></html>
