@@ -354,4 +354,15 @@ function handleContact(e){
   alert('Thanks '+name+'! Opening email & WhatsApp...');
   e.target.reset();
 }
+</script>
+<script>
+// show success after Netlify form submit
+if(window.location.search.includes('success=true')){
+  const msgBox = document.getElementById('formSuccess');
+  if(msgBox) msgBox.style.display='block';
+  // scroll to contact section
+  setTimeout(()=>{
+    document.getElementById('contact')?.scrollIntoView({behavior:'smooth'});
+  }, 500);
+}
 </script></body></html>
