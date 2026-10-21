@@ -44,6 +44,17 @@
     "image": ""
   },
   {
+    "file": "writeups/superspam.md",
+    "title": "Superspam",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "superspam.md"
+    ],
+    "image": "writeups/images/superspam.png"
+  },
+  {
     "file": "writeups/timelapse-ad.md",
     "title": "Timelapse Ad",
     "platform": "HackTheBox",
