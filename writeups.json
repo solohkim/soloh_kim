@@ -1,42 +1,62 @@
 [
   {
-    "file": "mr-robot-suid.md",
-    "title": "Mr Robot — SUID nmap to Root",
-    "platform": "TryHackMe",
-    "level": "Easy",
-    "date": "2026-10-18",
-    "tags": ["privesc", "suid"]
+    "file": "xss-to-rce.md",
+    "title": "Xss To Rce",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "xss"
+    ]
   },
   {
     "file": "wingdata-htb.md",
-    "title": "WingData — HackTheBox Writeup",
+    "title": "Wingdata Htb",
     "platform": "HackTheBox",
     "level": "Medium",
     "date": "2026-10-21",
-    "tags": ["ad", "windows"]
+    "tags": [
+      "wingdata"
+    ]
   },
   {
     "file": "timelapse-ad.md",
-    "title": "Timelapse — AD Kerberoasting",
+    "title": "Timelapse Ad",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-15",
-    "tags": ["ad", "kerberoast"]
+    "date": "2026-10-21",
+    "tags": [
+      "timelapse"
+    ]
   },
   {
-    "file": "xss-to-rce.md",
-    "title": "Stored XSS to RCE",
-    "platform": "Lab",
-    "level": "Hard",
-    "date": "2026-10-20",
-    "tags": ["xss", "rce"]
+    "file": "mr-robot-suid.md",
+    "title": "Mr Robot Suid",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "mr"
+    ]
+  },
+  {
+    "file": "layover-htb.md",
+    "title": "Layover Htb",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "layover"
+    ]
   },
   {
     "file": "creative_thm.md",
-    "title": "Creative — THM",
+    "title": "Creative_Thm",
     "platform": "TryHackMe",
     "level": "Medium",
     "date": "2026-10-21",
-    "tags": ["web", "linux"]
+    "tags": [
+      "creative_thm.md"
+    ]
   }
 ]
