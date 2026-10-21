@@ -11,6 +11,17 @@
     "image": "writeups/images/creative_thm.png"
   },
   {
+    "file": "writeups/cupidbot.md",
+    "title": "Cupidbot",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": [
+      "cupidbot.md"
+    ],
+    "image": "writeups/images/cupidbot.png"
+  },
+  {
     "file": "writeups/layover-htb.md",
     "title": "Layover Htb",
     "platform": "HackTheBox",
