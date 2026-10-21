@@ -1,6 +1,6 @@
 [
   {
-    "file": "creative_thm.md",
+    "file": "writeups/creative_thm.md",
     "title": "Creative Thm",
     "platform": "TryHackMe",
     "level": "Medium",
@@ -11,7 +11,7 @@
     "image": ""
   },
   {
-    "file": "layover-htb.md",
+    "file": "writeups/layover-htb.md",
     "title": "Layover Htb",
     "platform": "HackTheBox",
     "level": "Medium",
@@ -22,7 +22,7 @@
     "image": ""
   },
   {
-    "file": "mr-robot-suid.md",
+    "file": "writeups/mr-robot-suid.md",
     "title": "Mr Robot Suid",
     "platform": "HackTheBox",
     "level": "Medium",
@@ -33,7 +33,7 @@
     "image": ""
   },
   {
-    "file": "timelapse-ad.md",
+    "file": "writeups/timelapse-ad.md",
     "title": "Timelapse Ad",
     "platform": "HackTheBox",
     "level": "Medium",
@@ -44,7 +44,7 @@
     "image": ""
   },
   {
-    "file": "wingdata-htb.md",
+    "file": "writeups/wingdata-htb.md",
     "title": "Wingdata Htb",
     "platform": "HackTheBox",
     "level": "Medium",
@@ -55,7 +55,7 @@
     "image": "writeups/images/wingdata.png"
   },
   {
-    "file": "xss-to-rce.md",
+    "file": "writeups/xss-to-rce.md",
     "title": "Xss To Rce",
     "platform": "HackTheBox",
     "level": "Medium",
