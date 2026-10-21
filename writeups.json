@@ -1,0 +1,42 @@
+[
+  {
+    "file": "mr-robot-suid.md",
+    "title": "Mr Robot — SUID nmap to Root",
+    "platform": "TryHackMe",
+    "level": "Easy",
+    "date": "2026-10-18",
+    "tags": ["privesc", "suid"]
+  },
+  {
+    "file": "wingdata-htb.md",
+    "title": "WingData — HackTheBox Writeup",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": ["ad", "windows"]
+  },
+  {
+    "file": "timelapse-ad.md",
+    "title": "Timelapse — AD Kerberoasting",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-15",
+    "tags": ["ad", "kerberoast"]
+  },
+  {
+    "file": "xss-to-rce.md",
+    "title": "Stored XSS to RCE",
+    "platform": "Lab",
+    "level": "Hard",
+    "date": "2026-10-20",
+    "tags": ["xss", "rce"]
+  },
+  {
+    "file": "creative_thm.md",
+    "title": "Creative — THM",
+    "platform": "TryHackMe",
+    "level": "Medium",
+    "date": "2026-10-21",
+    "tags": ["web", "linux"]
+  }
+]
