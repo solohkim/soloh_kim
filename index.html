@@ -7,365 +7,63 @@
 <style>
 :root{--green:#00FF41;--gold:#FFD54F;--bg:#080808;--card:#111;--border:#1f1f1f}
 body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace}
-.hero-terminal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 0 30px rgba(0,255,65,.1)}
-.cursor::after{content:'█';animation:blink 1s infinite;color:var(--green)}
-@keyframes blink{50%{opacity:0}}
-.card-m{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;transition:.2s}
-.card-m:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,255,65,.08)}
-.badge-h{font-size:.65rem;padding:3px 8px;border-radius:20px;border:1px solid var(--border)}
-.skill-bar{height:6px;background:#222;border-radius:10px;overflow:hidden}
-.skill-fill{height:100%;background:var(--green)}
-.btn-hack{background:var(--green);color:#000;font-weight:800}
-.icon-book{font-size:1.8rem;display:inline-block;padding:10px;border-radius:10px;background:#000;border:1px solid var(--border)}
-#mdContent img{max-width:650px;width:90%;height:auto;display:block;margin:18px auto;border-radius:8px;border:1px solid #222;box-shadow:0 0 20px rgba(0,255,65,0.15);cursor:zoom-in;transition:.2s}
-#mdContent img:active{transform:scale(1.8);max-width:90vw;z-index:999;position:relative}
-#mdContent pre{background:#0a0a0a!important;border:1px solid #00ff41;border-left:4px solid #00ff41;border-radius:8px;padding:15px;overflow-x:auto;box-shadow:0 0 15px rgba(0,255,65,0.15);margin:15px 0}
-#mdContent code{color:#00ff41!important;font-family:'Consolas','Courier New',monospace;font-size:14px}
-#mdContent p code{background:#1a1a1a;padding:2px 6px;border-radius:4px;border:1px solid #333}
 .vault-card{background:#0f1410;border:1px solid #1c2a1c;border-radius:14px;overflow:hidden;transition:.3s;height:100%;display:flex;flex-direction:column}
 .vault-card:hover{border-color:var(--green);transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,255,65,.15)}
 .vault-img{height:200px;background:#000;display:flex;align-items:center;justify-content:center;position:relative;border-bottom:1px solid #1c2a1c}
-.vault-img img{width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover;transition:.3s;box-shadow:0 0 20px rgba(122,199,79,.2)}
-.vault-card:hover .vault-img img{transform:scale(1.05)}
+.vault-img img{width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover}
 .vault-body{padding:14px;flex:1;display:flex;flex-direction:column}
-.vault-title{font-weight:800;font-size:.92rem;line-height:1.35;color:#e6e6e6;min-height:42px}
+.vault-title{font-weight:800;font-size:.92rem;color:#e6e6e6}
 .vault-meta{font-size:.7rem;color:#4a8a4a;margin:6px 0 8px 0}
-.vault-desc{font-size:.84rem;color:#e5e7eb;flex:1;margin-bottom:10px;display:block;overflow:visible;line-height:1.6}
 .tag{font-size:.6rem;padding:2px 7px;border-radius:20px;border:1px solid #1f3d1f;color:var(--green);margin:2px;display:inline-block;background:rgba(0,255,65,.05)}
-.pag-btn{background:#111;border:1px solid #222;color:#888;border-radius:20px;padding:6px 16px;margin:3px;font-size:.8rem;transition:.2s;cursor:pointer !important}
-.pag-btn:hover{border-color:var(--green);color:var(--green)}
-.pag-btn.active{background:var(--green);color:#000;border-color:var(--green);font-weight:800;box-shadow:0 0 15px rgba(0,255,65,.3)}
-#reader{background:#0d1117!important;border:1px solid var(--green)!important;box-shadow:0 0 40px rgba(0,255,65,.2)!important}
-.top-menu{color:#ddd;text-decoration:none;font-size:.95rem;font-weight:600;margin-right:18px;transition:.2s;cursor:pointer !important;user-select:none}
+.top-menu{color:#ddd;text-decoration:none;font-size:.95rem;font-weight:600;margin-right:18px;cursor:pointer !important}
 .top-menu:hover{color:var(--green)}
-.top-menu.active{color:#fff !important;border-bottom:3px solid #fff;padding-bottom:2px}
-nav a, [onclick]{cursor:pointer !important}
-#backToTop{position:fixed;bottom:20px;right:20px;width:45px;height:45px;background:var(--green);color:#000;border:none;border-radius:50%;display:none;align-items:center;justify-content:center;font-size:1.3rem;z-index:99;box-shadow:0 5px 20px rgba(0,255,65,.4);cursor:pointer !important}
-#backToTop.show{display:flex}
-#backToTop:hover{transform:scale(1.1)}
-.page-section{display:none}
-.page-section.active{display:block;animation:fadeIn .25s}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.form-hack{background:#0a0a0a;border:1px solid #222;border-radius:8px;color:#ddd;padding:10px 14px;width:100%;transition:.2s}
-.card-m small.text-muted{color:#d1d5db !important;opacity:1 !important}
-.form-hack:focus{outline:none;border-color:var(--green);box-shadow:0 0 12px rgba(0,255,65,.2)}
+.top-menu.active{color:#fff !important;border-bottom:3px solid #fff}
+.page-section{display:none}.page-section.active{display:block}
+#reader{background:#0d1117!important;border:1px solid var(--green)!important}
 </style></head><body>
-
-<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:11">
-<div class="d-flex align-items-center gap-2 flex-wrap">
-<a onclick="showPage('home')" id="nav-home" class="top-menu active" style="color:#fff;font-weight:800;margin-right:20px">Home</a>
-<a onclick="showPage('about')" id="nav-about" class="top-menu" style="color:#ddd;margin-right:18px">About</a>
-<a onclick="showPage('posts')" id="nav-posts" class="top-menu" style="color:#ddd;margin-right:18px">Posts</a>
-<a onclick="showPage('stats')" id="nav-stats" class="top-menu" style="color:#ddd;margin-right:18px">Stats</a>
-<a onclick="showPage('cheatsheets')" id="nav-cheatsheets" class="top-menu" style="color:#ddd;margin-right:18px">Cheatsheets</a>
-<a onclick="showPage('tools')" id="nav-tools" class="top-menu" style="color:#ddd;margin-right:18px">Tools</a>
-<a onclick="showPage('contact')" id="nav-contact" class="top-menu" style="color:#ddd;margin-right:18px">Contact</a>
-<div class="dropdown d-inline">
-<a class="dropdown-toggle top-menu" href="#" data-bs-toggle="dropdown" style="color:#ddd">Explore</a>
-<ul class="dropdown-menu" style="background:#111;border:1px solid var(--border)">
-<li><a class="dropdown-item" onclick="showPage('posts')" style="color:#ddd;cursor:pointer !important">/vault</a></li>
-<li><a class="dropdown-item" onclick="showPage('cheatsheets')" style="color:#ddd;cursor:pointer !important">/cheatsheets</a></li>
-<li><a class="dropdown-item" onclick="showPage('tools')" style="color:#ddd;cursor:pointer !important">/tools</a></li>
-<li><a class="dropdown-item" onclick="showPage('contact')" style="color:#ddd;cursor:pointer !important">/contact</a></li>
-</ul>
+<nav class="py-2 px-3 d-flex justify-content-between" style="background:#000;border-bottom:1px solid #222;position:sticky;top:0;z-index:11">
+<div class="d-flex gap-3">
+<a onclick="showPage('home')" id="nav-home" class="top-menu active">Home</a>
+<a onclick="showPage('about')" id="nav-about" class="top-menu">About</a>
+<a onclick="showPage('posts')" id="nav-posts" class="top-menu">Posts</a>
+<a onclick="showPage('stats')" id="nav-stats" class="top-menu">Stats</a>
+<a onclick="showPage('cheatsheets')" id="nav-cheatsheets" class="top-menu">Cheatsheets</a>
+<a onclick="showPage('tools')" id="nav-tools" class="top-menu">Tools</a>
+<a onclick="showPage('contact')" id="nav-contact" class="top-menu">Contact</a>
 </div>
-</div>
-<div class="d-flex align-items-center gap-3">
-<a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:4px 12px;cursor:pointer !important"><i class="bi bi-whatsapp"></i> Chat</a>
-</div>
+<a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:#00FF41;color:#000;font-weight:800">Chat</a>
 </nav>
-
-<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:#000;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:10">
-<a href="https://wa.me/254700000000?text=Hey%200xSoloh%20%2C%20I%20saw%20your%20portfolio" target="_blank" style="text-decoration:none;color:inherit;cursor:pointer !important">
-<div><b style="color:var(--green)">0x</b><b>Soloh</b> <span class="badge-h" style="color:var(--green)">TOP 3% THM</span> <i class="bi bi-whatsapp ms-1" style="color:var(--green)"></i></div>
-</a>
-<div class="d-flex gap-3 small align-items-center">
-<a onclick="showPage('posts')" style="color:#888;text-decoration:none;cursor:pointer !important">/vault</a>
-<a onclick="showPage('cheatsheets')" style="color:#888;text-decoration:none;cursor:pointer !important">/manuals</a>
-<a onclick="showPage('stats')" style="color:var(--gold);text-decoration:none;cursor:pointer !important">/badges</a>
-</div>
-</nav>
-
 <div class="container py-4" style="max-width:1100px">
-
 <div id="page-home" class="page-section active">
-<div class="hero-terminal mb-4">
-<div class="d-flex gap-2 mb-3"><span style="width:12px;height:12px;background:#ff5f56;border-radius:50%"></span><span style="width:12px;height:12px;background:#ffbd2e;border-radius:50%"></span><span style="width:12px;height:12px;background:#27c93f;border-radius:50%"></span><small class="ms-2" style="color:#555">0xSoloh@kali:~</small></div>
-<div class="mono" style="color:#ccc;line-height:1.8;font-size:.9rem">
-<span style="color:var(--green)">$ whoami</span><br>> Soloh Kim — PenTester | CTF Player | Murang'a PSB eCitizen Dev<br><br>
-<span style="color:var(--green)">$ cat mission.txt</span><br>> Break to Secure. Web Exploitation, PrivEsc, OSINT, AD attacks.<br><br>
-<span style="color:var(--green)">$ </span><span id="typewriter" style="color:#fff"></span><span class="cursor"></span>
-</div>
-</div>
-<script>
-const phrases = ["welcome here", "### who are you?", "ls ~/vault/ — exploring?", "sudo cat /etc/shadow 😏"];
-let phraseIndex=0,charIndex=0,isDeleting=false;const el=document.getElementById('typewriter');
-function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textContent=cur.substring(0,charIndex+1);charIndex++;if(charIndex===cur.length){setTimeout(()=>{isDeleting=true;typeLoop()},1800);return}}else{el.textContent=cur.substring(0,charIndex-1);charIndex--;if(charIndex===0){isDeleting=false;phraseIndex=(phraseIndex+1)%phrases.length}}setTimeout(typeLoop,isDeleting?40:90)}typeLoop();
-</script>
-<div id="badges-home" class="row g-3 mb-5">
-<div class="col-md-4"><div class="card-m"><small class="text-muted">TRYHACKME</small><div style="background:#000;border-radius:8px;padding:10px;margin-top:8px;text-align:center"><small style="color:var(--green)">Link your THM ID here</small><br><small class="text-muted">api/v2/badges/public-profile?userPublicId=YOURS</small></div></div></div>
-<div class="col-md-4"><div class="card-m"><small class="text-muted">HACKTHEBOX</small><br><small class="text-muted d-block mt-2">Replace YOUR-HTB-ID → Badge</small><br><small>Rank: Hacker | Owns: 24</small></div></div>
-<div class="col-md-4"><div class="card-m"><small class="text-muted">SKILLS // ARSENAL</small>
-<div class="mt-2 small">Web Exploitation<div class="skill-bar"><div class="skill-fill" style="width:92%"></div></div></div>
-<div class="mt-2 small">Linux PrivEsc<div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div></div>
-<div class="mt-2 small">Active Directory<div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div></div>
-</div></div>
-</div>
-<div class="d-flex justify-content-between align-items-center mb-2">
-<h6 id="vault" class="fw-bold mb-0"><span style="color:var(--green)">~/</span>vault <small class="text-muted">— auto from writeups.json</small></h6>
-<small id="vaultCount" class="text-muted"></small>
-</div>
+<h6 id="vault"><span style="color:#00FF41">~/</span>vault <small id="vaultCount"></small></h6>
 <div id="vaultGrid" class="row g-3 mb-3"></div>
 <div id="pagination" class="text-center mb-5"></div>
-<h6 class="fw-bold mb-3"><span style="color:var(--gold)">~/</span>manuals <small class="text-muted">— auto from cheatsheets.json</small></h6>
-<div id="manualsPreview" class="row g-3 mb-5"></div>
 </div>
-
-<div id="page-about" class="page-section">
-<h4 style="color:var(--green)">$ cat about.txt</h4>
-<div class="card-m mt-3">
-<p>I'm <b>0xSoloh</b> — Penetration Tester, Nairobi, Kenya. Murang'a PSB eCitizen System developer by day, CTF player by night.</p>
-<p class="text-muted small">Top 3% THM | Hacker Rank HTB | I break to secure.</p>
-<button onclick="showPage('contact')" class="btn btn-sm mt-2" style="background:var(--green);color:#000;font-weight:800;cursor:pointer !important">Contact Me →</button>
+<div id="page-posts" class="page-section"><h4>~/posts</h4><div id="vaultGridPosts" class="row g-3 mt-3"></div></div>
+<div id="page-about" class="page-section"><h4>$ cat about.txt</h4><p>0xSoloh — Nairobi, PenTester</p></div>
+<div id="page-stats" class="page-section"><h4>~/stats</h4><p>Top 3% THM | Hacker HTB</p></div>
+<div id="page-cheatsheets" class="page-section"><h4>~/cheatsheets</h4><div id="cheatsGrid" class="row g-3 mt-3"></div></div>
+<div id="page-tools" class="page-section"><h4>~/tools</h4><div id="toolsGrid" class="row g-3 mt-3"></div></div>
+<div id="page-contact" class="page-section"><h4>~/contact</h4><p>WhatsApp: +254797003045</p></div>
+<div id="reader" style="display:none" class="card p-3 mb-5"><button onclick="reader.style.display='none'" class="btn btn-sm btn-outline-light mb-3">Close</button><div id="mdContent"></div></div>
 </div>
-</div>
-
-<div id="page-posts" class="page-section">
-<h4 style="color:var(--green)">~/posts — All Writeups</h4>
-<div id="vaultGridPosts" class="row g-3 mt-3"></div>
-</div>
-
-<div id="page-stats" class="page-section">
-<h4 style="color:var(--gold)">~/stats — Badges</h4>
-<div class="row g-3 mt-3">
-<div class="col-md-6"><div class="card-m"><small class="text-muted">TRYHACKME</small><div class="mt-3 text-center"><i class="bi bi-trophy" style="font-size:3rem;color:var(--green)"></i><br><b>Top 3%</b></div></div></div>
-<div class="col-md-6"><div class="card-m"><small class="text-muted">HACKTHEBOX</small><div class="mt-3 text-center"><i class="bi bi-box" style="font-size:3rem;color:var(--green)"></i><br><b>Hacker Rank - 24 Owns</b></div></div></div>
-</div>
-</div>
-
-<!-- AUTOLOAD CHEATSHEETS -->
-<div id="page-cheatsheets" class="page-section">
-<h4 style="color:var(--gold)">~/cheatsheets — Private Playbooks</h4>
-<p class="text-muted small"><span id="cheatCount">loading...</span> — auto from cheatsheets.json</p>
-<div id="cheatsGrid" class="row g-3 mt-3"></div>
-</div>
-
-<!-- AUTOLOAD TOOLS -->
-<div id="page-tools" class="page-section">
-<h4 style="color:var(--green)">~/tools — Custom Tools</h4>
-<p class="text-muted small"><span id="toolsCount">loading...</span> — auto from tools.json</p>
-<div id="toolsGrid" class="row g-3 mt-3"></div>
-</div>
-
-<div id="page-contact" class="page-section">
-<h4 style="color:var(--green)">~/contact — Let's Talk</h4>
-<div class="row g-4 mt-2">
-<div class="col-md-6">
-<div class="card-m">
-<h6>Send me a message</h6>
-<small class="text-muted">For pentest, CTF collab, or PSB system audit.</small>
-<form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" id="contactForm">
-  <input type="hidden" name="form-name" value="contact" />
-  <p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p>
-
-  <div class="mb-3">
-    <label class="small text-muted">Email *</label>
-    <input type="email" name="email" class="form-control" placeholder="solomonkilonzo49@gmail.com" required style="background:#111;border:1px solid #1f1f1f;color:#ddd">
-  </div>
-
-  <div class="mb-3">
-    <label class="small text-muted">Phone Number</label>
-    <input type="tel" name="phone" class="form-control" placeholder="+254 797 003 045" style="background:#111;border:1px solid #1f1f1f;color:#ddd">
-  </div>
-
-  <div class="mb-3">
-    <label class="small text-muted">Message *</label>
-    <textarea name="message" class="form-control" rows="4" placeholder="Hey 0xSoloh, I need..." required style="background:#111;border:1px solid #1f1f1f;color:#ddd"></textarea>
-  </div>
-
-  <button type="submit" class="btn" style="background:#00FF41;color:#000;font-weight:800;width:100%;border-radius:8px;padding:12px">
-    ➤ Submit
-  </button>
-  
-  <div id="formSuccess" style="display:none;color:#00FF41;margin-top:10px;text-align:center;font-size:.9rem">✓ Message sent! I'll reply soon.</div>
-</form>
-</div>
-</div>
-<div class="col-md-6">
-<div class="card-m"><h6><i class="bi bi-whatsapp" style="color:#25D366"></i> Direct Contact</h6>
-<div class="mt-3 d-grid gap-2">
-<a href="https://wa.me/254797003045" target="_blank" class="btn" style="background:#25D366;color:#000;font-weight:700;cursor:pointer !important"><i class="bi bi-whatsapp"></i> WhatsApp Chat</a>
-<a href="mailto:0xsoloh@pm.me" class="btn" style="background:#111;border:1px solid var(--border);color:#fff;cursor:pointer !important"><i class="bi bi-envelope"></i> 0xsoloh@pm.me</a>
-</div>
-<hr style="border-color:#222"><small class="text-muted">Response time: <b style="color:var(--green)">~2 hours</b> (Nairobi time)</small>
-</div>
-</div>
-</div>
-</div>
-
-<h6 id="writeups" class="fw-bold mb-3 mt-5"><span style="color:var(--green)">~/</span>writeups</h6>
-<div id="writeupList" class="row g-3 mb-4"></div>
-<div id="reader" class="card-m mb-5" style="display:none"><button onclick="reader.style.display='none'" class="btn btn-sm btn-outline-light mb-3" style="cursor:pointer !important"><i class="bi bi-x"></i> Close</button><div id="mdContent" style="color:#ccc"></div></div>
-
-<footer class="text-center py-4 mt-4 border-top" style="border-color:var(--border)!important">
-<div class="d-flex justify-content-center gap-3 mb-3">
-<a href="https://twitter.com/YOURHANDLE" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#fff;text-decoration:none;cursor:pointer !important"><i class="bi bi-twitter-x"></i></a>
-<a href="https://linkedin.com/in/YOURHANDLE" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#0077b5;text-decoration:none;cursor:pointer !important"><i class="bi bi-linkedin"></i></a>
-<a href="mailto:0xsoloh@pm.me" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:var(--green);text-decoration:none;cursor:pointer !important"><i class="bi bi-envelope-fill"></i></a>
-<a href="https://instagram.com/YOURHANDLE" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#E1306C;text-decoration:none;cursor:pointer !important"><i class="bi bi-instagram"></i></a>
-<a href="https://wa.me/254797003045" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#25D366;text-decoration:none;cursor:pointer !important"><i class="bi bi-whatsapp"></i></a>
-</div>
-<small class="text-muted">© 2026 0xSoloh — Break to Secure | Built with <i class="bi bi-heart-fill" style="color:#ff5f56"></i> and <span style="color:var(--green)">$ sudo</span></small><br>
-<small class="text-muted" style="font-size:.65rem">0xSoloh@kali:~$ drag folder to netlify drop</small>
-</footer>
-</div>
-
-<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
-
 <script>
 let allWriteups=[];let currentPage=1;const perPage=8;
-async function loadVault(){try{const res=await fetch('writeups.json');allWriteups=await res.json();renderVault()}catch(e){document.getElementById('vaultGrid').innerHTML='<small class=text-muted>Missing writeups.json - create it</small>'}}
+async function loadVault(){try{const res=await fetch('writeups.json');allWriteups=await res.json();renderVault()}catch(e){document.getElementById('vaultGrid').innerHTML='Missing writeups.json'}}
 function renderVault(){
-  const grid=document.getElementById('vaultGrid');const list=document.getElementById('writeupList');const pag=document.getElementById('pagination');const count=document.getElementById('vaultCount');const gridPosts=document.getElementById('vaultGridPosts');
-  const totalPages=Math.ceil(allWriteups.length/perPage);const start=(currentPage-1)*perPage;const pageItems=allWriteups.slice(start,start+perPage);
-  if(count) count.textContent=`${allWriteups.length} writeups • Page ${currentPage}/${totalPages||1}`;
-  
+  const grid=document.getElementById('vaultGrid');const pag=document.getElementById('pagination');const count=document.getElementById('vaultCount');const gridPosts=document.getElementById('vaultGridPosts');
+  const totalPages=Math.ceil(allWriteups.length/perPage)||1;const start=(currentPage-1)*perPage;const pageItems=allWriteups.slice(start,start+perPage);
+  if(count) count.textContent=`${allWriteups.length} writeups • Page ${currentPage}/${totalPages}`;
   const html=pageItems.map(p=>{
-    let iconHtml='';
-    if(p.image){iconHtml=`<img src="${p.image}" alt="${p.title}">`;}
-    else {
-      let emoji='💻'; let bg='#111';
-      const name=(p.file+' '+p.title).toLowerCase();
-      if(name.includes('robot')){emoji='🤖';bg='#1a0a14';}
-      else if(name.includes('wing')){emoji='🪟';bg='#0a141a';}
-      else if(name.includes('timelapse')){emoji='⏱️';bg='#0a1a14';}
-      else if(name.includes('xss')){emoji='💉';bg='#1a0a0a';}
-      else if(name.includes('layover')){emoji='✈️';bg='#0a141a';}
-      else if(name.includes('creative')){emoji='🎨';bg='#1a1410';}
-      else if(name.includes('rce')){emoji='💥';bg='#1a0a0a';}
-      // THIS LINE WAS MISSING:
-      iconHtml=`<div style="width:140px;height:140px;border-radius:50%;background:${bg};border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">${emoji}</div>`;
-    }
-    const desc=p.desc||`Full walkthrough of ${p.title} — ${p.platform||''} ${p.level||''}`;
-    const tags=p.tags||[p.platform,p.level].filter(Boolean);
-  if(grid) grid.innerHTML=html || '<small class=text-muted>No writeups yet - add via admin.html</small>';
-  if(gridPosts) gridPosts.innerHTML=allWriteups.map(p=>`<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card"><div class="vault-img"><div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div></div><div class="vault-body"><div class="vault-title">${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:var(--green);color:#000;font-weight:800;margin-top:auto">Read</button></div></div></div>`).join('');
-  if(list) list.innerHTML=pageItems.map(p=>`<div class="col-md-6"><div class="card-m d-flex justify-content-between align-items-center"><div><small class="badge-h"><i class="bi bi-book"></i> ${p.platform}</small><div class="fw-bold mt-1" style="font-size:.85rem">${p.title}</div></div><button onclick="openWriteup('${p.file}')" class="btn btn-sm btn-outline-success"><i class="bi bi-book"></i></button></div></div>`).join('');
-  if(pag){
-    if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}
-  }
+    let iconHtml=p.image?`<img src="${p.image}" alt="${p.title}">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`;
+    const tags=p.tags||[];return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card"><div class="vault-img">${iconHtml}</div><div class="vault-body"><div class="vault-title">${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><div class="mb-2">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:#00FF41;color:#000;font-weight:800;margin-top:auto">Read</button></div></div></div>`;
+  }).join('');
+  if(grid) grid.innerHTML=html;
+  if(gridPosts) gridPosts.innerHTML=allWriteups.map(p=>`<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card"><div class="vault-img">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`💻`}</div><div class="vault-body"><div class="vault-title">${p.title}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:#00FF41;color:#000">Read</button></div></div></div>`).join('');
+  if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
-function goPage(n){currentPage=n;renderVault();document.getElementById('vault').scrollIntoView({behavior:'smooth'})}
-async function openWriteup(file){
-  try{
-    const txt=await fetch('writeups/'+file).then(r=>{if(!r.ok) throw '';return r.text()});
-    document.getElementById('mdContent').innerHTML=marked.parse(txt);
-  }catch(e){
-    const txt=await fetch('writeups/'+file).catch(()=>null);
-    document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;
-  }
-  document.getElementById('reader').style.display='block';
-  window.scrollTo(0,document.getElementById('reader').offsetTop-80)
-}
-async function openDoc(folder,file){
-  if(!file) return;
-  try{
-    const txt=await fetch(folder+'/'+file).then(r=>r.text());
-    document.getElementById('mdContent').innerHTML=marked.parse(txt);
-    document.getElementById('reader').style.display='block';
-    window.scrollTo(0,document.getElementById('reader').offsetTop-80);
-  }catch(e){ alert('Put '+file+' inside /'+folder+'/ folder'); }
-}
-
-// ===== AUTOLOAD CHEATSHEETS =====
-async function loadCheatsheets(){
-  try{
-    const res=await fetch('cheatsheets.json'); const data=await res.json();
-    document.getElementById('cheatCount').textContent=data.length+' cheatsheets';
-    const grid=document.getElementById('cheatsGrid');
-    const preview=document.getElementById('manualsPreview');
-    if(data.length===0){
-      grid.innerHTML='<div class=col-12><div class=card-m text-center><small class=text-muted>No cheatsheets yet. Add via admin.html → Export cheatsheets.json</small></div></div>';
-      if(preview) preview.innerHTML=grid.innerHTML;
-      return;
-    }
-    const html=data.map(c=>`
-      <div class="col-md-4"><div class="card-m text-center" style="height:100%">
-        <div class="icon-book" style="color:var(--gold)">${c.icon && c.icon.length<5 ? c.icon : `<i class="${c.icon||'bi bi-journal-code'}"></i>`}</div>
-        <h6 class="mt-3 fw-bold">${c.title}</h6><small class="text-muted d-block mb-2" style="min-height:38px">${c.desc||''}</small>
-        <div class="mt-3 d-grid gap-1">
-          ${c.file?`<button onclick="openDoc('cheatsheets','${c.file}')" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800">Read Cheatsheet</button>`:''}
-        </div></div></div>`).join('');
-    grid.innerHTML=html;
-    if(preview) preview.innerHTML=data.slice(0,3).map(c=>`
-      <div class="col-md-4"><a onclick="showPage('cheatsheets')" style="text-decoration:none;color:inherit;cursor:pointer"><div class="card-m text-center">
-      <div class="icon-book" style="color:var(--gold)">${c.icon && c.icon.length<5 ? c.icon : `<i class="bi bi-journal-code"></i>`}</div>
-      <h6 class="mt-3 fw-bold">${c.title}</h6><small class="text-muted">${c.desc||''}</small>
-      <div class="mt-3"><span style="color:var(--green)" class="small"><i class="bi bi-book"></i> Read Manual</span></div></div></a></div>`).join('') || '<small class=text-muted>No cheatsheets yet</small>';
-  }catch(e){
-    document.getElementById('cheatsGrid').innerHTML='<small class=text-muted>Missing cheatsheets.json — create []</small>';
-  }
-}
-// ===== AUTOLOAD TOOLS =====
-async function loadTools(){
-  try{
-    const res=await fetch('tools.json'); const data=await res.json();
-    document.getElementById('toolsCount').textContent=data.length+' tools';
-    const grid=document.getElementById('toolsGrid');
-    if(data.length===0){
-      grid.innerHTML='<div class=col-12><div class=card-m text-center><small class=text-muted>No tools yet. Add via admin.html → Your gobuster will appear here.</small></div></div>';
-      return;
-    }
-    grid.innerHTML=data.map(t=>`
-      <div class="col-md-6"><div class="card-m" style="height:100%">
-        <h6><i class="bi bi-tools" style="color:var(--green)"></i> ${t.title}</h6>
-        <small class="text-muted d-block mb-2">${t.desc||''}</small>
-        <div class="mb-2">${(t.tags||[]).map(x=>`<span class="tag">${x}</span>`).join('')}</div>
-        <div class="d-flex gap-2 mt-2">
-          ${t.link && t.link!=='#'?`<a href="${t.link}" target="_blank" class="btn btn-sm" style="background:#111;border:1px solid var(--border);color:var(--green)">GitHub <i class="bi bi-box-arrow-up-right"></i></a>`:''}
-          ${t.file?`<button onclick="openDoc('tools','${t.file}')" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:700">Read Docs</button>`:''}
-          ${t.title.toLowerCase().includes('gobuster')?`<span class="badge-h" style="color:var(--green);border-color:var(--green)">NEW</span>`:''}
-        </div>
-      </div></div>`).join('');
-  }catch(e){
-    document.getElementById('toolsGrid').innerHTML='<small class=text-muted>Missing tools.json — create []</small>';
-  }
-}
-
-loadVault(); loadCheatsheets(); loadTools();
-const btt=document.getElementById('backToTop');window.addEventListener('scroll',()=>{if(window.scrollY>300){btt.classList.add('show')}else{btt.classList.remove('show')}});
-function showPage(name){
-  document.querySelectorAll('.page-section').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  document.querySelectorAll('.top-menu').forEach(a=>{a.style.color='#ddd';a.classList.remove('active')});
-  const activeNav=document.getElementById('nav-'+name);
-  if(activeNav){activeNav.style.color='#fff';activeNav.classList.add('active');}
-  window.scrollTo({top:0,behavior:'smooth'});
-  if(name==='cheatsheets') loadCheatsheets();
-  if(name==='tools') loadTools();
-}
-function handleContact(e){
-  e.preventDefault();
-  const name=document.getElementById('cName').value;
-  const email=document.getElementById('cEmail').value;
-  const phone=document.getElementById('cPhone').value;
-  const msg=document.getElementById('cMsg').value;
-  const full=`New Contact from Vault:%0AName: ${name}%0AEmail: ${email}%0APhone: ${phone}%0AMessage: ${msg}`;
-  window.open(`mailto:0xsoloh@pm.me?subject=Contact from ${encodeURIComponent(name)}&body=${full}`);
-  setTimeout(()=>{window.open(`https://wa.me/254797003045?text=${full}`,'_blank')},800);
-  alert('Thanks '+name+'! Opening email & WhatsApp...');
-  e.target.reset();
-}
-</script>
-<script>
-// show success after Netlify form submit
-if(window.location.search.includes('success=true')){
-  const msgBox = document.getElementById('formSuccess');
-  if(msgBox) msgBox.style.display='block';
-  // show contact page in your SPA
-  if(typeof showPage === 'function'){ showPage('contact'); }
-  setTimeout(()=>{
-    document.getElementById('page-contact')?.scrollIntoView({behavior:'smooth'});
-  }, 500);
-}
+function goPage(n){currentPage=n;renderVault();window.scrollTo(0,0)}
+async function openWriteup(file){try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/')) path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80);}catch(e){alert('Could not load '+file)}}
+function showPage(name){document.querySelectorAll('.page-section').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+name).classList.add('active');document.querySelectorAll('.top-menu').forEach(a=>a.classList.remove('active'));const nav=document.getElementById('nav-'+name);if(nav) nav.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});document.getElementById('reader').style.display='none';}
+loadVault();
 </script></body></html>
