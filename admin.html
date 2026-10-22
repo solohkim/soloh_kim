@@ -28,45 +28,32 @@ function checkAdmin(){
   const v = document.getElementById('adminPass').value;
   if(v === ADMIN_KEY){
     document.getElementById('adminLock').style.display='none';
-    document.getElementById('adminPass').value='';
-    document.getElementById('lockMsg').style.display='none';
     startIdleTimer();
+    loadExistingFromServer(); // LOAD REAL DATA AFTER UNLOCK
   } else {
     document.getElementById('lockMsg').style.display='block';
   }
 }
-function lockAgain(){
-  document.getElementById('adminLock').style.display='flex';
-  clearTimeout(idleTimer);
-}
-function startIdleTimer(){
-  clearTimeout(idleTimer);
-  idleTimer = setTimeout(lockAgain, 180000);
-}
+function lockAgain(){document.getElementById('adminLock').style.display='flex'; clearTimeout(idleTimer);}
+function startIdleTimer(){clearTimeout(idleTimer); idleTimer=setTimeout(lockAgain,180000);}
 ['mousemove','keydown','click','scroll','touchstart'].forEach(evt=>{
-  document.addEventListener(evt, ()=>{
-    if(document.getElementById('adminLock').style.display==='none'){
-      startIdleTimer();
-    }
-  });
+  document.addEventListener(evt, ()=>{if(document.getElementById('adminLock').style.display==='none'){startIdleTimer();}});
 });
-document.addEventListener('keydown', (e)=>{
-  const lock = document.getElementById('adminLock');
-  if(e.key==='Enter' && lock && lock.style.display!=='none'){
-    checkAdmin();
-  }
-});
+document.addEventListener('keydown', (e)=>{const lock=document.getElementById('adminLock'); if(e.key==='Enter' && lock && lock.style.display!=='none'){checkAdmin();}});
 </script>
 
 <div class="container py-4" style="max-width:800px">
 <h4 style="color:var(--green)"><i class="bi bi-shield-lock"></i> 0xSoloh Admin Panel</h4>
-<small class="text-muted">Add content without coding. Then Export JSON.</small>
+<div class="card-m py-2" style="background:#0a1a0a;border-color:#1a3a1a">
+  <small id="loadStatus" style="color:#888">⏳ Waiting for unlock to load existing JSONs...</small>
+  <button onclick="loadExistingFromServer()" class="btn btn-sm ms-2" style="background:#111;border:1px solid #333;color:#aaa;font-size:.7rem">↻ Reload from Server</button>
+</div>
 
-<div class="mt-4 mb-3">
-<button class="nav-tab active" onclick="showTab('writeups')" id="t-writeups">Writeups</button>
-<button class="nav-tab" onclick="showTab('cheatsheets')" id="t-cheatsheets">Cheatsheets</button>
-<button class="nav-tab" onclick="showTab('tools')" id="t-tools">Tools</button>
-<button class="nav-tab" onclick="showTab('stats')" id="t-stats">Stats / Badges</button>
+<div class="mt-3 mb-3">
+<button class="nav-tab active" onclick="showTab('writeups')" id="t-writeups">Writeups (<span id="count-w">0</span>)</button>
+<button class="nav-tab" onclick="showTab('cheatsheets')" id="t-cheatsheets">Cheatsheets (<span id="count-c">0</span>)</button>
+<button class="nav-tab" onclick="showTab('tools')" id="t-tools">Tools (<span id="count-t">0</span>)</button>
+<button class="nav-tab" onclick="showTab('stats')" id="t-stats">Stats / Badges (<span id="count-s">0</span>)</button>
 </div>
 
 <!-- WRITEUPS TAB -->
@@ -107,28 +94,27 @@ document.addEventListener('keydown', (e)=>{
 <input id="tl-title" class="form-hack mb-2" placeholder="Tool name - e.g. subfuzzer.sh">
 <input id="tl-desc" class="form-hack mb-2" placeholder="Description">
 <input id="tl-tags" class="form-hack mb-2" placeholder="Tags - e.g. bash,recon">
-<input id="tl-link" class="form-hack mb-2" placeholder="GitHub Link - e.g. https://github.com/...">
-<input id="tl-file" class="form-hack mb-2" placeholder="File - e.g. subfuzzer.md (put in /tools/)">
+<input id="tl-link" class="form-hack mb-2" placeholder="GitHub Link">
+<input id="tl-file" class="form-hack mb-2" placeholder="File - e.g. subfuzzer.md">
 <button onclick="addItem('tools')" class="btn btn-sm w-100" style="background:var(--green);color:#000;font-weight:800">+ Add Tool</button>
 </div>
 <div id="list-tools"></div>
 </div>
 
-<!-- STATS TAB - NEW -->
+<!-- STATS TAB -->
 <div id="tab-stats" class="tab" style="display:none">
 <div class="card-m">
 <h6>Add Stat / Badge + Proof</h6>
 <select id="s-platform" class="form-hack mb-2"><option>TryHackMe</option><option>HackTheBox</option><option>Certification</option><option>Other</option></select>
 <input id="s-rank" class="form-hack mb-2" placeholder="Rank - e.g. Top 2% - 2026">
-<input id="s-icon" class="form-hack mb-2" placeholder="Icon - e.g. bi-trophy or 🏆">
-<input id="s-link" class="form-hack mb-2" placeholder="Profile Link - https://...">
+<input id="s-icon" class="form-hack mb-2" placeholder="Icon - bi-trophy or 🏆">
+<input id="s-link" class="form-hack mb-2" placeholder="Profile Link">
 <label class="small text-muted mt-2">Upload Evidence Screenshot</label>
 <input type="file" id="s-file" accept="image/*" class="form-hack mb-2" onchange="handleProof(this)">
 <input id="s-proof" class="form-hack mb-2" placeholder="Proof path - e.g. images/evidence/thm-top2.png">
 <div id="proofPreview" style="display:none;margin:10px 0;text-align:center">
-  <img id="previewImg" style="max-width:220px;border-radius:8px;border:2px solid #00FF41;box-shadow:0 0 15px rgba(0,255,65,.2)">
+  <img id="previewImg" style="max-width:220px;border-radius:8px;border:2px solid #00FF41">
   <small id="previewName" class="text-muted d-block mt-2"></small>
-  <small class="text-muted" style="font-size:.65rem">Save this image manually to /images/evidence/ folder</small>
 </div>
 <button onclick="addItem('stats')" class="btn btn-sm w-100 mt-2" style="background:var(--gold);color:#000;font-weight:800">+ Add Stat</button>
 </div>
@@ -137,16 +123,19 @@ document.addEventListener('keydown', (e)=>{
 
 <hr style="border-color:#222" class="my-4">
 <div class="card-m">
-<h6>Export JSONs</h6>
-<small class="text-muted">Download and replace your old JSON files in project root.</small>
+<h6>Export JSONs (Safe Merge)</h6>
+<small class="text-muted">These files now include your OLD + NEW data. Safe to replace.</small>
 <div class="d-grid gap-2 mt-3">
 <button onclick="exportJSON('writeups')" class="btn btn-outline-light btn-sm"><i class="bi bi-download"></i> Download writeups.json</button>
 <button onclick="exportJSON('cheatsheets')" class="btn btn-outline-warning btn-sm"><i class="bi bi-download"></i> Download cheatsheets.json</button>
 <button onclick="exportJSON('tools')" class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Download tools.json</button>
-<button onclick="exportJSON('stats')" class="btn btn-outline-warning btn-sm" style="border-color:var(--gold);color:var(--gold)"><i class="bi bi-trophy"></i> Download stats.json (NEW)</button>
+<button onclick="exportJSON('stats')" class="btn btn-outline-warning btn-sm" style="border-color:var(--gold);color:var(--gold)"><i class="bi bi-trophy"></i> Download stats.json</button>
+</div>
+<div class="mt-3">
+  <label class="small text-muted">Import existing JSON manually (if auto-load fails):</label>
+  <input type="file" id="importFile" accept=".json" class="form-hack mt-1" onchange="importJSON(this)">
 </div>
 </div>
-
 <a href="index.html" class="btn btn-sm mt-3" style="border:1px solid #333;color:#888">← Back to Site</a>
 </div>
 
@@ -157,6 +146,40 @@ let data={
   tools:JSON.parse(localStorage.getItem('t')||'[]'),
   stats:JSON.parse(localStorage.getItem('s')||'[]')
 };
+let serverLoaded = false;
+
+async function loadExistingFromServer(){
+  const status = document.getElementById('loadStatus');
+  status.textContent = '⏳ Loading existing JSONs from server...';
+  status.style.color = '#FFD54F';
+  
+  try{
+    const files = ['writeups','cheatsheets','tools','stats'];
+    for(let type of files){
+      try{
+        const res = await fetch(type+'.json?cachebust='+Date.now());
+        if(res.ok){
+          const json = await res.json();
+          if(Array.isArray(json) && json.length>0){
+            // Only overwrite localStorage if server has more data than local
+            const localCount = data[type].length;
+            if(!serverLoaded || json.length > localCount || localCount===0){
+              data[type] = json;
+              localStorage.setItem(type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s', JSON.stringify(json));
+            }
+          }
+        }
+      }catch(e){ console.log('No '+type+'.json or empty'); }
+    }
+    serverLoaded = true;
+    status.textContent = `✅ Loaded: ${data.writeups.length} writeups, ${data.cheatsheets.length} cheatsheets, ${data.tools.length} tools, ${data.stats.length} stats — safe to add new`;
+    status.style.color = '#00FF41';
+    render();
+  }catch(e){
+    status.textContent = '⚠️ Could not auto-load. Use Import JSON below or add manually.';
+    status.style.color = '#ff5f56';
+  }
+}
 
 function showTab(name){
   document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
@@ -171,15 +194,7 @@ function addItem(type){
   if(type==='writeups'){
     const title=document.getElementById('w-title').value; const file=document.getElementById('w-file').value;
     if(!title||!file) return alert('Title + File needed');
-    item={
-      title,file,
-      platform:document.getElementById('w-platform').value,
-      level:document.getElementById('w-level').value||'Medium',
-      date:new Date().toISOString().slice(0,10),
-      tags:document.getElementById('w-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
-      image:document.getElementById('w-image').value||'',
-      desc:''
-    };
+    item={title,file,platform:document.getElementById('w-platform').value,level:document.getElementById('w-level').value||'Medium',date:new Date().toISOString().slice(0,10),tags:document.getElementById('w-tags').value.split(',').map(s=>s.trim()).filter(Boolean),image:document.getElementById('w-image').value||'',desc:''};
     data.writeups.unshift(item);
     localStorage.setItem('w',JSON.stringify(data.writeups));
   }
@@ -201,18 +216,13 @@ function addItem(type){
     const platform=document.getElementById('s-platform').value;
     const rank=document.getElementById('s-rank').value;
     if(!rank) return alert('Rank needed');
-    item={
-      platform,
-      rank,
-      icon:document.getElementById('s-icon').value||'bi-trophy',
-      link:document.getElementById('s-link').value||'#',
-      proof:document.getElementById('s-proof').value||'images/evidence/placeholder.png',
-      date:new Date().toISOString().slice(0,10)
-    };
+    item={platform,rank,icon:document.getElementById('s-icon').value||'bi-trophy',link:document.getElementById('s-link').value||'#',proof:document.getElementById('s-proof').value||'images/evidence/placeholder.png',date:new Date().toISOString().slice(0,10)};
     data.stats.unshift(item);
     localStorage.setItem('s',JSON.stringify(data.stats));
   }
-  render(); alert('Added! Now Export JSON below.');
+  // clear inputs
+  if(type==='writeups'){document.getElementById('w-title').value=''; document.getElementById('w-file').value=''; document.getElementById('w-tags').value='';}
+  render();
 }
 
 function render(){
@@ -220,6 +230,10 @@ function render(){
   document.getElementById('list-cheatsheets').innerHTML=data.cheatsheets.map((x,i)=>`<div class="card-m small d-flex justify-content-between"><span>${x.icon} ${x.title}</span><span style="cursor:pointer;color:#ff5f56" onclick="del('cheatsheets',${i})">x</span></div>`).join('');
   document.getElementById('list-tools').innerHTML=data.tools.map((x,i)=>`<div class="card-m small d-flex justify-content-between"><span>🛠️ ${x.title}</span><span style="cursor:pointer;color:#ff5f56" onclick="del('tools',${i})">x</span></div>`).join('');
   document.getElementById('list-stats').innerHTML=data.stats.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><div><b>${x.platform}</b> - ${x.rank}<br><small style="color:#666">${x.proof}</small></div><span style="cursor:pointer;color:#ff5f56" onclick="del('stats',${i})">x</span></div>`).join('');
+  document.getElementById('count-w').textContent=data.writeups.length;
+  document.getElementById('count-c').textContent=data.cheatsheets.length;
+  document.getElementById('count-t').textContent=data.tools.length;
+  document.getElementById('count-s').textContent=data.stats.length;
 }
 
 function del(type,i){
@@ -236,29 +250,42 @@ function exportJSON(type){
 }
 
 function handleProof(input){
-  const file = input.files[0];
-  if(!file) return;
+  const file = input.files[0]; if(!file) return;
   document.getElementById('s-proof').value = 'images/evidence/' + file.name;
   const reader = new FileReader();
   reader.onload = (e)=>{
     document.getElementById('previewImg').src = e.target.result;
     document.getElementById('proofPreview').style.display='block';
-    document.getElementById('previewName').textContent = file.name + ' → save to /images/evidence/';
-  };
-  reader.readAsDataURL(file);
+    document.getElementById('previewName').textContent = file.name;
+  }; reader.readAsDataURL(file);
 }
-
 function handleWriteupImage(input){
-  const file = input.files[0];
-  if(!file) return;
+  const file = input.files[0]; if(!file) return;
   document.getElementById('w-image').value = 'images/evidence/' + file.name;
   const reader = new FileReader();
   reader.onload = (e)=>{
     document.getElementById('w-preview-img').src = e.target.result;
     document.getElementById('w-preview').style.display='block';
-  };
-  reader.readAsDataURL(file);
+  }; reader.readAsDataURL(file);
 }
-
+function importJSON(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const json = JSON.parse(e.target.result);
+      const type = file.name.replace('.json','');
+      if(data.hasOwnProperty(type)){
+        data[type] = json;
+        const key = type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s';
+        localStorage.setItem(key, JSON.stringify(json));
+        alert(`Imported ${json.length} items for ${type}`);
+        render();
+      } else {
+        alert('Unknown file name, use writeups.json, cheatsheets.json etc');
+      }
+    }catch(err){ alert('Invalid JSON'); }
+  }; reader.readAsText(file);
+}
 render();
 </script></body></html>
