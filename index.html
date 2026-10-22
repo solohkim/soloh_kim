@@ -51,7 +51,7 @@ nav a, [onclick]{cursor:pointer !important}
 .form-hack:focus{outline:none;border-color:var(--green);box-shadow:0 0 12px rgba(0,255,65,.2)}
 #proofLightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column}
 #proofLightbox img{max-width:90vw;max-height:85vh;border:2px solid var(--green);border-radius:12px;box-shadow:0 0 40px rgba(0,255,65,.3)}
-#restrictedModal,#premiumModal{position:fixed;inset:0;background:rgba(5,10,5,0.96);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+#restrictedModal,#premiumModal,#coffeeModal{position:fixed;inset:0;background:rgba(5,10,5,0.96);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
 .restricted-box{background:#0a1210;border:1px solid #00FF41;border-radius:14px;max-width:520px;width:100%;padding:0;overflow:hidden;box-shadow:0 0 50px rgba(0,255,65,.25)}
 .restricted-head{background:#0f1f0f;padding:14px 18px;border-bottom:1px solid #1a3a1a;display:flex;justify-content:space-between;align-items:center}
 .restricted-body{padding:24px;text-align:center}
@@ -92,7 +92,6 @@ nav a, [onclick]{cursor:pointer !important}
   </div>
 </div>
 
-<!-- PREMIUM MODAL - PERSONAL PAYPAL -->
 <div id="premiumModal">
   <div class="restricted-box" style="border-color:#FFD54F;box-shadow:0 0 50px rgba(255,213,79,.25)">
     <div class="restricted-head" style="background:#1a150a;border-color:#3a3010">
@@ -121,6 +120,28 @@ nav a, [onclick]{cursor:pointer !important}
   </div>
 </div>
 
+<!-- NEW: COFFEE MODAL - TOKEN, NO UNLOCK -->
+<div id="coffeeModal">
+  <div class="restricted-box" style="border-color:#FF8C42;box-shadow:0 0 50px rgba(255,140,66,.25)">
+    <div class="restricted-head" style="background:#1a1008;border-color:#3a2010">
+      <small style="color:#FF8C42;font-weight:800;letter-spacing:1px">> FUEL_0xSoloh ☕</small>
+      <span onclick="closeCoffee()" style="cursor:pointer;color:#666"><i class="bi bi-x-lg"></i></span>
+    </div>
+    <div class="restricted-body">
+      <div style="width:70px;height:70px;background:rgba(255,140,66,.1);border:1px solid #FF8C42;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i class="bi bi-cup-hot-fill" style="font-size:2rem;color:#FF8C42"></i></div>
+      <h5 style="color:#FF8C42;font-weight:800;letter-spacing:2px">Buy me a coffee</h5>
+      <small style="color:#888;font-size:.75rem;display:block;margin-bottom:16px">Support my research — no unlock, just love. All tokens go to my personal PayPal.</small>
+      <div class="d-grid gap-2">
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=3&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn" style="background:#FF8C42;color:#000;font-weight:800;padding:12px;border-radius:8px">☕ Small — $3</a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=5&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn" style="background:#FFD54F;color:#000;font-weight:800;padding:12px;border-radius:8px">☕☕ Medium — $5</a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=10&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn" style="background:#fff;color:#000;font-weight:800;padding:12px;border-radius:8px">🔥 Large — $10</a>
+      </div>
+      <a href="https://www.paypal.com/donate/?business=solomonkilonzo49@gmail.com&no_recurring=0&currency_code=USD" target="_blank" class="btn w-100 mt-3" style="background:#0070BA;color:#fff;font-weight:800;padding:10px;border-radius:8px"><i class="bi bi-paypal"></i> Custom amount</a>
+      <small style="color:#555;font-size:.65rem;display:block;margin-top:12px">PayPal: solomonkilonzo49@gmail.com • Thank you! ❤️</small>
+    </div>
+  </div>
+</div>
+
 <nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:11">
   <div class="d-flex align-items-center">
     <a onclick="showPage('home')" style="color:#fff;font-weight:800;text-decoration:none;margin-right:20px;cursor:pointer !important">0xSoloh</a>
@@ -136,11 +157,13 @@ nav a, [onclick]{cursor:pointer !important}
   </div>
   <div class="d-flex align-items-center gap-3">
     <div class="d-none d-lg-flex align-items-center gap-3">
+      <a onclick="openCoffee()" style="color:#FF8C42;cursor:pointer !important" title="Buy me a coffee"><i class="bi bi-cup-hot-fill fs-5"></i></a>
       <a onclick="openSearch()" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
       <a onclick="toggleTheme()" style="color:var(--green);cursor:pointer !important"><i class="bi bi-brightness-high-fill fs-5" id="themeIconDesktop"></i></a>
       <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:4px 12px"><i class="bi bi-whatsapp"></i> Chat</a>
     </div>
     <div class="d-flex d-lg-none align-items-center gap-3">
+      <a onclick="openCoffee()" style="color:#FF8C42;cursor:pointer !important"><i class="bi bi-cup-hot-fill fs-5"></i></a>
       <a onclick="openSearch()" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
       <a onclick="toggleTheme()" style="color:var(--green);cursor:pointer !important"><i class="bi bi-brightness-high-fill fs-5" id="themeIcon"></i></a>
       <button class="btn text-white p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"><i class="bi bi-list fs-2"></i></button>
@@ -166,6 +189,7 @@ nav a, [onclick]{cursor:pointer !important}
     <a onclick="showPage('tools'); closeMobile()" class="top-menu py-2">Tools</a>
     <a onclick="showPage('contact'); closeMobile()" class="top-menu py-2">Contact</a>
     <hr style="border-color:#222">
+    <a onclick="openCoffee(); closeMobile()" class="btn btn-sm mb-2" style="background:#FF8C42;color:#000;font-weight:800;border-radius:20px;padding:8px 16px"><i class="bi bi-cup-hot-fill"></i> Buy me a coffee</a>
     <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:8px 16px"><i class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
   </div>
 </div>
@@ -335,7 +359,6 @@ async function openWriteup(file){
   let writeup = allWriteups.find(w => w.file === file);
   if(!writeup){ writeup = allWriteups.find(w => file.includes(w.file) || w.file.includes(file.split('/').pop())); }
   if(!writeup) return;
-  // PREMIUM CHECK FIRST
   if(writeup.premium){
     const paid = localStorage.getItem('premium_paid_'+writeup.file);
     if(!paid){ showPremiumModal(writeup); return; }
@@ -395,10 +418,14 @@ async function forceOpenWriteup(file){
   try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/')) path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>{if(!r.ok) throw '';return r.text()});document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}
   document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)
 }
+// COFFEE - TOKEN ONLY
+function openCoffee(){ document.getElementById('coffeeModal').style.display='flex'; }
+function closeCoffee(){ document.getElementById('coffeeModal').style.display='none'; }
+
 document.addEventListener('keydown', (e)=>{
   if(document.getElementById('restrictedModal').style.display==='flex' && e.key==='Enter'){ tryUnlock(); }
   if(document.getElementById('premiumModal').style.display==='flex' && e.key==='Enter'){ verifyTxn(); }
-  if(e.key==='Escape'){ closeRestrictedModal(); closePremiumModal(); }
+  if(e.key==='Escape'){ closeRestrictedModal(); closePremiumModal(); closeCoffee(); }
 });
 async function openDoc(folder,file){if(!file) return;try{const txt=await fetch(folder+'/'+file).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80);}catch(e){ alert('Put '+file+' inside /'+folder+'/ folder'); }}
 async function loadCheatsheets(){
