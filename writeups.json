@@ -1,5 +1,17 @@
 [
   {
+    "title": "Kiba Machine walkthrough",
+    "file": "kiba.md",
+    "platform": "TryHackMe",
+    "level": "Easy",
+    "date": "2026-10-22",
+    "tags": [
+      "Linux"
+    ],
+    "image": "images/evidence/kiba.png",
+    "desc": ""
+  },
+  {
     "file": "writeups/creative_thm.md",
     "title": "Creative Thm",
     "platform": "TryHackMe",
