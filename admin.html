@@ -10,6 +10,7 @@ body{background:var(--bg);color:#ddd;font-family:monospace}
 .form-hack:focus{outline:none;border-color:var(--green)}
 .nav-tab{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:#111;color:#888;cursor:pointer;margin:4px}
 .nav-tab.active{background:var(--green);color:#000;font-weight:800;border-color:var(--green)}
+.skill-row{display:flex;gap:8px;margin-bottom:6px}
 </style></head><body>
 <div id="adminLock" style="position:fixed;inset:0;background:#080808;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column">
   <div style="background:#111;border:1px solid #1f1f1f;border-radius:14px;padding:30px;max-width:380px;width:90%;text-align:center;box-shadow:0 0 30px rgba(0,255,65,.15)">
@@ -29,7 +30,7 @@ function checkAdmin(){
   if(v === ADMIN_KEY){
     document.getElementById('adminLock').style.display='none';
     startIdleTimer();
-    loadExistingFromServer(); // LOAD REAL DATA AFTER UNLOCK
+    loadExistingFromServer();
   } else {
     document.getElementById('lockMsg').style.display='block';
   }
@@ -53,7 +54,8 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <button class="nav-tab active" onclick="showTab('writeups')" id="t-writeups">Writeups (<span id="count-w">0</span>)</button>
 <button class="nav-tab" onclick="showTab('cheatsheets')" id="t-cheatsheets">Cheatsheets (<span id="count-c">0</span>)</button>
 <button class="nav-tab" onclick="showTab('tools')" id="t-tools">Tools (<span id="count-t">0</span>)</button>
-<button class="nav-tab" onclick="showTab('stats')" id="t-stats">Stats / Badges (<span id="count-s">0</span>)</button>
+<button class="nav-tab" onclick="showTab('stats')" id="t-stats">Stats (<span id="count-s">0</span>)</button>
+<button class="nav-tab" onclick="showTab('about')" id="t-about" style="border-color:var(--gold);color:var(--gold)">About</button>
 </div>
 
 <!-- WRITEUPS TAB -->
@@ -121,6 +123,39 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <div id="list-stats"></div>
 </div>
 
+<!-- ABOUT TAB -->
+<div id="tab-about" class="tab" style="display:none">
+<div class="card-m">
+<h6 style="color:var(--gold)"><i class="bi bi-person-badge"></i> Edit About — auto from about.json</h6>
+<small class="text-muted">This edits your whole About section + hero terminal.</small>
+<div class="mt-3">
+<label class="small text-muted">Display Name (0xSoloh)</label>
+<input id="a-name" class="form-hack mb-2" placeholder="0xSoloh">
+<label class="small text-muted">Full Name</label>
+<input id="a-fullName" class="form-hack mb-2" placeholder="Soloh Kim">
+<label class="small text-muted">Role / Title</label>
+<input id="a-role" class="form-hack mb-2" placeholder="PenTester | CTF Player | Murang'a PSB eCitizen Dev">
+<label class="small text-muted">Location</label>
+<input id="a-location" class="form-hack mb-2" placeholder="Nairobi, Kenya">
+<label class="small text-muted">Bio (HTML allowed)</label>
+<textarea id="a-bio" class="form-hack mb-2" rows="3" placeholder="I'm <b>0xSoloh</b> — ..."></textarea>
+<label class="small text-muted">Mission (for terminal)</label>
+<textarea id="a-mission" class="form-hack mb-2" rows="2" placeholder="Break to Secure. Web Exploitation..."></textarea>
+<label class="small text-muted">Badges Line</label>
+<input id="a-badges" class="form-hack mb-2" placeholder="Top 3% THM | Hacker Rank HTB">
+<label class="small text-muted">Contact Note</label>
+<input id="a-contactNote" class="form-hack mb-2" placeholder="Available for pentest...">
+<label class="small text-muted">Skills (name:level comma separated - e.g. Web Exploitation:92, Linux PrivEsc:88)</label>
+<textarea id="a-skills" class="form-hack mb-2" rows="3" placeholder="Web Exploitation:92, Linux PrivEsc:88, Active Directory:80, OSINT:85"></textarea>
+<button onclick="saveAbout()" class="btn btn-sm w-100 mt-2" style="background:var(--gold);color:#000;font-weight:800">💾 Save About Locally</button>
+</div>
+</div>
+<div class="card-m">
+<h6>Current About Preview</h6>
+<pre id="aboutPreview" style="background:#000;border:1px solid #222;border-radius:8px;padding:12px;color:#00FF41;font-size:.75rem;white-space:pre-wrap">Loading...</pre>
+</div>
+</div>
+
 <hr style="border-color:#222" class="my-4">
 <div class="card-m">
 <h6>Export JSONs (Safe Merge)</h6>
@@ -130,6 +165,7 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <button onclick="exportJSON('cheatsheets')" class="btn btn-outline-warning btn-sm"><i class="bi bi-download"></i> Download cheatsheets.json</button>
 <button onclick="exportJSON('tools')" class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Download tools.json</button>
 <button onclick="exportJSON('stats')" class="btn btn-outline-warning btn-sm" style="border-color:var(--gold);color:var(--gold)"><i class="bi bi-trophy"></i> Download stats.json</button>
+<button onclick="exportJSON('about')" class="btn btn-sm" style="background:var(--gold);color:#000;font-weight:800"><i class="bi bi-person"></i> Download about.json</button>
 </div>
 <div class="mt-3">
   <label class="small text-muted">Import existing JSON manually (if auto-load fails):</label>
@@ -144,7 +180,8 @@ let data={
   writeups:JSON.parse(localStorage.getItem('w')||'[]'),
   cheatsheets:JSON.parse(localStorage.getItem('c')||'[]'),
   tools:JSON.parse(localStorage.getItem('t')||'[]'),
-  stats:JSON.parse(localStorage.getItem('s')||'[]')
+  stats:JSON.parse(localStorage.getItem('s')||'[]'),
+  about:JSON.parse(localStorage.getItem('about')||'null')
 };
 let serverLoaded = false;
 
@@ -152,7 +189,6 @@ async function loadExistingFromServer(){
   const status = document.getElementById('loadStatus');
   status.textContent = '⏳ Loading existing JSONs from server...';
   status.style.color = '#FFD54F';
-  
   try{
     const files = ['writeups','cheatsheets','tools','stats'];
     for(let type of files){
@@ -161,7 +197,6 @@ async function loadExistingFromServer(){
         if(res.ok){
           const json = await res.json();
           if(Array.isArray(json) && json.length>0){
-            // Only overwrite localStorage if server has more data than local
             const localCount = data[type].length;
             if(!serverLoaded || json.length > localCount || localCount===0){
               data[type] = json;
@@ -169,16 +204,65 @@ async function loadExistingFromServer(){
             }
           }
         }
-      }catch(e){ console.log('No '+type+'.json or empty'); }
+      }catch(e){ console.log('No '+type+'.json'); }
     }
+    // Load about.json (object, not array)
+    try{
+      const res = await fetch('about.json?cachebust='+Date.now());
+      if(res.ok){
+        const json = await res.json();
+        if(json && json.name){
+          data.about = json;
+          localStorage.setItem('about', JSON.stringify(json));
+          fillAboutForm(json);
+        }
+      }
+    }catch(e){ console.log('No about.json'); }
+
     serverLoaded = true;
-    status.textContent = `✅ Loaded: ${data.writeups.length} writeups, ${data.cheatsheets.length} cheatsheets, ${data.tools.length} tools, ${data.stats.length} stats — safe to add new`;
+    status.textContent = `✅ Loaded: ${data.writeups.length} writeups, ${data.cheatsheets.length} cheatsheets, ${data.tools.length} tools, ${data.stats.length} stats, about: ${data.about?'yes':'no'} — safe to add new`;
     status.style.color = '#00FF41';
     render();
+    if(data.about) document.getElementById('aboutPreview').textContent = JSON.stringify(data.about,null,2);
   }catch(e){
-    status.textContent = '⚠️ Could not auto-load. Use Import JSON below or add manually.';
+    status.textContent = '⚠️ Could not auto-load. Use Import JSON below.';
     status.style.color = '#ff5f56';
   }
+}
+
+function fillAboutForm(a){
+  document.getElementById('a-name').value = a.name||'';
+  document.getElementById('a-fullName').value = a.fullName||'';
+  document.getElementById('a-role').value = a.role||'';
+  document.getElementById('a-location').value = a.location||'';
+  document.getElementById('a-bio').value = a.bio||'';
+  document.getElementById('a-mission').value = a.mission||'';
+  document.getElementById('a-badges').value = a.badges||'';
+  document.getElementById('a-contactNote').value = a.contactNote||'';
+  if(a.skills) document.getElementById('a-skills').value = a.skills.map(s=>`${s.name}:${s.level}`).join(', ');
+}
+
+function saveAbout(){
+  const skillsRaw = document.getElementById('a-skills').value;
+  const skills = skillsRaw.split(',').map(s=>s.trim()).filter(Boolean).map(pair=>{
+    const [name, level] = pair.split(':').map(x=>x.trim());
+    return {name: name||'Skill', level: parseInt(level)||80};
+  });
+  const about = {
+    name: document.getElementById('a-name').value||'0xSoloh',
+    fullName: document.getElementById('a-fullName').value||'Soloh Kim',
+    role: document.getElementById('a-role').value||'PenTester',
+    location: document.getElementById('a-location').value||'Nairobi, Kenya',
+    bio: document.getElementById('a-bio').value||'',
+    mission: document.getElementById('a-mission').value||'',
+    badges: document.getElementById('a-badges').value||'',
+    contactNote: document.getElementById('a-contactNote').value||'',
+    skills: skills
+  };
+  data.about = about;
+  localStorage.setItem('about', JSON.stringify(about));
+  document.getElementById('aboutPreview').textContent = JSON.stringify(about,null,2);
+  alert('About saved locally! Now Export about.json');
 }
 
 function showTab(name){
@@ -220,7 +304,6 @@ function addItem(type){
     data.stats.unshift(item);
     localStorage.setItem('s',JSON.stringify(data.stats));
   }
-  // clear inputs
   if(type==='writeups'){document.getElementById('w-title').value=''; document.getElementById('w-file').value=''; document.getElementById('w-tags').value='';}
   render();
 }
@@ -234,6 +317,7 @@ function render(){
   document.getElementById('count-c').textContent=data.cheatsheets.length;
   document.getElementById('count-t').textContent=data.tools.length;
   document.getElementById('count-s').textContent=data.stats.length;
+  if(data.about) document.getElementById('aboutPreview').textContent = JSON.stringify(data.about,null,2);
 }
 
 function del(type,i){
@@ -245,7 +329,13 @@ function del(type,i){
 }
 
 function exportJSON(type){
-  const blob=new Blob([JSON.stringify(data[type],null,2)],{type:'application/json'});
+  let blob;
+  if(type==='about'){
+    if(!data.about) return alert('No about data yet — save first');
+    blob=new Blob([JSON.stringify(data.about,null,2)],{type:'application/json'});
+  } else {
+    blob=new Blob([JSON.stringify(data[type],null,2)],{type:'application/json'});
+  }
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=type+'.json'; a.click();
 }
 
@@ -275,6 +365,14 @@ function importJSON(input){
     try{
       const json = JSON.parse(e.target.result);
       const type = file.name.replace('.json','');
+      if(type==='about'){
+        data.about = json;
+        localStorage.setItem('about', JSON.stringify(json));
+        fillAboutForm(json);
+        alert(`Imported about.json`);
+        render();
+        return;
+      }
       if(data.hasOwnProperty(type)){
         data[type] = json;
         const key = type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s';
