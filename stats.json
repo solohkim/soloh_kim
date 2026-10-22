@@ -1,5 +1,365 @@
 [
   {
+    "platform": "TryHackMe",
+    "rank": "ohsint",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/ohsint?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/ohsint.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "basic pentesting",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/basicpentestingjt?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/basicpentest.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "wgel machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/wgelctf?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/wgel.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "attacktivedirectory machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/attacktivedirectory?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/attacktivedir.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "picklerick machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/picklerick?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/picklerick.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "kothfood machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/kothfoodctf?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/kothfood.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "anthem machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/anthem?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/anthem.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "smaggrotto machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/smaggrotto?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/smaggrotto.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "easypeasy machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/easypeasyctf?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/easypisy.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "kiba machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/kiba?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/kiba.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "gamingserver machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/gamingserver?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/gamingserver.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "ghizer machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/ghizerctf?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/ghizer.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "poster machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/poster?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/poster.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "bookstore machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/bookstoreoc?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/bookstore.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "magician machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/magician?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/magician.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "mustachio machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/mustacchio?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/mustachio.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "sweettooth machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/sweettoothinc?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/sweettooth.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "vulnet machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/vulnnetactive?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/vulnet.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "lookdown machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/lockdown?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/lookdown.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "webserver owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/ohmyweb?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/webserver.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "ollie machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/ollie?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/ollie.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "hacker vs hacker machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/hackervshacker?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/hacker.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "b3dr0ck machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/b3dr0ck?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/b3dr0ck.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "flip machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/flip?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/flip.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "dreaming machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/dreaming?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/dreaming.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "kitty machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/kitty?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/kitty.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "creative machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/creative?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/creative.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "mkingdom machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/mkingdom?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/mkingdom.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "school machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/yueiua?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/school.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "lookup machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/lookup?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/lookup.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "light machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/lightroom?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/light.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "bankgpt machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/bankgpt?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/bank.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "valentfind machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/lafb2026e10?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/valentfind.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "foolsmate machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/foolsmate?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/foolsmate.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "room404 machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/hh-room404-804573bf?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/room404.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "packedlight machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/hh-packedlight-02e5330c?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/packedlight.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "TryHackMe",
+    "rank": "overhead machine owned",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/hh-overheardatbreakfast-6f01793c?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/overhead.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "cap machine owned",
+    "icon": "🤖",
+    "link": "https://labs.hackthebox.com/achievement/machine/2240408/351",
+    "proof": "images/evidence/cap.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "kobold machine owned",
+    "icon": "🤖",
+    "link": "https://app.hackthebox.com/machines/Kobold",
+    "proof": "images/evidence/kobold.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "spookypass owned",
+    "icon": "🤖",
+    "link": "https://labs.hackthebox.com/achievement/challenge/2240408/806",
+    "proof": "images/evidence/spooky.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "flag command owned",
+    "icon": "🤖",
+    "link": "https://labs.hackthebox.com/achievement/challenge/2240408/646",
+    "proof": "images/evidence/flag.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "lucky dice machine owned",
+    "icon": "🤖",
+    "link": "https://labs.hackthebox.com/achievement/challenge/2240408/1180",
+    "proof": "images/evidence/dice.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "connected machine owned",
+    "icon": "🤖",
+    "link": "https://app.hackthebox.com/machines/Connected",
+    "proof": "images/evidence/connected.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "principal machine owned",
+    "icon": "🤖",
+    "link": "https://labs.hackthebox.com/achievement/machine/2240408/853",
+    "proof": "images/evidence/principal.png",
+    "date": "2026-10-22"
+  },
+  {
+    "platform": "HackTheBox",
+    "rank": "nexus machine owned",
+    "icon": "🤖",
+    "link": "https://labs.hackthebox.com/achievement/machine/2240408/948",
+    "proof": "images/evidence/nexus.png",
+    "date": "2026-10-22"
+  },
+  {
     "platform": "HackTheBox",
     "rank": "Top tier",
     "icon": "icon",
