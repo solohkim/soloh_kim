@@ -10,7 +10,6 @@ body{background:var(--bg);color:#ddd;font-family:monospace}
 .form-hack:focus{outline:none;border-color:var(--green)}
 .nav-tab{padding:8px 16px;border-radius:20px;border:1px solid var(--border);background:#111;color:#888;cursor:pointer;margin:4px}
 .nav-tab.active{background:var(--green);color:#000;font-weight:800;border-color:var(--green)}
-.skill-row{display:flex;gap:8px;margin-bottom:6px}
 </style></head><body>
 <div id="adminLock" style="position:fixed;inset:0;background:#080808;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column">
   <div style="background:#111;border:1px solid #1f1f1f;border-radius:14px;padding:30px;max-width:380px;width:90%;text-align:center;box-shadow:0 0 30px rgba(0,255,65,.15)">
@@ -19,7 +18,6 @@ body{background:var(--bg);color:#ddd;font-family:monospace}
     <input type="password" id="adminPass" placeholder="Enter admin key" style="background:#0a0a0a;border:1px solid #222;border-radius:8px;color:#ddd;padding:12px;width:100%;margin-bottom:12px">
     <button onclick="checkAdmin()" style="background:#00FF41;color:#000;font-weight:800;border:none;border-radius:8px;padding:10px;width:100%;cursor:pointer">Unlock</button>
     <small id="lockMsg" style="color:#ff5f56;display:none;margin-top:10px">Wrong key</small>
-    <small style="color:#333;display:block;margin-top:12px;font-size:.65rem">Auto-locks on reload + 3 min idle</small>
   </div>
 </div>
 <script>
@@ -37,17 +35,15 @@ function checkAdmin(){
 }
 function lockAgain(){document.getElementById('adminLock').style.display='flex'; clearTimeout(idleTimer);}
 function startIdleTimer(){clearTimeout(idleTimer); idleTimer=setTimeout(lockAgain,180000);}
-['mousemove','keydown','click','scroll','touchstart'].forEach(evt=>{
-  document.addEventListener(evt, ()=>{if(document.getElementById('adminLock').style.display==='none'){startIdleTimer();}});
-});
+['mousemove','keydown','click','scroll'].forEach(evt=>{document.addEventListener(evt, ()=>{if(document.getElementById('adminLock').style.display==='none'){startIdleTimer();}});});
 document.addEventListener('keydown', (e)=>{const lock=document.getElementById('adminLock'); if(e.key==='Enter' && lock && lock.style.display!=='none'){checkAdmin();}});
 </script>
 
 <div class="container py-4" style="max-width:800px">
-<h4 style="color:var(--green)"><i class="bi bi-shield-lock"></i> 0xSoloh Admin Panel</h4>
+<h4 style="color:var(--green)"><i class="bi bi-shield-lock"></i> 0xSoloh Admin Panel — EDIT MODE ADDED</h4>
 <div class="card-m py-2" style="background:#0a1a0a;border-color:#1a3a1a">
-  <small id="loadStatus" style="color:#888">⏳ Waiting for unlock to load existing JSONs...</small>
-  <button onclick="loadExistingFromServer()" class="btn btn-sm ms-2" style="background:#111;border:1px solid #333;color:#aaa;font-size:.7rem">↻ Reload from Server</button>
+  <small id="loadStatus" style="color:#888">⏳ Waiting for unlock...</small>
+  <button onclick="loadExistingFromServer()" class="btn btn-sm ms-2" style="background:#111;border:1px solid #333;color:#aaa;font-size:.7rem">↻ Reload</button>
 </div>
 
 <div class="mt-3 mb-3">
@@ -58,10 +54,10 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <button class="nav-tab" onclick="showTab('about')" id="t-about" style="border-color:var(--gold);color:var(--gold)">About</button>
 </div>
 
-<!-- WRITEUPS TAB -->
 <div id="tab-writeups" class="tab">
 <div class="card-m">
-<h6>Add New Writeup</h6>
+<h6 id="w-form-title">Add New Writeup</h6>
+<div id="w-editing" style="display:none;background:#1a2a1a;border:1px solid #2a5a2a;border-radius:8px;padding:8px;margin-bottom:10px"><small style="color:var(--green)">✏️ Editing index <span id="w-edit-index"></span></small> <button onclick="cancelEdit('writeups')" class="btn btn-sm ms-2" style="background:#333;color:#fff;font-size:.65rem">Cancel</button></div>
 <input id="w-title" class="form-hack mb-2" placeholder="Title - e.g. Mr Robot SUID">
 <input id="w-file" class="form-hack mb-2" placeholder="File name - e.g. mr-robot-suid.md">
 <select id="w-platform" class="form-hack mb-2"><option>HackTheBox</option><option>TryHackMe</option><option>Lab</option></select>
@@ -71,108 +67,88 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <input type="file" id="w-image-file" accept="image/*" class="form-hack mb-2" onchange="handleWriteupImage(this)">
 <input id="w-image" class="form-hack mb-2" placeholder="Image path - e.g. images/evidence/robot.png">
 <div id="w-preview" style="display:none;text-align:center;margin:8px 0"><img id="w-preview-img" style="max-width:150px;border-radius:50%;border:3px solid #00FF41"></div>
-<button onclick="addItem('writeups')" class="btn btn-sm w-100" style="background:var(--green);color:#000;font-weight:800">+ Add Writeup</button>
+<button id="w-btn" onclick="addItem('writeups')" class="btn btn-sm w-100" style="background:var(--green);color:#000;font-weight:800">+ Add Writeup</button>
 </div>
 <div id="list-writeups"></div>
 </div>
 
-<!-- CHEATSHEETS TAB -->
 <div id="tab-cheatsheets" class="tab" style="display:none">
 <div class="card-m">
-<h6>Add Cheatsheet</h6>
-<input id="c-title" class="form-hack mb-2" placeholder="Title - e.g. Nmap Quick Ref">
-<input id="c-icon" class="form-hack mb-2" placeholder="Icon emoji - e.g. 🔍 or bi-journal-code">
+<h6 id="c-form-title">Add Cheatsheet</h6>
+<div id="c-editing" style="display:none;background:#2a1a0a;border:1px solid #5a4a1a;border-radius:8px;padding:8px;margin-bottom:10px"><small style="color:var(--gold)">✏️ Editing index <span id="c-edit-index"></span></small> <button onclick="cancelEdit('cheatsheets')" class="btn btn-sm ms-2" style="background:#333;color:#fff;font-size:.65rem">Cancel</button></div>
+<input id="c-title" class="form-hack mb-2" placeholder="Title">
+<input id="c-icon" class="form-hack mb-2" placeholder="Icon emoji">
 <input id="c-desc" class="form-hack mb-2" placeholder="Short description">
-<input id="c-file" class="form-hack mb-2" placeholder="File - e.g. nmap.md (put file in /cheatsheets/)">
-<button onclick="addItem('cheatsheets')" class="btn btn-sm w-100" style="background:#FFD54F;color:#000;font-weight:800">+ Add Cheatsheet</button>
+<input id="c-file" class="form-hack mb-2" placeholder="File - e.g. nmap.md">
+<button id="c-btn" onclick="addItem('cheatsheets')" class="btn btn-sm w-100" style="background:#FFD54F;color:#000;font-weight:800">+ Add Cheatsheet</button>
 </div>
 <div id="list-cheatsheets"></div>
 </div>
 
-<!-- TOOLS TAB -->
 <div id="tab-tools" class="tab" style="display:none">
 <div class="card-m">
-<h6>Add Tool</h6>
-<input id="tl-title" class="form-hack mb-2" placeholder="Tool name - e.g. subfuzzer.sh">
+<h6 id="tl-form-title">Add Tool</h6>
+<div id="tl-editing" style="display:none;background:#1a2a1a;border:1px solid #2a5a2a;border-radius:8px;padding:8px;margin-bottom:10px"><small style="color:var(--green)">✏️ Editing index <span id="tl-edit-index"></span></small> <button onclick="cancelEdit('tools')" class="btn btn-sm ms-2" style="background:#333;color:#fff;font-size:.65rem">Cancel</button></div>
+<input id="tl-title" class="form-hack mb-2" placeholder="Tool name">
 <input id="tl-desc" class="form-hack mb-2" placeholder="Description">
-<input id="tl-tags" class="form-hack mb-2" placeholder="Tags - e.g. bash,recon">
+<input id="tl-tags" class="form-hack mb-2" placeholder="Tags">
 <input id="tl-link" class="form-hack mb-2" placeholder="GitHub Link">
-<input id="tl-file" class="form-hack mb-2" placeholder="File - e.g. subfuzzer.md">
-<button onclick="addItem('tools')" class="btn btn-sm w-100" style="background:var(--green);color:#000;font-weight:800">+ Add Tool</button>
+<input id="tl-file" class="form-hack mb-2" placeholder="File">
+<button id="tl-btn" onclick="addItem('tools')" class="btn btn-sm w-100" style="background:var(--green);color:#000;font-weight:800">+ Add Tool</button>
 </div>
 <div id="list-tools"></div>
 </div>
 
-<!-- STATS TAB -->
 <div id="tab-stats" class="tab" style="display:none">
 <div class="card-m">
-<h6>Add Stat / Badge + Proof</h6>
+<h6 id="s-form-title">Add Stat / Badge</h6>
+<div id="s-editing" style="display:none;background:#2a2a1a;border:1px solid #5a4a1a;border-radius:8px;padding:8px;margin-bottom:10px"><small style="color:var(--gold)">✏️ Editing index <span id="s-edit-index"></span></small> <button onclick="cancelEdit('stats')" class="btn btn-sm ms-2" style="background:#333;color:#fff;font-size:.65rem">Cancel</button></div>
 <select id="s-platform" class="form-hack mb-2"><option>TryHackMe</option><option>HackTheBox</option><option>Certification</option><option>Other</option></select>
-<input id="s-rank" class="form-hack mb-2" placeholder="Rank - e.g. Top 2% - 2026">
-<input id="s-icon" class="form-hack mb-2" placeholder="Icon - bi-trophy or 🏆">
+<input id="s-rank" class="form-hack mb-2" placeholder="Rank">
+<input id="s-icon" class="form-hack mb-2" placeholder="Icon">
 <input id="s-link" class="form-hack mb-2" placeholder="Profile Link">
-<label class="small text-muted mt-2">Upload Evidence Screenshot</label>
+<label class="small text-muted mt-2">Upload Evidence</label>
 <input type="file" id="s-file" accept="image/*" class="form-hack mb-2" onchange="handleProof(this)">
-<input id="s-proof" class="form-hack mb-2" placeholder="Proof path - e.g. images/evidence/thm-top2.png">
-<div id="proofPreview" style="display:none;margin:10px 0;text-align:center">
-  <img id="previewImg" style="max-width:220px;border-radius:8px;border:2px solid #00FF41">
-  <small id="previewName" class="text-muted d-block mt-2"></small>
-</div>
-<button onclick="addItem('stats')" class="btn btn-sm w-100 mt-2" style="background:var(--gold);color:#000;font-weight:800">+ Add Stat</button>
+<input id="s-proof" class="form-hack mb-2" placeholder="Proof path">
+<div id="proofPreview" style="display:none;text-align:center"><img id="previewImg" style="max-width:220px;border-radius:8px;border:2px solid #00FF41"><small id="previewName" class="text-muted d-block mt-2"></small></div>
+<button id="s-btn" onclick="addItem('stats')" class="btn btn-sm w-100 mt-2" style="background:var(--gold);color:#000;font-weight:800">+ Add Stat</button>
 </div>
 <div id="list-stats"></div>
 </div>
 
-<!-- ABOUT TAB -->
 <div id="tab-about" class="tab" style="display:none">
 <div class="card-m">
-<h6 style="color:var(--gold)"><i class="bi bi-person-badge"></i> Edit About — auto from about.json</h6>
-<small class="text-muted">This edits your whole About section + hero terminal.</small>
-<div class="mt-3">
-<label class="small text-muted">Display Name (0xSoloh)</label>
+<h6 style="color:var(--gold)">Edit About</h6>
 <input id="a-name" class="form-hack mb-2" placeholder="0xSoloh">
-<label class="small text-muted">Full Name</label>
-<input id="a-fullName" class="form-hack mb-2" placeholder="Soloh Kim">
-<label class="small text-muted">Role / Title</label>
-<input id="a-role" class="form-hack mb-2" placeholder="PenTester | CTF Player | Murang'a PSB eCitizen Dev">
-<label class="small text-muted">Location</label>
-<input id="a-location" class="form-hack mb-2" placeholder="Nairobi, Kenya">
-<label class="small text-muted">Bio (HTML allowed)</label>
-<textarea id="a-bio" class="form-hack mb-2" rows="3" placeholder="I'm <b>0xSoloh</b> — ..."></textarea>
-<label class="small text-muted">Mission (for terminal)</label>
-<textarea id="a-mission" class="form-hack mb-2" rows="2" placeholder="Break to Secure. Web Exploitation..."></textarea>
-<label class="small text-muted">Badges Line</label>
-<input id="a-badges" class="form-hack mb-2" placeholder="Top 3% THM | Hacker Rank HTB">
-<label class="small text-muted">Contact Note</label>
-<input id="a-contactNote" class="form-hack mb-2" placeholder="Available for pentest...">
-<label class="small text-muted">Skills (name:level comma separated - e.g. Web Exploitation:92, Linux PrivEsc:88)</label>
-<textarea id="a-skills" class="form-hack mb-2" rows="3" placeholder="Web Exploitation:92, Linux PrivEsc:88, Active Directory:80, OSINT:85"></textarea>
-<button onclick="saveAbout()" class="btn btn-sm w-100 mt-2" style="background:var(--gold);color:#000;font-weight:800">💾 Save About Locally</button>
+<input id="a-fullName" class="form-hack mb-2" placeholder="Full Name">
+<input id="a-role" class="form-hack mb-2" placeholder="Role">
+<input id="a-location" class="form-hack mb-2" placeholder="Location">
+<textarea id="a-bio" class="form-hack mb-2" rows="3" placeholder="Bio"></textarea>
+<textarea id="a-mission" class="form-hack mb-2" rows="2" placeholder="Mission"></textarea>
+<input id="a-badges" class="form-hack mb-2" placeholder="Badges">
+<input id="a-contactNote" class="form-hack mb-2" placeholder="Contact Note">
+<textarea id="a-skills" class="form-hack mb-2" rows="3" placeholder="Skills"></textarea>
+<button onclick="saveAbout()" class="btn btn-sm w-100 mt-2" style="background:var(--gold);color:#000;font-weight:800">💾 Save About</button>
 </div>
-</div>
-<div class="card-m">
-<h6>Current About Preview</h6>
 <pre id="aboutPreview" style="background:#000;border:1px solid #222;border-radius:8px;padding:12px;color:#00FF41;font-size:.75rem;white-space:pre-wrap">Loading...</pre>
-</div>
 </div>
 
 <hr style="border-color:#222" class="my-4">
 <div class="card-m">
-<h6>Export JSONs (Safe Merge)</h6>
-<small class="text-muted">These files now include your OLD + NEW data. Safe to replace.</small>
+<h6>Export JSONs</h6>
 <div class="d-grid gap-2 mt-3">
-<button onclick="exportJSON('writeups')" class="btn btn-outline-light btn-sm"><i class="bi bi-download"></i> Download writeups.json</button>
-<button onclick="exportJSON('cheatsheets')" class="btn btn-outline-warning btn-sm"><i class="bi bi-download"></i> Download cheatsheets.json</button>
-<button onclick="exportJSON('tools')" class="btn btn-outline-success btn-sm"><i class="bi bi-download"></i> Download tools.json</button>
-<button onclick="exportJSON('stats')" class="btn btn-outline-warning btn-sm" style="border-color:var(--gold);color:var(--gold)"><i class="bi bi-trophy"></i> Download stats.json</button>
-<button onclick="exportJSON('about')" class="btn btn-sm" style="background:var(--gold);color:#000;font-weight:800"><i class="bi bi-person"></i> Download about.json</button>
+<button onclick="exportJSON('writeups')" class="btn btn-outline-light btn-sm">Download writeups.json</button>
+<button onclick="exportJSON('cheatsheets')" class="btn btn-outline-warning btn-sm">Download cheatsheets.json</button>
+<button onclick="exportJSON('tools')" class="btn btn-outline-success btn-sm">Download tools.json</button>
+<button onclick="exportJSON('stats')" class="btn btn-outline-warning btn-sm" style="border-color:var(--gold);color:var(--gold)">Download stats.json</button>
+<button onclick="exportJSON('about')" class="btn btn-sm" style="background:var(--gold);color:#000;font-weight:800">Download about.json</button>
 </div>
 <div class="mt-3">
-  <label class="small text-muted">Import existing JSON manually (if auto-load fails):</label>
+  <label class="small text-muted">Import JSON manually:</label>
   <input type="file" id="importFile" accept=".json" class="form-hack mt-1" onchange="importJSON(this)">
 </div>
 </div>
-<a href="index.html" class="btn btn-sm mt-3" style="border:1px solid #333;color:#888">← Back to Site</a>
+<a href="index.html" class="btn btn-sm mt-3" style="border:1px solid #333;color:#888">← Back</a>
 </div>
 
 <script>
@@ -183,88 +159,70 @@ let data={
   stats:JSON.parse(localStorage.getItem('s')||'[]'),
   about:JSON.parse(localStorage.getItem('about')||'null')
 };
-let serverLoaded = false;
+let editIndex={writeups:null,cheatsheets:null,tools:null,stats:null};
+let serverLoaded=false;
 
 async function loadExistingFromServer(){
-  const status = document.getElementById('loadStatus');
-  status.textContent = '⏳ Loading existing JSONs from server...';
-  status.style.color = '#FFD54F';
+  const status=document.getElementById('loadStatus');
+  status.textContent='⏳ Loading...'; status.style.color='#FFD54F';
   try{
-    const files = ['writeups','cheatsheets','tools','stats'];
-    for(let type of files){
+    for(let type of ['writeups','cheatsheets','tools','stats']){
       try{
-        const res = await fetch(type+'.json?cachebust='+Date.now());
+        const res=await fetch(type+'.json?cachebust='+Date.now());
         if(res.ok){
-          const json = await res.json();
-          if(Array.isArray(json) && json.length>0){
-            const localCount = data[type].length;
-            if(!serverLoaded || json.length > localCount || localCount===0){
-              data[type] = json;
-              localStorage.setItem(type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s', JSON.stringify(json));
+          const json=await res.json();
+          if(Array.isArray(json)&&json.length>0){
+            if(!serverLoaded||data[type].length===0){
+              data[type]=json;
+              localStorage.setItem(type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s',JSON.stringify(json));
             }
           }
         }
-      }catch(e){ console.log('No '+type+'.json'); }
+      }catch(e){}
     }
-    // Load about.json (object, not array)
     try{
-      const res = await fetch('about.json?cachebust='+Date.now());
+      const res=await fetch('about.json?cachebust='+Date.now());
       if(res.ok){
-        const json = await res.json();
-        if(json && json.name){
-          data.about = json;
-          localStorage.setItem('about', JSON.stringify(json));
+        const json=await res.json();
+        if(json&&json.name){
+          data.about=json;
+          localStorage.setItem('about',JSON.stringify(json));
           fillAboutForm(json);
         }
       }
-    }catch(e){ console.log('No about.json'); }
-
-    serverLoaded = true;
-    status.textContent = `✅ Loaded: ${data.writeups.length} writeups, ${data.cheatsheets.length} cheatsheets, ${data.tools.length} tools, ${data.stats.length} stats, about: ${data.about?'yes':'no'} — safe to add new`;
-    status.style.color = '#00FF41';
+    }catch(e){}
+    serverLoaded=true;
+    status.textContent=`✅ Loaded: ${data.writeups.length} writeups, ${data.cheatsheets.length} cheatsheets, ${data.tools.length} tools, ${data.stats.length} stats`;
+    status.style.color='#00FF41';
     render();
-    if(data.about) document.getElementById('aboutPreview').textContent = JSON.stringify(data.about,null,2);
   }catch(e){
-    status.textContent = '⚠️ Could not auto-load. Use Import JSON below.';
-    status.style.color = '#ff5f56';
+    status.textContent='⚠️ Could not auto-load. Use Import.';
+    status.style.color='#ff5f56';
   }
 }
 
 function fillAboutForm(a){
-  document.getElementById('a-name').value = a.name||'';
-  document.getElementById('a-fullName').value = a.fullName||'';
-  document.getElementById('a-role').value = a.role||'';
-  document.getElementById('a-location').value = a.location||'';
-  document.getElementById('a-bio').value = a.bio||'';
-  document.getElementById('a-mission').value = a.mission||'';
-  document.getElementById('a-badges').value = a.badges||'';
-  document.getElementById('a-contactNote').value = a.contactNote||'';
-  if(a.skills) document.getElementById('a-skills').value = a.skills.map(s=>`${s.name}:${s.level}`).join(', ');
+  document.getElementById('a-name').value=a.name||'';
+  document.getElementById('a-fullName').value=a.fullName||'';
+  document.getElementById('a-role').value=a.role||'';
+  document.getElementById('a-location').value=a.location||'';
+  document.getElementById('a-bio').value=a.bio||'';
+  document.getElementById('a-mission').value=a.mission||'';
+  document.getElementById('a-badges').value=a.badges||'';
+  document.getElementById('a-contactNote').value=a.contactNote||'';
+  if(a.skills) document.getElementById('a-skills').value=a.skills.map(s=>`${s.name}:${s.level}`).join(', ');
 }
-
 function saveAbout(){
-  const skillsRaw = document.getElementById('a-skills').value;
-  const skills = skillsRaw.split(',').map(s=>s.trim()).filter(Boolean).map(pair=>{
-    const [name, level] = pair.split(':').map(x=>x.trim());
-    return {name: name||'Skill', level: parseInt(level)||80};
+  const skillsRaw=document.getElementById('a-skills').value;
+  const skills=skillsRaw.split(',').map(s=>s.trim()).filter(Boolean).map(pair=>{
+    const [name,level]=pair.split(':').map(x=>x.trim());
+    return {name:name||'Skill',level:parseInt(level)||80};
   });
-  const about = {
-    name: document.getElementById('a-name').value||'0xSoloh',
-    fullName: document.getElementById('a-fullName').value||'Soloh Kim',
-    role: document.getElementById('a-role').value||'PenTester',
-    location: document.getElementById('a-location').value||'Nairobi, Kenya',
-    bio: document.getElementById('a-bio').value||'',
-    mission: document.getElementById('a-mission').value||'',
-    badges: document.getElementById('a-badges').value||'',
-    contactNote: document.getElementById('a-contactNote').value||'',
-    skills: skills
-  };
-  data.about = about;
-  localStorage.setItem('about', JSON.stringify(about));
-  document.getElementById('aboutPreview').textContent = JSON.stringify(about,null,2);
-  alert('About saved locally! Now Export about.json');
+  data.about={name:document.getElementById('a-name').value||'0xSoloh',fullName:document.getElementById('a-fullName').value||'Soloh Kim',role:document.getElementById('a-role').value,location:document.getElementById('a-location').value,bio:document.getElementById('a-bio').value,mission:document.getElementById('a-mission').value,badges:document.getElementById('a-badges').value,contactNote:document.getElementById('a-contactNote').value,skills};
+  localStorage.setItem('about',JSON.stringify(data.about));
+  document.getElementById('aboutPreview').textContent=JSON.stringify(data.about,null,2);
+  alert('About saved!');
 }
-
 function showTab(name){
   document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
   document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
@@ -272,117 +230,170 @@ function showTab(name){
   document.getElementById('t-'+name).classList.add('active');
   render();
 }
-
 function addItem(type){
   let item;
   if(type==='writeups'){
     const title=document.getElementById('w-title').value; const file=document.getElementById('w-file').value;
     if(!title||!file) return alert('Title + File needed');
     item={title,file,platform:document.getElementById('w-platform').value,level:document.getElementById('w-level').value||'Medium',date:new Date().toISOString().slice(0,10),tags:document.getElementById('w-tags').value.split(',').map(s=>s.trim()).filter(Boolean),image:document.getElementById('w-image').value||'',desc:''};
-    data.writeups.unshift(item);
+    if(editIndex.writeups!==null){data.writeups[editIndex.writeups]=item; editIndex.writeups=null;}else{data.writeups.unshift(item);}
     localStorage.setItem('w',JSON.stringify(data.writeups));
+    cancelEdit('writeups');
   }
   if(type==='cheatsheets'){
     const title=document.getElementById('c-title').value; const file=document.getElementById('c-file').value;
     if(!title) return alert('Title needed');
     item={title,icon:document.getElementById('c-icon').value||'📄',desc:document.getElementById('c-desc').value||'',file};
-    data.cheatsheets.unshift(item);
+    if(editIndex.cheatsheets!==null){data.cheatsheets[editIndex.cheatsheets]=item; editIndex.cheatsheets=null;}else{data.cheatsheets.unshift(item);}
     localStorage.setItem('c',JSON.stringify(data.cheatsheets));
+    cancelEdit('cheatsheets');
   }
   if(type==='tools'){
     const title=document.getElementById('tl-title').value;
     if(!title) return alert('Title needed');
     item={title,desc:document.getElementById('tl-desc').value||'',tags:document.getElementById('tl-tags').value.split(',').map(s=>s.trim()).filter(Boolean),link:document.getElementById('tl-link').value||'#',file:document.getElementById('tl-file').value||''};
-    data.tools.unshift(item);
+    if(editIndex.tools!==null){data.tools[editIndex.tools]=item; editIndex.tools=null;}else{data.tools.unshift(item);}
     localStorage.setItem('t',JSON.stringify(data.tools));
+    cancelEdit('tools');
   }
   if(type==='stats'){
-    const platform=document.getElementById('s-platform').value;
-    const rank=document.getElementById('s-rank').value;
+    const platform=document.getElementById('s-platform').value; const rank=document.getElementById('s-rank').value;
     if(!rank) return alert('Rank needed');
     item={platform,rank,icon:document.getElementById('s-icon').value||'bi-trophy',link:document.getElementById('s-link').value||'#',proof:document.getElementById('s-proof').value||'images/evidence/placeholder.png',date:new Date().toISOString().slice(0,10)};
-    data.stats.unshift(item);
+    if(editIndex.stats!==null){data.stats[editIndex.stats]=item; editIndex.stats=null;}else{data.stats.unshift(item);}
     localStorage.setItem('s',JSON.stringify(data.stats));
+    cancelEdit('stats');
   }
-  if(type==='writeups'){document.getElementById('w-title').value=''; document.getElementById('w-file').value=''; document.getElementById('w-tags').value='';}
   render();
 }
-
+function editItem(type,i){
+  const item=data[type][i];
+  editIndex[type]=i;
+  if(type==='writeups'){
+    document.getElementById('w-title').value=item.title||'';
+    document.getElementById('w-file').value=item.file||'';
+    document.getElementById('w-platform').value=item.platform||'HackTheBox';
+    document.getElementById('w-level').value=item.level||'';
+    document.getElementById('w-tags').value=(item.tags||[]).join(', ');
+    document.getElementById('w-image').value=item.image||'';
+    document.getElementById('w-form-title').textContent='✏️ Editing Writeup';
+    document.getElementById('w-btn').textContent='💾 Update Writeup';
+    document.getElementById('w-btn').style.background='#FFD54F';
+    document.getElementById('w-editing').style.display='block';
+    document.getElementById('w-edit-index').textContent=i;
+    showTab('writeups');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  if(type==='cheatsheets'){
+    document.getElementById('c-title').value=item.title||'';
+    document.getElementById('c-icon').value=item.icon||'';
+    document.getElementById('c-desc').value=item.desc||'';
+    document.getElementById('c-file').value=item.file||'';
+    document.getElementById('c-form-title').textContent='✏️ Editing Cheatsheet';
+    document.getElementById('c-btn').textContent='💾 Update Cheatsheet';
+    document.getElementById('c-editing').style.display='block';
+    document.getElementById('c-edit-index').textContent=i;
+    showTab('cheatsheets');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  if(type==='tools'){
+    document.getElementById('tl-title').value=item.title||'';
+    document.getElementById('tl-desc').value=item.desc||'';
+    document.getElementById('tl-tags').value=(item.tags||[]).join(', ');
+    document.getElementById('tl-link').value=item.link||'';
+    document.getElementById('tl-file').value=item.file||'';
+    document.getElementById('tl-form-title').textContent='✏️ Editing Tool';
+    document.getElementById('tl-btn').textContent='💾 Update Tool';
+    document.getElementById('tl-editing').style.display='block';
+    document.getElementById('tl-edit-index').textContent=i;
+    showTab('tools');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  if(type==='stats'){
+    document.getElementById('s-platform').value=item.platform||'TryHackMe';
+    document.getElementById('s-rank').value=item.rank||'';
+    document.getElementById('s-icon').value=item.icon||'';
+    document.getElementById('s-link').value=item.link||'';
+    document.getElementById('s-proof').value=item.proof||'';
+    document.getElementById('s-form-title').textContent='✏️ Editing Stat';
+    document.getElementById('s-btn').textContent='💾 Update Stat';
+    document.getElementById('s-editing').style.display='block';
+    document.getElementById('s-edit-index').textContent=i;
+    if(item.proof){document.getElementById('previewImg').src=item.proof; document.getElementById('proofPreview').style.display='block';}
+    showTab('stats');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+}
+function cancelEdit(type){
+  editIndex[type]=null;
+  if(type==='writeups'){
+    document.getElementById('w-title').value=''; document.getElementById('w-file').value=''; document.getElementById('w-tags').value=''; document.getElementById('w-image').value=''; document.getElementById('w-level').value='';
+    document.getElementById('w-form-title').textContent='Add New Writeup'; document.getElementById('w-btn').textContent='+ Add Writeup'; document.getElementById('w-btn').style.background='var(--green)'; document.getElementById('w-editing').style.display='none'; document.getElementById('w-preview').style.display='none';
+  }
+  if(type==='cheatsheets'){
+    document.getElementById('c-title').value=''; document.getElementById('c-icon').value=''; document.getElementById('c-desc').value=''; document.getElementById('c-file').value='';
+    document.getElementById('c-form-title').textContent='Add Cheatsheet'; document.getElementById('c-btn').textContent='+ Add Cheatsheet'; document.getElementById('c-editing').style.display='none';
+  }
+  if(type==='tools'){
+    document.getElementById('tl-title').value=''; document.getElementById('tl-desc').value=''; document.getElementById('tl-tags').value=''; document.getElementById('tl-link').value=''; document.getElementById('tl-file').value='';
+    document.getElementById('tl-form-title').textContent='Add Tool'; document.getElementById('tl-btn').textContent='+ Add Tool'; document.getElementById('tl-editing').style.display='none';
+  }
+  if(type==='stats'){
+    document.getElementById('s-rank').value=''; document.getElementById('s-icon').value=''; document.getElementById('s-link').value=''; document.getElementById('s-proof').value='';
+    document.getElementById('s-form-title').textContent='Add Stat / Badge'; document.getElementById('s-btn').textContent='+ Add Stat'; document.getElementById('s-editing').style.display='none'; document.getElementById('proofPreview').style.display='none';
+  }
+}
 function render(){
-  document.getElementById('list-writeups').innerHTML=data.writeups.map((x,i)=>`<div class="card-m small d-flex justify-content-between"><span>${x.title} - ${x.file}</span><span style="cursor:pointer;color:#ff5f56" onclick="del('writeups',${i})">x</span></div>`).join('');
-  document.getElementById('list-cheatsheets').innerHTML=data.cheatsheets.map((x,i)=>`<div class="card-m small d-flex justify-content-between"><span>${x.icon} ${x.title}</span><span style="cursor:pointer;color:#ff5f56" onclick="del('cheatsheets',${i})">x</span></div>`).join('');
-  document.getElementById('list-tools').innerHTML=data.tools.map((x,i)=>`<div class="card-m small d-flex justify-content-between"><span>🛠️ ${x.title}</span><span style="cursor:pointer;color:#ff5f56" onclick="del('tools',${i})">x</span></div>`).join('');
-  document.getElementById('list-stats').innerHTML=data.stats.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><div><b>${x.platform}</b> - ${x.rank}<br><small style="color:#666">${x.proof}</small></div><span style="cursor:pointer;color:#ff5f56" onclick="del('stats',${i})">x</span></div>`).join('');
+  document.getElementById('list-writeups').innerHTML=data.writeups.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>${x.title} - ${x.file}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('writeups',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('writeups',${i})">x</span></div></div>`).join('');
+  document.getElementById('list-cheatsheets').innerHTML=data.cheatsheets.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>${x.icon} ${x.title}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('cheatsheets',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('cheatsheets',${i})">x</span></div></div>`).join('');
+  document.getElementById('list-tools').innerHTML=data.tools.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>🛠️ ${x.title}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('tools',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('tools',${i})">x</span></div></div>`).join('');
+  document.getElementById('list-stats').innerHTML=data.stats.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><div><b>${x.platform}</b> - ${x.rank}<br><small style="color:#666">${x.proof}</small></div><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('stats',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('stats',${i})">x</span></div></div>`).join('');
   document.getElementById('count-w').textContent=data.writeups.length;
   document.getElementById('count-c').textContent=data.cheatsheets.length;
   document.getElementById('count-t').textContent=data.tools.length;
   document.getElementById('count-s').textContent=data.stats.length;
-  if(data.about) document.getElementById('aboutPreview').textContent = JSON.stringify(data.about,null,2);
+  if(data.about) document.getElementById('aboutPreview').textContent=JSON.stringify(data.about,null,2);
 }
-
 function del(type,i){
   if(!confirm('Delete?')) return;
   data[type].splice(i,1);
-  const key = type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s';
+  const key=type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s';
   localStorage.setItem(key,JSON.stringify(data[type]));
+  if(editIndex[type]===i) cancelEdit(type);
   render();
 }
-
 function exportJSON(type){
   let blob;
   if(type==='about'){
-    if(!data.about) return alert('No about data yet — save first');
+    if(!data.about) return alert('No about');
     blob=new Blob([JSON.stringify(data.about,null,2)],{type:'application/json'});
-  } else {
+  }else{
     blob=new Blob([JSON.stringify(data[type],null,2)],{type:'application/json'});
   }
   const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=type+'.json'; a.click();
 }
-
 function handleProof(input){
-  const file = input.files[0]; if(!file) return;
-  document.getElementById('s-proof').value = 'images/evidence/' + file.name;
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    document.getElementById('previewImg').src = e.target.result;
-    document.getElementById('proofPreview').style.display='block';
-    document.getElementById('previewName').textContent = file.name;
-  }; reader.readAsDataURL(file);
+  const file=input.files[0]; if(!file) return;
+  document.getElementById('s-proof').value='images/evidence/'+file.name;
+  const reader=new FileReader();
+  reader.onload=(e)=>{document.getElementById('previewImg').src=e.target.result; document.getElementById('proofPreview').style.display='block'; document.getElementById('previewName').textContent=file.name;}; reader.readAsDataURL(file);
 }
 function handleWriteupImage(input){
-  const file = input.files[0]; if(!file) return;
-  document.getElementById('w-image').value = 'images/evidence/' + file.name;
-  const reader = new FileReader();
-  reader.onload = (e)=>{
-    document.getElementById('w-preview-img').src = e.target.result;
-    document.getElementById('w-preview').style.display='block';
-  }; reader.readAsDataURL(file);
+  const file=input.files[0]; if(!file) return;
+  document.getElementById('w-image').value='images/evidence/'+file.name;
+  const reader=new FileReader();
+  reader.onload=(e)=>{document.getElementById('w-preview-img').src=e.target.result; document.getElementById('w-preview').style.display='block';}; reader.readAsDataURL(file);
 }
 function importJSON(input){
-  const file = input.files[0]; if(!file) return;
-  const reader = new FileReader();
-  reader.onload = (e)=>{
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=(e)=>{
     try{
-      const json = JSON.parse(e.target.result);
-      const type = file.name.replace('.json','');
-      if(type==='about'){
-        data.about = json;
-        localStorage.setItem('about', JSON.stringify(json));
-        fillAboutForm(json);
-        alert(`Imported about.json`);
-        render();
-        return;
-      }
-      if(data.hasOwnProperty(type)){
-        data[type] = json;
-        const key = type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s';
-        localStorage.setItem(key, JSON.stringify(json));
-        alert(`Imported ${json.length} items for ${type}`);
-        render();
-      } else {
-        alert('Unknown file name, use writeups.json, cheatsheets.json etc');
-      }
-    }catch(err){ alert('Invalid JSON'); }
+      const json=JSON.parse(e.target.result);
+      const type=file.name.replace('.json','');
+      if(type==='about'){data.about=json; localStorage.setItem('about',JSON.stringify(json)); fillAboutForm(json); render(); return;}
+      if(data.hasOwnProperty(type)){data[type]=json; const key=type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s'; localStorage.setItem(key,JSON.stringify(json)); render();}
+    }catch(err){alert('Invalid JSON');}
   }; reader.readAsText(file);
 }
 render();
