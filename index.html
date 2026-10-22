@@ -64,6 +64,12 @@ nav a, [onclick]{cursor:pointer !important}
 .ticker-track span b{color:#00FF41}
 @keyframes tickerScroll{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
 .fact-ticker-bar:hover .ticker-track{animation-play-state:paused}
+/* FIX FOR COFFEE MODAL - X VISIBLE + SCROLLABLE */
+#coffeeModal .restricted-box{max-height:85vh;overflow:hidden;display:flex;flex-direction:column}
+#coffeeModal .restricted-head{position:sticky;top:0;z-index:5;background:#1a1008!important}
+#coffeeModal .restricted-body{overflow-y:auto;max-height:calc(85vh - 50px);padding:16px}
+#coffeeModal .close-x{width:36px;height:36px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;cursor:pointer;border:2px solid #FF8C42}
+#coffeeModal .close-x:hover{background:#FF8C42;color:#000}
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
@@ -120,39 +126,33 @@ nav a, [onclick]{cursor:pointer !important}
   </div>
 </div>
 
-<!-- NEW: COFFEE MODAL - TOKEN, NO UNLOCK -->
-<!-- NEW: COFFEE MODAL - TOKEN, NO UNLOCK -->
+<!-- FIXED COFFEE MODAL - TOKEN, NO UNLOCK, X VISIBLE -->
 <div id="coffeeModal">
   <div class="restricted-box" style="border-color:#FF8C42;box-shadow:0 0 50px rgba(255,140,66,.25)">
-    <div class="restricted-head" style="background:#1a1008;border-color:#3a2010">
+    <div class="restricted-head">
       <small style="color:#FF8C42;font-weight:800;letter-spacing:1px">> sudo brew --coffee ☕</small>
-      <span onclick="closeCoffee()" style="cursor:pointer;color:#666"><i class="bi bi-x-lg"></i></span>
+      <span onclick="closeCoffee()" class="close-x"><i class="bi bi-x-lg"></i></span>
     </div>
     <div class="restricted-body">
-      <div style="width:70px;height:70px;background:rgba(255,140,66,.1);border:1px solid #FF8C42;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i class="bi bi-cup-hot-fill" style="font-size:2rem;color:#FF8C42"></i></div>
-      <h5 style="color:#FF8C42;font-weight:800;letter-spacing:1px">Buy me a coffee</h5>
-      
-      <div style="background:#000;border:1px solid #222;border-radius:8px;padding:12px;text-align:left;margin:12px 0">
-        <small style="color:#ccc;font-size:.7rem;line-height:1.6;display:block">
-          Hey, it's <b style="color:#00FF41">0xSoloh</b> — 
-          I spend nights breaking labs so you don't have to. Every writeup, tool & cheatsheet here is free, but caffeine isn't 😅<br><br>
+      <div style="width:60px;height:60px;background:rgba(255,140,66,.1);border:1px solid #FF8C42;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px"><i class="bi bi-cup-hot-fill" style="font-size:1.8rem;color:#FF8C42"></i></div>
+      <h6 style="color:#FF8C42;font-weight:800;letter-spacing:1px;text-align:center;margin-bottom:8px">Buy me a coffee</h6>
+      <div style="background:#000;border:1px solid #222;border-radius:8px;padding:10px;text-align:left;margin:10px 0">
+        <small style="color:#ccc;font-size:.68rem;line-height:1.5;display:block">
+          Hey, it's <b style="color:#00FF41">0xSoloh</b> — I spend nights breaking labs so you don't have to. Every writeup, tool & cheatsheet here is free, but caffeine isn't 😅<br><br>
           If my work helped you root a box, pass an exam, or just understand privesc — fuel my next all-nighter.<br>
           <span style="color:#666">100% goes to my personal PayPal. No paywall, no unlock. Just pure support & respect. 🙏</span>
         </small>
       </div>
-
       <div class="d-grid gap-2">
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=3&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn" style="background:#FF8C42;color:#000;font-weight:800;padding:12px;border-radius:8px">☕ $3 — One coffee, one exploit</a>
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=5&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn" style="background:#FFD54F;color:#000;font-weight:800;padding:12px;border-radius:8px">☕☕ $5 — Keep me awake past 2AM</a>
-        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=10&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn" style="background:#fff;color:#000;font-weight:800;padding:12px;border-radius:8px">🔥 $10 — You just sponsored my next 0day</a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=3&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn btn-sm" style="background:#FF8C42;color:#000;font-weight:800;padding:10px;border-radius:8px">☕ $3 — One coffee, one exploit</a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=5&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn btn-sm" style="background:#FFD54F;color:#000;font-weight:800;padding:10px;border-radius:8px">☕☕ $5 — Keep me awake past 2AM</a>
+        <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=10&currency_code=USD&item_name=Coffee%20for%200xSoloh" target="_blank" class="btn btn-sm" style="background:#fff;color:#000;font-weight:800;padding:10px;border-radius:8px">🔥 $10 — You just sponsored my next 0day</a>
       </div>
-      
-      <a href="https://www.paypal.com/donate/?business=solomonkilonzo49@gmail.com&no_recurring=0&currency_code=USD" target="_blank" class="btn w-100 mt-3" style="background:#0070BA;color:#fff;font-weight:800;padding:10px;border-radius:8px"><i class="bi bi-paypal"></i> Custom amount — you're legend</a>
-      
-      <div style="margin-top:16px;padding:8px;background:rgba(0,255,65,.05);border:1px dashed #1f3d1f;border-radius:8px">
-        <small style="color:#4a8a4a;font-size:.6rem">💡 Tip: Even $3 = 1,000 KSH of motivation from Nairobi. Every coffee is logged in my terminal as <code style="color:#FF8C42">./thanks.sh</code></small>
+      <a href="https://www.paypal.com/donate/?business=solomonkilonzo49@gmail.com&no_recurring=0&currency_code=USD" target="_blank" class="btn btn-sm w-100 mt-2" style="background:#0070BA;color:#fff;font-weight:800;padding:9px;border-radius:8px"><i class="bi bi-paypal"></i> Custom amount — you're legend</a>
+      <div style="margin-top:10px;padding:6px;background:rgba(0,255,65,.05);border:1px dashed #1f3d1f;border-radius:6px;text-align:center">
+        <small style="color:#4a8a4a;font-size:.6rem">💡 Tip: Even $3 = 1,000 KSH motivation from Nairobi. Every coffee logged as <code style="color:#FF8C42">./thanks.sh</code></small>
       </div>
-      <small style="color:#555;font-size:.6rem;display:block;margin-top:10px">PayPal: solomonkilonzo49@gmail.com • M-Pesa? WhatsApp me +254 797 003 045</small>
+      <small style="color:#555;font-size:.58rem;display:block;margin-top:8px;text-align:center">PayPal: solomonkilonzo49@gmail.com • M-Pesa? WhatsApp +254 797 003 045</small>
     </div>
   </div>
 </div>
@@ -433,10 +433,8 @@ async function forceOpenWriteup(file){
   try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/')) path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>{if(!r.ok) throw '';return r.text()});document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}
   document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)
 }
-// COFFEE - TOKEN ONLY
 function openCoffee(){ document.getElementById('coffeeModal').style.display='flex'; }
 function closeCoffee(){ document.getElementById('coffeeModal').style.display='none'; }
-
 document.addEventListener('keydown', (e)=>{
   if(document.getElementById('restrictedModal').style.display==='flex' && e.key==='Enter'){ tryUnlock(); }
   if(document.getElementById('premiumModal').style.display==='flex' && e.key==='Enter'){ verifyTxn(); }
