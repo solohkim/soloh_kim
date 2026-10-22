@@ -4,6 +4,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
 <style>
 :root{--green:#00FF41;--gold:#FFD54F;--bg:#080808;--card:#111;--border:#1f1f1f}
 body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;transition:.3s}
@@ -68,31 +69,24 @@ nav a, [onclick]{cursor:pointer !important}
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
 
-<!-- PREMIUM MODAL - PERSONAL PAYPAL - UPDATED -->
+<!-- PREMIUM MODAL - NEW -->
 <div id="premiumModal">
   <div class="restricted-box" style="border-color:#FFD54F">
     <div class="restricted-head" style="background:#1a150a;border-color:#3a3010">
-      <small style="color:#FFD54F;font-weight:800;letter-spacing:1px">> PREMIUM_RESEARCH_DETECTED 💎</small>
+      <small style="color:#FFD54F;font-weight:800;letter-spacing:1px">> PREMIUM_RESEARCH_DETECTED...</small>
       <span onclick="closePremiumModal()" style="cursor:pointer;color:#666"><i class="bi bi-x-lg"></i></span>
     </div>
     <div class="restricted-body">
       <div style="width:70px;height:70px;background:rgba(255,213,79,.1);border:1px solid #FFD54F;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i class="bi bi-gem" style="font-size:2rem;color:#FFD54F"></i></div>
       <h5 style="color:#FFD54F;font-weight:800;letter-spacing:2px">PREMIUM CONTENT</h5>
       <div id="premiumTitle" style="color:#fff;font-weight:800;font-size:1.1rem;margin:8px 0">ADVANCED RESEARCH</div>
-      <small style="color:#888;font-size:.7rem;display:block;margin-bottom:12px">My private research. Lab + tools cost me. PayPal: solomonkilonzo49@gmail.com</small>
+      <small style="color:#888;font-size:.7rem;display:block;margin-bottom:12px">This writeup is my private research. Lab + tools cost me time & money.</small>
       <div style="background:#000;border:1px solid #222;border-radius:8px;padding:10px;text-align:left;margin:12px 0">
-        <small style="color:#aaa;font-size:.65rem">> Price: <b style="color:#FFD54F">$50 USD</b> one-time<br>> Personal PayPal - No Business needed<br>> Access saved on this device forever<br>> WhatsApp: +254 797 003 045 if issue</small>
+        <small style="color:#666;font-size:.65rem">> Price: $50 USD one-time<br>> Instant unlock after PayPal payment<br>> Access saved on this device forever</small>
       </div>
-      <a id="paypalPayLink" href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=50&currency_code=USD&item_name=Premium%20Research%20-%200xSoloh%20Vault" target="_blank" class="btn w-100" style="background:#0070BA;color:#fff;font-weight:800;padding:12px;border-radius:8px;margin-bottom:12px">
-        <i class="bi bi-paypal"></i> Pay $50 with PayPal (Personal)
-      </a>
-      <div style="background:#000;border:1px solid #222;border-radius:8px;padding:10px;text-align:left;margin:12px 0">
-        <small style="color:#666;font-size:.65rem">1. Click Pay → Complete payment<br>2. Copy Transaction ID (e.g. 8RU12345AB)<br>3. Paste below → Instant unlock</small>
-      </div>
-      <input id="txnInput" class="restricted-input" style="border-color:#FFD54F;color:#FFD54F" placeholder="Paste PayPal Transaction ID">
-      <div id="premiumError" style="color:#ff5f56;font-size:.7rem;display:none;margin-bottom:8px">❌ Enter at least 8 chars of Transaction ID</div>
-      <button onclick="verifyTxn()" class="btn w-100" style="background:#FFD54F;color:#000;font-weight:800;padding:12px;border-radius:8px">Verify & Unlock Instantly <i class="bi bi-unlock-fill ms-1"></i></button>
-      <small style="color:#444;font-size:.6rem;display:block;margin-top:12px">PayPal personal account: solomonkilonzo49@gmail.com • Secure</small>
+      <div id="paypal-button-container" style="margin:16px 0"></div>
+      <div id="premiumError" style="color:#ff5f56;font-size:.7rem;display:none;margin-bottom:8px">Payment failed. Try again.</div>
+      <small style="color:#444;font-size:.6rem;display:block;margin-top:12px">Powered by PayPal • Secure checkout • Contact on WhatsApp if issue</small>
     </div>
   </div>
 </div>
@@ -284,6 +278,7 @@ async function openWriteup(file){
   let writeup = allWriteups.find(w => w.file === file);
   if(!writeup){ writeup = allWriteups.find(w => file.includes(w.file) || w.file.includes(file.split('/').pop())); }
   if(!writeup) return;
+  // PREMIUM FIRST
   if(writeup.premium){
     const paid = localStorage.getItem('premium_paid_'+writeup.file);
     if(!paid){ showPremiumModal(writeup); return; }
@@ -296,26 +291,32 @@ async function openWriteup(file){
 function showPremiumModal(writeup){
   currentPremiumWriteup = writeup;
   document.getElementById('premiumTitle').textContent = writeup.title.toUpperCase();
-  // update paypal link amount dynamically
-  const price = writeup.price || 50;
-  document.getElementById('paypalPayLink').href = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=solomonkilonzo49@gmail.com&amount=${price}&currency_code=USD&item_name=Premium%20Research%20-%20${encodeURIComponent(writeup.title)}`;
-  document.getElementById('paypalPayLink').innerHTML = `<i class="bi bi-paypal"></i> Pay $${price} with PayPal`;
-  document.getElementById('txnInput').value = '';
-  document.getElementById('premiumError').style.display='none';
   document.getElementById('premiumModal').style.display='flex';
+  document.getElementById('paypal-button-container').innerHTML='';
+  // Render PayPal button
+  if(window.paypal){
+    paypal.Buttons({
+      style:{ layout:'vertical', color:'gold', shape:'rect', label:'paypal' },
+      createOrder: (data, actions) => {
+        return actions.order.create({
+          purchase_units: [{ amount: { value: String(writeup.price||50), currency_code:'USD' }, description: writeup.title }]
+        });
+      },
+      onApprove: (data, actions) => {
+        return actions.order.capture().then(details => {
+          localStorage.setItem('premium_paid_'+writeup.file, details.id);
+          document.getElementById('premiumModal').style.display='none';
+          alert('✅ Payment success! ID: '+details.id+' - Unlocking...');
+          forceOpenWriteup(writeup.file);
+        });
+      },
+      onError: (err)=>{ document.getElementById('premiumError').style.display='block'; console.log(err); }
+    }).render('#paypal-button-container');
+  } else {
+    document.getElementById('paypal-button-container').innerHTML='<small style="color:#ff5f56">PayPal SDK not loaded. Replace YOUR_PAYPAL_CLIENT_ID with your real Client ID.</small>';
+  }
 }
 function closePremiumModal(){ document.getElementById('premiumModal').style.display='none'; currentPremiumWriteup=null; }
-function verifyTxn(){
-  const txn = document.getElementById('txnInput').value.trim();
-  if(txn.length < 8){
-    document.getElementById('premiumError').style.display='block';
-    return;
-  }
-  localStorage.setItem('premium_paid_'+currentPremiumWriteup.file, txn);
-  document.getElementById('premiumModal').style.display='none';
-  alert('✅ Payment verified! ID: '+txn+' - Unlocking... Check PayPal: solomonkilonzo49@gmail.com');
-  forceOpenWriteup(currentPremiumWriteup.file);
-}
 
 function showRestrictedModal(writeup){
   currentRestrictedWriteup = writeup;
@@ -348,7 +349,6 @@ async function forceOpenWriteup(file){
 }
 document.addEventListener('keydown', (e)=>{
   if(document.getElementById('restrictedModal').style.display==='flex' && e.key==='Enter'){ tryUnlock(); }
-  if(document.getElementById('premiumModal').style.display==='flex' && e.key==='Enter'){ verifyTxn(); }
   if(e.key==='Escape'){ closeRestrictedModal(); closePremiumModal(); }
 });
 async function openDoc(folder,file){if(!file) return;try{const txt=await fetch(folder+'/'+file).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80);}catch(e){ alert('Put '+file+' inside /'+folder+'/ folder'); }}
