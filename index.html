@@ -326,11 +326,11 @@ let currentRestrictedWriteup=null;
 let currentPremiumWriteup=null;
 const linuxTips=[{cmd:"pwd",desc:"Print Working Directory - where am I?",ex:"pwd"},{cmd:"ls -la",desc:"List all files incl hidden - recon 101",ex:"ls -la"},{cmd:"cat file.txt",desc:"Read file - like reading writeups",ex:"cat about.txt"},{cmd:"whoami",desc:"Who are you?",ex:"whoami"},{cmd:"id",desc:"User ID & groups - privesc check",ex:"id"},{cmd:"sudo -l",desc:"Check sudo privs",ex:"sudo -l"},{cmd:"grep -r 'flag' .",desc:"Search inside files",ex:"grep -r 'flag' ."}];
 let pendingAction=null,currentTipIndex=0;
-function showLinuxTip(next){if(localStorage.getItem('disableLinuxTips')==='1'){next();return;}pendingAction=next;currentTipIndex=Math.floor(Math.random()*linuxTips.length);renderLinuxTip();document.getElementById('linuxTipModal').style.display='flex';}
+function showLinuxTip(next){pendingAction=next;currentTipIndex=Math.floor(Math.random()*linuxTips.length);renderLinuxTip();document.getElementById('linuxTipModal').style.display='flex';}
 function renderLinuxTip(){const t=linuxTips[currentTipIndex];document.getElementById('tipNum').textContent=currentTipIndex+1;document.getElementById('tipCmd').textContent=t.cmd;document.getElementById('tipDesc').textContent=t.desc;document.getElementById('tipExample').textContent=t.ex;}
 function nextLinuxTip(){currentTipIndex=(currentTipIndex+1)%linuxTips.length;renderLinuxTip();}
 function closeLinuxTip(){document.getElementById('linuxTipModal').style.display='none';pendingAction=null;}
-function closeLinuxTipAndContinue(){if(document.getElementById('dontShowTips').checked){localStorage.setItem('disableLinuxTips','1');}document.getElementById('linuxTipModal').style.display='none';if(pendingAction){const fn=pendingAction;pendingAction=null;fn();}}
+function closeLinuxTipAndContinue(){document.getElementById('linuxTipModal').style.display='none';if(pendingAction){const fn=pendingAction;pendingAction=null;fn();}}
 async function loadAbout(){
   try{
     const res=await fetch('about.json'); const a=await res.json();
