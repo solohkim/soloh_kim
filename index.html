@@ -51,17 +51,17 @@ nav a, [onclick]{cursor:pointer !important}
 .form-hack:focus{outline:none;border-color:var(--green);box-shadow:0 0 12px rgba(0,255,65,.2)}
 #proofLightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column}
 #proofLightbox img{max-width:90vw;max-height:85vh;border:2px solid var(--green);border-radius:12px;box-shadow:0 0 40px rgba(0,255,65,.3)}
-/* ADDED: RESTRICTED MODAL */
 #restrictedModal{position:fixed;inset:0;background:rgba(5,10,5,0.96);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
 .restricted-box{background:#0a1210;border:1px solid #00FF41;border-radius:14px;max-width:520px;width:100%;padding:0;overflow:hidden;box-shadow:0 0 50px rgba(0,255,65,.25)}
 .restricted-head{background:#0f1f0f;padding:14px 18px;border-bottom:1px solid #1a3a1a;display:flex;justify-content:space-between;align-items:center}
 .restricted-body{padding:24px;text-align:center}
 .restricted-input{background:#000;border:1px solid #00FF41;border-radius:8px;color:#00FF41;padding:12px;width:100%;margin:16px 0;font-family:monospace;letter-spacing:2px;text-align:center}
 .restricted-input:focus{outline:none;box-shadow:0 0 15px rgba(0,255,65,.3)}
+/* MATRIX CANVAS */
+#matrixCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:0.12;pointer-events:none}
 </style></head><body>
+<canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
-
-<!-- ADDED: RESTRICTED MODAL HTML -->
 <div id="restrictedModal">
   <div class="restricted-box">
     <div class="restricted-head">
@@ -85,7 +85,6 @@ nav a, [onclick]{cursor:pointer !important}
     </div>
   </div>
 </div>
-
 <nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:11">
   <div class="d-flex align-items-center">
     <a onclick="showPage('home')" style="color:#fff;font-weight:800;text-decoration:none;margin-right:20px;cursor:pointer !important">0xSoloh</a>
@@ -159,7 +158,6 @@ function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textConten
 <h6 class="fw-bold mb-3"><span style="color:var(--gold)">~/</span>manuals <small class="text-muted">— auto from cheatsheets.json</small></h6>
 <div id="manualsPreview" class="row g-3 mb-5"></div>
 </div>
-
 <div id="page-about" class="page-section">
 <h4 style="color:var(--green)">$ cat about.txt <small class="text-muted" style="font-size:.6rem">— auto from about.json</small></h4>
 <div class="card-m mt-3" id="aboutCard">
@@ -184,7 +182,6 @@ function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textConten
   </div>
 </div>
 </div>
-
 <div id="page-posts" class="page-section"><h4 style="color:var(--green)">~/posts — All Writeups</h4><div id="vaultGridPosts" class="row g-3 mt-3"></div><div id="postsPagination" class="text-center mt-4 mb-3"></div></div>
 <div id="page-stats" class="page-section">
   <h4 style="color:var(--gold)">~/stats — Badges</h4>
@@ -200,11 +197,36 @@ function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textConten
 </div>
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
 <script>
+// MATRIX 0/1 RAIN - ADDED
+(function(){
+  const canvas=document.getElementById('matrixCanvas');
+  const ctx=canvas.getContext('2d');
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
+  resize(); window.addEventListener('resize',resize);
+  const chars="01";
+  const fontSize=14;
+  let columns=Math.floor(canvas.width/fontSize);
+  let drops=Array(columns).fill(0);
+  function draw(){
+    ctx.fillStyle="rgba(8,8,8,0.08)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#00FF41";
+    ctx.font=fontSize+"px monospace";
+    for(let i=0;i<drops.length;i++){
+      const text=chars[Math.floor(Math.random()*chars.length)];
+      ctx.fillText(text,i*fontSize,drops[i]*fontSize);
+      if(drops[i]*fontSize>canvas.height && Math.random()>0.975){drops[i]=0;}
+      drops[i]++;
+    }
+  }
+  setInterval(draw,50);
+})();
+</script>
+<script>
 let allWriteups=[];let currentPage=1;const perPage=8;
 let postsPage=1;let statsData=[];let statsPage=1;let cheatsData=[];let cheatsPage=1;let toolsData=[];let toolsPage=1;
 const PAGE_SIZE=8;
 let currentRestrictedWriteup=null;
-
 async function loadAbout(){
   try{
     const res=await fetch('about.json'); const a=await res.json();
@@ -244,7 +266,6 @@ function renderVault(){
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goPage(n){currentPage=n;renderVault();document.getElementById('vault').scrollIntoView({behavior:'smooth'})}
-
 function renderPostsPage(){
   const grid=document.getElementById('vaultGridPosts');const pag=document.getElementById('postsPagination');
   if(!grid) return;
@@ -257,17 +278,10 @@ function renderPostsPage(){
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===postsPage?'active':''}" onclick="goPostsPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goPostsPage(n){postsPage=n;renderPostsPage();document.getElementById('page-posts').scrollIntoView({behavior:'smooth'})}
-
 async function openWriteup(file){
-  // FIND WRITEUP OBJECT TO CHECK ACTIVE LOCK
   let writeup = allWriteups.find(w => w.file === file);
-  if(!writeup){ // try with path variations
-    writeup = allWriteups.find(w => file.includes(w.file) || w.file.includes(file.split('/').pop()));
-  }
-  if(writeup && (writeup.active || writeup.restricted)){
-    showRestrictedModal(writeup);
-    return;
-  }
+  if(!writeup){ writeup = allWriteups.find(w => file.includes(w.file) || w.file.includes(file.split('/').pop())); }
+  if(writeup && (writeup.active || writeup.restricted)){ showRestrictedModal(writeup); return; }
   try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/')) path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>{if(!r.ok) throw '';return r.text()});document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}
   document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)
 }
@@ -280,21 +294,15 @@ function showRestrictedModal(writeup){
   document.getElementById('restrictedModal').style.display='flex';
   setTimeout(()=>document.getElementById('decryptKeyInput').focus(),100);
 }
-function closeRestrictedModal(){
-  document.getElementById('restrictedModal').style.display='none';
-  currentRestrictedWriteup=null;
-}
+function closeRestrictedModal(){ document.getElementById('restrictedModal').style.display='none'; currentRestrictedWriteup=null; }
 function tryUnlock(){
   const input = document.getElementById('decryptKeyInput').value.trim();
   if(!input || !currentRestrictedWriteup) return;
   const expected = (currentRestrictedWriteup.unlockKey||'').trim();
-  // allow empty key to be set as always open if admin forgot? No - require match
   if(expected && input === expected){
     document.getElementById('restrictedModal').style.display='none';
-    // now load the real file
     const file = currentRestrictedWriteup.file;
     currentRestrictedWriteup = null;
-    // force open bypassing active check
     forceOpenWriteup(file);
   } else {
     document.getElementById('restrictedError').style.display='block';
@@ -311,7 +319,6 @@ document.addEventListener('keydown', (e)=>{
   if(e.key==='Escape'){ closeRestrictedModal(); }
 });
 async function openDoc(folder,file){if(!file) return;try{const txt=await fetch(folder+'/'+file).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80);}catch(e){ alert('Put '+file+' inside /'+folder+'/ folder'); }}
-
 async function loadCheatsheets(){
   try{
     const res=await fetch('cheatsheets.json'); 
@@ -334,7 +341,6 @@ function renderCheatsPage(){
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===cheatsPage?'active':''}" onclick="goCheatsPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goCheatsPage(n){cheatsPage=n;renderCheatsPage();document.getElementById('page-cheatsheets').scrollIntoView({behavior:'smooth'})}
-
 async function loadTools(){
   try{
     const res=await fetch('tools.json'); 
@@ -353,7 +359,6 @@ function renderToolsPage(){
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===toolsPage?'active':''}" onclick="goToolsPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goToolsPage(n){toolsPage=n;renderToolsPage();document.getElementById('page-tools').scrollIntoView({behavior:'smooth'})}
-
 async function loadStats(){
   try{
     const res=await fetch('stats.json'); 
@@ -385,7 +390,6 @@ function renderStatsPage(){
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===statsPage?'active':''}" onclick="goStatsPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goStatsPage(n){statsPage=n;renderStatsPage();document.getElementById('page-stats').scrollIntoView({behavior:'smooth'})}
-
 function showProof(src){if(!src || src.includes('placeholder')) return alert('No proof image yet');document.getElementById('lbImg').src=src;document.getElementById('proofLightbox').style.display='flex';}
 loadAbout(); loadVault(); loadCheatsheets(); loadTools(); loadStats();
 const btt=document.getElementById('backToTop');window.addEventListener('scroll',()=>{if(window.scrollY>300){btt.classList.add('show')}else{btt.classList.remove('show')}});
