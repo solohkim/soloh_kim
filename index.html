@@ -50,31 +50,55 @@ nav a, [onclick]{cursor:pointer !important}
 .card-m small.text-muted{color:#d1d5db !important;opacity:1 !important}
 .form-hack:focus{outline:none;border-color:var(--green);box-shadow:0 0 12px rgba(0,255,65,.2)}
 </style></head><body>
-<!-- your full body unchanged, only JS fixed below -->
+
+<!-- FIXED RESPONSIVE NAV - DESKTOP FULL, MOBILE WITH HAMBURGER -->
 <nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:11">
-<div class="d-flex align-items-center gap-2 flex-wrap">
-<a onclick="showPage('home')" id="nav-home" class="top-menu active" style="color:#fff;font-weight:800;margin-right:20px">Home</a>
-<a onclick="showPage('about')" id="nav-about" class="top-menu" style="color:#ddd;margin-right:18px">About</a>
-<a onclick="showPage('posts')" id="nav-posts" class="top-menu" style="color:#ddd;margin-right:18px">Posts</a>
-<a onclick="showPage('stats')" id="nav-stats" class="top-menu" style="color:#ddd;margin-right:18px">Stats</a>
-<a onclick="showPage('cheatsheets')" id="nav-cheatsheets" class="top-menu" style="color:#ddd;margin-right:18px">Cheatsheets</a>
-<a onclick="showPage('tools')" id="nav-tools" class="top-menu" style="color:#ddd;margin-right:18px">Tools</a>
-<a onclick="showPage('contact')" id="nav-contact" class="top-menu" style="color:#ddd;margin-right:18px">Contact</a>
-<div class="dropdown d-inline">
-<a class="dropdown-toggle top-menu" href="#" data-bs-toggle="dropdown" style="color:#ddd">Explore</a>
-<ul class="dropdown-menu" style="background:#111;border:1px solid var(--border)">
-<li><a class="dropdown-item" onclick="showPage('posts')" style="color:#ddd;cursor:pointer !important">/vault</a></li>
-<li><a class="dropdown-item" onclick="showPage('cheatsheets')" style="color:#ddd;cursor:pointer !important">/cheatsheets</a></li>
-<li><a class="dropdown-item" onclick="showPage('tools')" style="color:#ddd;cursor:pointer !important">/tools</a></li>
-<li><a class="dropdown-item" onclick="showPage('contact')" style="color:#ddd;cursor:pointer !important">/contact</a></li>
-</ul>
-</div>
-</div>
-<div class="d-flex align-items-center gap-3">
-<a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:4px 12px;cursor:pointer !important"><i class="bi bi-whatsapp"></i> Chat</a>
-</div>
+  <div class="d-flex align-items-center">
+    <a onclick="showPage('home')" style="color:#fff;font-weight:800;text-decoration:none;margin-right:20px;cursor:pointer !important">0xSoloh</a>
+    <div class="d-none d-lg-flex align-items-center">
+      <a onclick="showPage('home')" id="nav-home" class="top-menu active">Home</a>
+      <a onclick="showPage('about')" id="nav-about" class="top-menu">About</a>
+      <a onclick="showPage('posts')" id="nav-posts" class="top-menu">Posts</a>
+      <a onclick="showPage('stats')" id="nav-stats" class="top-menu">Stats</a>
+      <a onclick="showPage('cheatsheets')" id="nav-cheatsheets" class="top-menu">Cheatsheets</a>
+      <a onclick="showPage('tools')" id="nav-tools" class="top-menu">Tools</a>
+      <a onclick="showPage('contact')" id="nav-contact" class="top-menu">Contact</a>
+      <div class="dropdown d-inline">
+        <a class="dropdown-toggle top-menu" href="#" data-bs-toggle="dropdown" style="color:#ddd">Explore</a>
+        <ul class="dropdown-menu" style="background:#111;border:1px solid var(--border)">
+          <li><a class="dropdown-item" onclick="showPage('posts')" style="color:#ddd;cursor:pointer !important">/vault</a></li>
+          <li><a class="dropdown-item" onclick="showPage('cheatsheets')" style="color:#ddd;cursor:pointer !important">/cheatsheets</a></li>
+          <li><a class="dropdown-item" onclick="showPage('tools')" style="color:#ddd;cursor:pointer !important">/tools</a></li>
+          <li><a class="dropdown-item" onclick="showPage('contact')" style="color:#ddd;cursor:pointer !important">/contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex align-items-center gap-3">
+    <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm d-none d-lg-inline-block" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:4px 12px"><i class="bi bi-whatsapp"></i> Chat</a>
+    <div class="d-flex d-lg-none align-items-center gap-3">
+      <a onclick="showPage('posts')" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
+      <span style="color:var(--green)"><i class="bi bi-brightness-high-fill fs-5"></i></span>
+      <button class="btn text-white p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"><i class="bi bi-list fs-2"></i></button>
+    </div>
+  </div>
 </nav>
-<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:#000;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:10">
+
+<div class="collapse d-lg-none" id="mobileMenu" style="background:#0f0f0f;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:10">
+  <div class="container py-3 d-flex flex-column gap-2">
+    <a onclick="showPage('home'); closeMobile()" class="top-menu py-2">Home</a>
+    <a onclick="showPage('about'); closeMobile()" class="top-menu py-2">About</a>
+    <a onclick="showPage('posts'); closeMobile()" class="top-menu py-2">Posts</a>
+    <a onclick="showPage('stats'); closeMobile()" class="top-menu py-2">Stats</a>
+    <a onclick="showPage('cheatsheets'); closeMobile()" class="top-menu py-2">Cheatsheets</a>
+    <a onclick="showPage('tools'); closeMobile()" class="top-menu py-2">Tools</a>
+    <a onclick="showPage('contact'); closeMobile()" class="top-menu py-2">Contact</a>
+    <hr style="border-color:#222">
+    <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:8px 16px"><i class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
+  </div>
+</div>
+
+<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:#000;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:9">
 <a href="https://wa.me/254700000000?text=Hey%200xSoloh%20%2C%20I%20saw%20your%20portfolio" target="_blank" style="text-decoration:none;color:inherit;cursor:pointer !important">
 <div><b style="color:var(--green)">0x</b><b>Soloh</b> <span class="badge-h" style="color:var(--green)">TOP 3% THM</span> <i class="bi bi-whatsapp ms-1" style="color:var(--green)"></i></div>
 </a>
@@ -84,6 +108,7 @@ nav a, [onclick]{cursor:pointer !important}
 <a onclick="showPage('stats')" style="color:var(--gold);text-decoration:none;cursor:pointer !important">/badges</a>
 </div>
 </nav>
+
 <div class="container py-4" style="max-width:1100px">
 <div id="page-home" class="page-section active">
 <div class="hero-terminal mb-4">
@@ -117,14 +142,14 @@ function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textConten
 <h6 class="fw-bold mb-3"><span style="color:var(--gold)">~/</span>manuals <small class="text-muted">— auto from cheatsheets.json</small></h6>
 <div id="manualsPreview" class="row g-3 mb-5"></div>
 </div>
-<div id="page-about" class="page-section"><h4 style="color:var(--green)">$ cat about.txt</h4><div class="card-m mt-3"><p>I'm <b>0xSoloh</b> — Penetration Tester, Nairobi, Kenya. Murang'a PSB eCitizen System developer by day, CTF player by night.</p><p class="text-muted small">Top 3% THM | Hacker Rank HTB | I break to secure.</p><button onclick="showPage('contact')" class="btn btn-sm mt-2" style="background:var(--green);color:#000;font-weight:800;cursor:pointer !important">Contact Me →</button></div></div>
+<div id="page-about" class="page-section"><h4 style="color:var(--green)">$ cat about.txt</h4><div class="card-m mt-3"><p>I'm <b>0xSoloh</b> — Penetration Tester, Nairobi, Kenya. Murang'a PSB eCitizen System developer by day, CTF player by night.</p><p class="text-muted small">Top 3% THM | Hacker Rank HTB | I break to secure.</p><button onclick="showPage('contact')" class="btn btn-sm mt-2" style="background:var(--green);color:#000;font-weight:800">Contact Me →</button></div></div>
 <div id="page-posts" class="page-section"><h4 style="color:var(--green)">~/posts — All Writeups</h4><div id="vaultGridPosts" class="row g-3 mt-3"></div></div>
 <div id="page-stats" class="page-section"><h4 style="color:var(--gold)">~/stats — Badges</h4><div class="row g-3 mt-3"><div class="col-md-6"><div class="card-m"><small class="text-muted">TRYHACKME</small><div class="mt-3 text-center"><i class="bi bi-trophy" style="font-size:3rem;color:var(--green)"></i><br><b>Top 3%</b></div></div></div><div class="col-md-6"><div class="card-m"><small class="text-muted">HACKTHEBOX</small><div class="mt-3 text-center"><i class="bi bi-box" style="font-size:3rem;color:var(--green)"></i><br><b>Hacker Rank - 24 Owns</b></div></div></div></div></div>
 <div id="page-cheatsheets" class="page-section"><h4 style="color:var(--gold)">~/cheatsheets — Private Playbooks</h4><p class="text-muted small"><span id="cheatCount">loading...</span> — auto from cheatsheets.json</p><div id="cheatsGrid" class="row g-3 mt-3"></div></div>
 <div id="page-tools" class="page-section"><h4 style="color:var(--green)">~/tools — Custom Tools</h4><p class="text-muted small"><span id="toolsCount">loading...</span> — auto from tools.json</p><div id="toolsGrid" class="row g-3 mt-3"></div></div>
-<div id="page-contact" class="page-section"><h4 style="color:var(--green)">~/contact — Let's Talk</h4><div class="row g-4 mt-2"><div class="col-md-6"><div class="card-m"><h6>Send me a message</h6><small class="text-muted">For pentest, CTF collab, or PSB system audit.</small><form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" id="contactForm"><input type="hidden" name="form-name" value="contact" /><p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p><div class="mb-3"><label class="small text-muted">Email *</label><input type="email" name="email" class="form-control" placeholder="solomonkilonzo49@gmail.com" required style="background:#111;border:1px solid #1f1f1f;color:#ddd"></div><div class="mb-3"><label class="small text-muted">Phone Number</label><input type="tel" name="phone" class="form-control" placeholder="+254 797 003 045" style="background:#111;border:1px solid #1f1f1f;color:#ddd"></div><div class="mb-3"><label class="small text-muted">Message *</label><textarea name="message" class="form-control" rows="4" placeholder="Hey 0xSoloh, I need..." required style="background:#111;border:1px solid #1f1f1f;color:#ddd"></textarea></div><button type="submit" class="btn" style="background:#00FF41;color:#000;font-weight:800;width:100%;border-radius:8px;padding:12px">➤ Submit</button><div id="formSuccess" style="display:none;color:#00FF41;margin-top:10px;text-align:center;font-size:.9rem">✓ Message sent! I'll reply soon.</div></form></div></div><div class="col-md-6"><div class="card-m"><h6><i class="bi bi-whatsapp" style="color:#25D366"></i> Direct Contact</h6><div class="mt-3 d-grid gap-2"><a href="https://wa.me/254797003045" target="_blank" class="btn" style="background:#25D366;color:#000;font-weight:700;cursor:pointer !important"><i class="bi bi-whatsapp"></i> WhatsApp Chat</a><a href="https://mail.google.com/mail/?view=cm&fs=1&to=solomonkilonzo49@gmail.com" target="_blank" class="btn" style="background:#111;border:1px solid var(--border);color:#fff;cursor:pointer !important"><i class="bi bi-envelope"></i> solomonkilonzo49@gmail.com</a></div><hr style="border-color:#222"><small class="text-muted">Response time: <b style="color:var(--green)">~2 hours</b> (Nairobi time)</small></div></div></div></div>
-<h6 id="writeups" class="fw-bold mb-3 mt-5"><span style="color:var(--green)">~/</span>writeups</h6><div id="writeupList" class="row g-3 mb-4"></div><div id="reader" class="card-m mb-5" style="display:none"><button onclick="reader.style.display='none'" class="btn btn-sm btn-outline-light mb-3" style="cursor:pointer !important"><i class="bi bi-x"></i> Close</button><div id="mdContent" style="color:#ccc"></div></div>
-<footer class="text-center py-4 mt-4 border-top" style="border-color:var(--border)!important"><div class="d-flex justify-content-center gap-3 mb-3"><a href="https://twitter.com/soloh_kim" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#fff;text-decoration:none;cursor:pointer !important"><i class="bi bi-twitter-x"></i></a><a href="https://linkedin.com/in/soloh-kim" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#0077b5;text-decoration:none;cursor:pointer !important"><i class="bi bi-linkedin"></i></a><a href="https://mail.google.com/mail/?view=cm&fs=1&to=solomonkilonzo49@gmail.com" target="_blank" style="width:40px;height:40px;;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:var(--green);text-decoration:none;cursor:pointer !important"><i class="bi bi-envelope-fill"></i></a><a href="https://instagram.com/soloh_kim" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#E1306C;text-decoration:none;cursor:pointer !important"><i class="bi bi-instagram"></i></a><a href="https://wa.me/254797003045" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#25D366;text-decoration:none;cursor:pointer !important"><i class="bi bi-whatsapp"></i></a></div><small style="color:#fff;">© 2026 0xSoloh - Break to Secure | Built with <i class="bi bi-heart-fill" style="color:#ff5f56"></i> and <span style="color:var(--green)">$ sudo</span></small><br><small style="color:#fff; font-size:.65rem">0xSoloh@kali:~$ ls --alh to console </small></footer>
+<div id="page-contact" class="page-section"><h4 style="color:var(--green)">~/contact — Let's Talk</h4><div class="row g-4 mt-2"><div class="col-md-6"><div class="card-m"><h6>Send me a message</h6><small class="text-muted">For pentest, CTF collab, or PSB system audit.</small><form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" id="contactForm"><input type="hidden" name="form-name" value="contact" /><p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p><div class="mb-3"><label class="small text-muted">Email *</label><input type="email" name="email" class="form-control" placeholder="solomonkilonzo49@gmail.com" required style="background:#111;border:1px solid #1f1f1f;color:#ddd"></div><div class="mb-3"><label class="small text-muted">Phone Number</label><input type="tel" name="phone" class="form-control" placeholder="+254 797 003 045" style="background:#111;border:1px solid #1f1f1f;color:#ddd"></div><div class="mb-3"><label class="small text-muted">Message *</label><textarea name="message" class="form-control" rows="4" placeholder="Hey 0xSoloh, I need..." required style="background:#111;border:1px solid #1f1f1f;color:#ddd"></textarea></div><button type="submit" class="btn" style="background:#00FF41;color:#000;font-weight:800;width:100%;border-radius:8px;padding:12px">➤ Submit</button><div id="formSuccess" style="display:none;color:#00FF41;margin-top:10px;text-align:center;font-size:.9rem">✓ Message sent! I'll reply soon.</div></form></div></div><div class="col-md-6"><div class="card-m"><h6><i class="bi bi-whatsapp" style="color:#25D366"></i> Direct Contact</h6><div class="mt-3 d-grid gap-2"><a href="https://wa.me/254797003045" target="_blank" class="btn" style="background:#25D366;color:#000;font-weight:700"><i class="bi bi-whatsapp"></i> WhatsApp Chat</a><a href="https://mail.google.com/mail/?view=cm&fs=1&to=solomonkilonzo49@gmail.com" target="_blank" class="btn" style="background:#111;border:1px solid var(--border);color:#fff"><i class="bi bi-envelope"></i> solomonkilonzo49@gmail.com</a></div><hr style="border-color:#222"><small class="text-muted">Response time: <b style="color:var(--green)">~2 hours</b> (Nairobi time)</small></div></div></div></div>
+<h6 id="writeups" class="fw-bold mb-3 mt-5"><span style="color:var(--green)">~/</span>writeups</h6><div id="writeupList" class="row g-3 mb-4"></div><div id="reader" class="card-m mb-5" style="display:none"><button onclick="reader.style.display='none'" class="btn btn-sm btn-outline-light mb-3"><i class="bi bi-x"></i> Close</button><div id="mdContent" style="color:#ccc"></div></div>
+<footer class="text-center py-4 mt-4 border-top" style="border-color:var(--border)!important"><div class="d-flex justify-content-center gap-3 mb-3"><a href="https://twitter.com/soloh_kim" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#fff;text-decoration:none"><i class="bi bi-twitter-x"></i></a><a href="https://linkedin.com/in/soloh-kim" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#0077b5;text-decoration:none"><i class="bi bi-linkedin"></i></a><a href="https://mail.google.com/mail/?view=cm&fs=1&to=solomonkilonzo49@gmail.com" target="_blank" style="width:40px;height:40px;;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:var(--green);text-decoration:none"><i class="bi bi-envelope-fill"></i></a><a href="https://instagram.com/soloh_kim" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#E1306C;text-decoration:none"><i class="bi bi-instagram"></i></a><a href="https://wa.me/254797003045" target="_blank" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#111;border:1px solid var(--border);border-radius:50%;color:#25D366;text-decoration:none"><i class="bi bi-whatsapp"></i></a></div><small style="color:#fff;">© 2026 0xSoloh - Break to Secure | Built with <i class="bi bi-heart-fill" style="color:#ff5f56"></i> and <span style="color:var(--green)">$ sudo</span></small><br><small style="color:#fff; font-size:.65rem">0xSoloh@kali:~$ ls --alh to console </small></footer>
 </div>
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
 <script>
@@ -190,6 +215,11 @@ function showPage(name){
   if(name==='cheatsheets') loadCheatsheets();
   if(name==='tools') loadTools();
   document.getElementById('reader').style.display='none';
+}
+function closeMobile(){
+  var el=document.getElementById('mobileMenu');
+  var bsCollapse=bootstrap.Collapse.getInstance(el);
+  if(bsCollapse){bsCollapse.hide();} else { new bootstrap.Collapse(el,{toggle:false}).hide(); }
 }
 </script>
 <script>
