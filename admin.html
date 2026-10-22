@@ -40,7 +40,7 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </script>
 
 <div class="container py-4" style="max-width:800px">
-<h4 style="color:var(--green)"><i class="bi bi-shield-lock"></i> 0xSoloh Admin Panel — EDIT MODE ADDED</h4>
+<h4 style="color:var(--green)"><i class="bi bi-shield-lock"></i> 0xSoloh Admin Panel — PREMIUM ADDED</h4>
 <div class="card-m py-2" style="background:#0a1a0a;border-color:#1a3a1a">
   <small id="loadStatus" style="color:#888">⏳ Waiting for unlock...</small>
   <button onclick="loadExistingFromServer()" class="btn btn-sm ms-2" style="background:#111;border:1px solid #333;color:#aaa;font-size:.7rem">↻ Reload</button>
@@ -64,7 +64,7 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <input id="w-level" class="form-hack mb-2" placeholder="Level - Easy/Medium/Hard">
 <input id="w-tags" class="form-hack mb-2" placeholder="Tags comma - e.g. privesc,suid">
 
-<!-- NEW: ACTIVE LOCK - DON'T CHANGE ANYTHING ABOVE -->
+<!-- ACTIVE LOCK - KEPT AS IS -->
 <div style="background:#0a0a0a;border:1px dashed #00FF41;border-radius:8px;padding:10px;margin-bottom:10px">
   <label style="cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:8px">
     <input type="checkbox" id="w-active" onchange="toggleActive()" style="accent-color:#00FF41;width:16px;height:16px">
@@ -74,6 +74,18 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
     <input id="w-unlock-key" class="form-hack mb-2" placeholder="Decryption Key - e.g. root flag hash">
     <input id="w-season" class="form-hack mb-2" placeholder="Season/Series - e.g. HackTheBox Season 10">
     <small style="color:#666;font-size:.65rem">If active, user must enter this key to view. This makes it HTB-compliant.</small>
+  </div>
+</div>
+
+<!-- NEW: PREMIUM - ADDED WITHOUT REMOVING ANYTHING -->
+<div style="background:#0a0a0a;border:1px dashed #FFD54F;border-radius:8px;padding:10px;margin-bottom:10px">
+  <label style="cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:8px">
+    <input type="checkbox" id="w-premium" onchange="togglePremium()" style="accent-color:#FFD54F;width:16px;height:16px">
+    <span style="color:#FFD54F;font-size:.8rem;font-weight:800">💎 Premium (PayPal: solomonkilonzo49@gmail.com)</span>
+  </label>
+  <div id="w-premium-fields" style="display:none">
+    <input id="w-price" class="form-hack mb-2" placeholder="Price USD - e.g. 50" type="number" value="50">
+    <small style="color:#888;font-size:.65rem">If premium, user pays via your personal PayPal then enters Transaction ID. Access saved forever.</small>
   </div>
 </div>
 
@@ -180,6 +192,10 @@ function toggleActive(){
   const isActive = document.getElementById('w-active').checked;
   document.getElementById('w-active-fields').style.display = isActive ? 'block' : 'none';
 }
+function togglePremium(){
+  const isPremium = document.getElementById('w-premium').checked;
+  document.getElementById('w-premium-fields').style.display = isPremium ? 'block' : 'none';
+}
 
 async function loadExistingFromServer(){
   const status=document.getElementById('loadStatus');
@@ -254,7 +270,22 @@ function addItem(type){
   if(type==='writeups'){
     const title=document.getElementById('w-title').value; const file=document.getElementById('w-file').value;
     if(!title||!file) return alert('Title + File needed');
-    item={title,file,platform:document.getElementById('w-platform').value,level:document.getElementById('w-level').value||'Medium',date:new Date().toISOString().slice(0,10),tags:document.getElementById('w-tags').value.split(',').map(s=>s.trim()).filter(Boolean),image:document.getElementById('w-image').value||'',desc:'',active:document.getElementById('w-active').checked,unlockKey:document.getElementById('w-unlock-key').value||'',season:document.getElementById('w-season').value||'',restricted:document.getElementById('w-active').checked};
+    item={
+      title,
+      file,
+      platform:document.getElementById('w-platform').value,
+      level:document.getElementById('w-level').value||'Medium',
+      date:new Date().toISOString().slice(0,10),
+      tags:document.getElementById('w-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
+      image:document.getElementById('w-image').value||'',
+      desc:'',
+      active:document.getElementById('w-active').checked,
+      unlockKey:document.getElementById('w-unlock-key').value||'',
+      season:document.getElementById('w-season').value||'',
+      restricted:document.getElementById('w-active').checked,
+      premium:document.getElementById('w-premium').checked,
+      price: parseInt(document.getElementById('w-price').value)||50
+    };
     if(editIndex.writeups!==null){data.writeups[editIndex.writeups]=item; editIndex.writeups=null;}else{data.writeups.unshift(item);}
     localStorage.setItem('w',JSON.stringify(data.writeups));
     cancelEdit('writeups');
@@ -298,7 +329,10 @@ function editItem(type,i){
     document.getElementById('w-active').checked=item.active||item.restricted||false;
     document.getElementById('w-unlock-key').value=item.unlockKey||'';
     document.getElementById('w-season').value=item.season||'';
+    document.getElementById('w-premium').checked=item.premium||false;
+    document.getElementById('w-price').value=item.price||50;
     toggleActive();
+    togglePremium();
     document.getElementById('w-form-title').textContent='✏️ Editing Writeup';
     document.getElementById('w-btn').textContent='💾 Update Writeup';
     document.getElementById('w-btn').style.background='#FFD54F';
@@ -352,6 +386,7 @@ function cancelEdit(type){
   if(type==='writeups'){
     document.getElementById('w-title').value=''; document.getElementById('w-file').value=''; document.getElementById('w-tags').value=''; document.getElementById('w-image').value=''; document.getElementById('w-level').value='';
     document.getElementById('w-active').checked=false; document.getElementById('w-unlock-key').value=''; document.getElementById('w-season').value=''; toggleActive();
+    document.getElementById('w-premium').checked=false; document.getElementById('w-price').value='50'; togglePremium();
     document.getElementById('w-form-title').textContent='Add New Writeup'; document.getElementById('w-btn').textContent='+ Add Writeup'; document.getElementById('w-btn').style.background='var(--green)'; document.getElementById('w-editing').style.display='none'; document.getElementById('w-preview').style.display='none';
   }
   if(type==='cheatsheets'){
@@ -368,7 +403,7 @@ function cancelEdit(type){
   }
 }
 function render(){
-  document.getElementById('list-writeups').innerHTML=data.writeups.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>${x.active||x.restricted?'🔒':''} ${x.title} - ${x.file} ${x.season?`[${x.season}]`:''}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('writeups',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('writeups',${i})">x</span></div></div>`).join('');
+  document.getElementById('list-writeups').innerHTML=data.writeups.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>${x.premium?'💎':''}${x.active||x.restricted?'🔒':''} ${x.title} - ${x.file} ${x.premium?`[$${x.price||50}]`:''} ${x.season?`[${x.season}]`:''}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('writeups',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('writeups',${i})">x</span></div></div>`).join('');
   document.getElementById('list-cheatsheets').innerHTML=data.cheatsheets.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>${x.icon} ${x.title}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('cheatsheets',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('cheatsheets',${i})">x</span></div></div>`).join('');
   document.getElementById('list-tools').innerHTML=data.tools.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>🛠️ ${x.title}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('tools',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('tools',${i})">x</span></div></div>`).join('');
   document.getElementById('list-stats').innerHTML=data.stats.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><div><b>${x.platform}</b> - ${x.rank}<br><small style="color:#666">${x.proof}</small></div><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('stats',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('stats',${i})">x</span></div></div>`).join('');
