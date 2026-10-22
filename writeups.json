@@ -38,15 +38,20 @@
     "image": "writeups/images/cupidbot.png"
   },
   {
-    "file": "writeups/layover-htb.md",
     "title": "Layover Htb",
+    "file": "writeups/layover-htb.md",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-21",
+    "date": "2026-10-22",
     "tags": [
       "layover"
     ],
-    "image": ""
+    "image": "images/evidence/layover.png",
+    "desc": "",
+    "active": true,
+    "unlockKey": "root123",
+    "season": "",
+    "restricted": true
   },
   {
     "file": "writeups/mr-robot-suid.md",
