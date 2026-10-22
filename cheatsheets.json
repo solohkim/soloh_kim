@@ -1,5 +1,11 @@
 [
   {
+    "title": "Basic linux commands",
+    "icon": "Linux terminal commands",
+    "desc": "Top 100 Linux Commands Every Sysadmin Should Know",
+    "file": "linuxcommands.md"
+  },
+  {
     "title": "Gobuster Usage",
     "icon": "👺",
     "desc": "Here you get all the usage of gobuster",
