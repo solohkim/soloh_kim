@@ -1,5 +1,21 @@
 [
   {
+    "title": "wgel machine walkthrough",
+    "file": "wgel.md",
+    "platform": "TryHackMe",
+    "level": "medium",
+    "date": "2026-10-22",
+    "tags": [
+      "Linux"
+    ],
+    "image": "images/evidence/wgel.png",
+    "desc": "",
+    "active": true,
+    "unlockKey": "root1",
+    "season": "season10",
+    "restricted": true
+  },
+  {
     "file": "writeups/creative_thm.md",
     "title": "Creative Thm",
     "platform": "TryHackMe",
