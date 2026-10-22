@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "title": "Gobuster Usage",
+    "icon": "👺",
+    "desc": "Here you get all the usage of gobuster",
+    "file": "gobuster.md"
+  }
+]
