@@ -170,9 +170,9 @@ nav a, [onclick]{cursor:pointer !important}
 <div style="display:flex;gap:8px;margin-top:12px"><button onclick="closeLinuxTipAndContinue()" style="background:#00FF41;color:#000;font-weight:800;padding:11px;border-radius:8px;width:100%;border:none">Continue Reading -></button><button onclick="nextLinuxTip()" style="background:#111;border:1px solid #333;color:#888;border-radius:8px;padding:11px">Shuffle</button></div>
 </div></div></div>
 
-<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:11">
+<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000">
   <div class="d-flex align-items-center">
-    <a onclick="showPage('home')" style="color:#fff;font-weight:800;text-decoration:none;margin-right:20px;cursor:pointer !important">0xSoloh</a>
+    <a onclick="showPage('home')" style="color:#fff;font-weight:800;text-decoration:none;margin-right:20px;cursor:pointer">0xSoloh</a>
     <div class="d-none d-lg-flex align-items-center">
       <a onclick="showPage('home')" id="nav-home" class="top-menu active">Home</a>
       <a onclick="showPage('about')" id="nav-about" class="top-menu">About</a>
@@ -185,24 +185,15 @@ nav a, [onclick]{cursor:pointer !important}
     </div>
   </div>
   <div class="d-flex align-items-center gap-2">
-    <!-- DESKTOP -->
     <div class="d-none d-lg-flex align-items-center gap-3">
-      <a onclick="openCoffee()" style="color:#FF8C42;cursor:pointer !important;display:flex;align-items:center;gap:6px;text-decoration:none" title="Buy me a coffee"><span style="font-size:.75rem;font-weight:800;white-space:nowrap">Buy me a coffee 😊</span><i class="bi bi-cup-hot-fill fs-5"></i></a>
-      <a onclick="openSearch()" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
-      <a onclick="toggleTheme()" style="color:var(--green);cursor:pointer !important"><i class="bi bi-brightness-high-fill fs-5" id="themeIconDesktop"></i></a>
+      <a onclick="openCoffee()" style="color:#FF8C42;cursor:pointer;display:flex;align-items:center;gap:6px;text-decoration:none"><span style="font-size:.75rem;font-weight:800;white-space:nowrap">Buy me a coffee 😊</span><i class="bi bi-cup-hot-fill"></i></a>
+      <a onclick="openSearch()" style="color:#fff;cursor:pointer"><i class="bi bi-search"></i></a>
+      <a onclick="toggleTheme()" style="color:var(--green);cursor:pointer"><i class="bi bi-brightness-high-fill" id="themeIconDesktop"></i></a>
       <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:4px 12px"><i class="bi bi-whatsapp"></i> Chat</a>
     </div>
-    <!-- MOBILE -->
-    <div class="d-flex d-lg-none align-items-center gap-3">
-      <a onclick="openCoffee()" style="color:#FF8C42;cursor:pointer !important"><i class="bi bi-cup-hot-fill fs-5"></i></a>
-      <a onclick="openSearch()" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
-      <button class="btn text-white p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"><i class="bi bi-list fs-2"></i></button>
-    </div>
-  </div>
-    <div class="d-flex d-lg-none align-items-center gap-3">
-      <a onclick="openCoffee()" style="color:#FF8C42;cursor:pointer !important;display:flex;align-items:center;gap:6px;text-decoration:none" title="Buy me a coffee"><span style="font-size:.75rem;font-weight:800;white-space:nowrap">Buy me a coffee 😊</span><i class="bi bi-cup-hot-fill fs-5"></i></a>
-      <a onclick="openSearch()" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
-      <a onclick="toggleTheme()" style="color:var(--green);cursor:pointer !important"><i class="bi bi-brightness-high-fill fs-5" id="themeIcon"></i></a>
+    <div class="d-flex d-lg-none align-items-center gap-2">
+      <a onclick="openCoffee()" style="color:#FF8C42;cursor:pointer"><i class="bi bi-cup-hot-fill fs-5"></i></a>
+      <a onclick="openSearch()" style="color:#fff;cursor:pointer"><i class="bi bi-search fs-5"></i></a>
       <button class="btn text-white p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"><i class="bi bi-list fs-2"></i></button>
     </div>
   </div>
