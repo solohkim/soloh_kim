@@ -98,4 +98,11 @@
     ],
     "image": ""
   }
+{
+  "title": "My Private Research",
+  "file": "research.md",
+  "premium": true,
+  "price": 50
+}
+
 ]
