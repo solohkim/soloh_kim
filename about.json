@@ -1,16 +1,28 @@
 {
   "name": "0xSoloh",
   "fullName": "Soloh Kim",
-  "role": "PenTester | CTF Player | Murang'a PSB eCitizen Dev",
+  "role": "PenTester | CTF Player | vulnerability assessment",
   "location": "Nairobi, Kenya",
-  "bio": "I'm <b>0xSoloh</b> — Penetration Tester, Nairobi, Kenya. Murang'a PSB eCitizen System developer by day, CTF player by night.",
+  "bio": "I'm <b>0xSoloh</b> — Penetration Tester, a CTF Player, A bug bounter in Nairobi, Kenya. Also development Murang'a PSB eCitizen System developer in my project. I do web app security, test for security flaws, before hackers do 🧑🏾‍💻. A red team i am.",
   "mission": "Break to Secure. Web Exploitation, PrivEsc, OSINT, AD attacks. Building secure systems for Murang'a County.",
-  "badges": "Top 3% THM | Hacker Rank HTB | I break to secure.",
+  "badges": "Top in THM | Hacker Rank HTB | I break to secure.",
+  "contactNote": "Available for pentest, CTF collab, or web app assessment.",
   "skills": [
-    {"name": "Web Exploitation", "level": 92},
-    {"name": "Linux PrivEsc", "level": 88},
-    {"name": "Active Directory", "level": 80},
-    {"name": "OSINT", "level": 85}
-  ],
-  "contactNote": "Available for pentest, CTF collab, or PSB system audit."
+    {
+      "name": "Web Exploitation",
+      "level": 92
+    },
+    {
+      "name": "Linux PrivEsc",
+      "level": 88
+    },
+    {
+      "name": "Active Directory",
+      "level": 80
+    },
+    {
+      "name": "OSINT",
+      "level": 85
+    }
+  ]
 }
