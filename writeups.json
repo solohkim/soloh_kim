@@ -8,7 +8,14 @@
     "tags": [
       "creative_thm.md"
     ],
-    "image": "writeups/images/creative_thm.png"
+    "image": "writeups/images/creative_thm.png",
+    "premium": true,
+    "price": 50,
+    "active": true,
+    "restricted": true,
+    "unlockKey": "root1",
+    "season": "season10",
+    "desc": ""
   },
   {
     "file": "writeups/layover-htb.md",
