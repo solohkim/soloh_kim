@@ -15,7 +15,7 @@
     "title": "Cupidbot",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-22",
+    "date": "2026-10-21",
     "tags": [
       "cupidbot.md"
     ],
@@ -30,7 +30,7 @@
     "tags": [
       "layover"
     ],
-    "image": ""
+    "image": "images/evidence/layover.png"
   },
   {
     "file": "writeups/mr-robot-suid.md",
@@ -48,7 +48,7 @@
     "title": "Reset",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-22",
+    "date": "2026-10-21",
     "tags": [
       "reset.md"
     ],
@@ -59,7 +59,7 @@
     "title": "Superspam",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-22",
+    "date": "2026-10-21",
     "tags": [
       "superspam.md"
     ],
@@ -70,7 +70,7 @@
     "title": "Timelapse Ad",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-22",
+    "date": "2026-10-21",
     "tags": [
       "timelapse"
     ],
@@ -81,18 +81,18 @@
     "title": "Wingdata Htb",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-22",
+    "date": "2026-10-21",
     "tags": [
       "wingdata"
     ],
-    "image": ""
+    "image": "writeups/images/wingdata.png"
   },
   {
     "file": "writeups/xss-to-rce.md",
     "title": "Xss To Rce",
     "platform": "HackTheBox",
     "level": "Medium",
-    "date": "2026-10-22",
+    "date": "2026-10-21",
     "tags": [
       "xss"
     ],
