@@ -57,8 +57,14 @@ nav a, [onclick]{cursor:pointer !important}
 .restricted-body{padding:24px;text-align:center}
 .restricted-input{background:#000;border:1px solid #00FF41;border-radius:8px;color:#00FF41;padding:12px;width:100%;margin:16px 0;font-family:monospace;letter-spacing:2px;text-align:center}
 .restricted-input:focus{outline:none;box-shadow:0 0 15px rgba(0,255,65,.3)}
-/* MATRIX CANVAS */
 #matrixCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:0.12;pointer-events:none}
+/* FACT TICKER - NEW */
+.fact-ticker-bar{background:#0e111a;border-bottom:1px solid #1f1f1f;overflow:hidden;white-space:nowrap;padding:6px 0;position:sticky;top:42px;z-index:10}
+.ticker-track{display:inline-block;white-space:nowrap;animation:tickerScroll 35s linear infinite;color:#a0a8b0;font-size:.72rem}
+.ticker-track span{margin-right:80px}
+.ticker-track span b{color:#00FF41}
+@keyframes tickerScroll{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+.fact-ticker-bar:hover .ticker-track{animation-play-state:paused}
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
@@ -111,6 +117,16 @@ nav a, [onclick]{cursor:pointer !important}
     </div>
   </div>
 </nav>
+<!-- FACT TICKER - JUST BEFORE SEARCH BAR / SECOND NAV -->
+<div class="fact-ticker-bar">
+  <div class="ticker-track">
+    <span>💡 <b>FACT:</b> 90% of security breaches start with phishing</span>
+    <span>🔐 <b>FACT:</b> 80% of breaches involve compromised credentials</span>
+    <span>⚠️ <b>FACT:</b> A cyber attack happens every 39 seconds</span>
+    <span>🛡️ <b>FACT:</b> Weak passwords cause 61% of data breaches</span>
+    <span>💡 <b>FACT:</b> 90% of security breaches start with phishing</span>
+  </div>
+</div>
 <div class="collapse d-lg-none" id="mobileMenu" style="background:#0f0f0f;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:10">
   <div class="container py-3 d-flex flex-column gap-2">
     <a onclick="showPage('home'); closeMobile()" class="top-menu py-2">Home</a>
@@ -124,7 +140,7 @@ nav a, [onclick]{cursor:pointer !important}
     <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:8px 16px"><i class="bi bi-whatsapp"></i> Chat on WhatsApp</a>
   </div>
 </div>
-<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:#000;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:9">
+<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:#000;border-bottom:1px solid var(--border);position:sticky;top:78px;z-index:9">
 <a href="https://wa.me/254797003045?text=Hey%200xSoloh%20%2C%20I%20saw%20your%20portfolio" target="_blank" style="text-decoration:none;color:inherit;cursor:pointer !important">
 <div><b style="color:var(--green)">0x</b><b>Soloh</b> <span class="badge-h" style="color:var(--green)">TOP 3% THM</span> <i class="bi bi-whatsapp ms-1" style="color:var(--green)"></i></div>
 </a>
@@ -197,7 +213,6 @@ function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textConten
 </div>
 <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
 <script>
-// MATRIX 0/1 RAIN - ADDED
 (function(){
   const canvas=document.getElementById('matrixCanvas');
   const ctx=canvas.getContext('2d');
@@ -205,8 +220,7 @@ function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textConten
   resize(); window.addEventListener('resize',resize);
   const chars="01";
   const fontSize=14;
-  let columns=Math.floor(canvas.width/fontSize);
-  let drops=Array(columns).fill(0);
+  let drops=Array(Math.floor(canvas.width/fontSize)).fill(0);
   function draw(){
     ctx.fillStyle="rgba(8,8,8,0.08)";
     ctx.fillRect(0,0,canvas.width,canvas.height);
