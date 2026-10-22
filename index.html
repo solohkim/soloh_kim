@@ -4,7 +4,6 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
 <style>
 :root{--green:#00FF41;--gold:#FFD54F;--bg:#080808;--card:#111;--border:#1f1f1f}
 body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;transition:.3s}
@@ -52,13 +51,14 @@ nav a, [onclick]{cursor:pointer !important}
 .form-hack:focus{outline:none;border-color:var(--green);box-shadow:0 0 12px rgba(0,255,65,.2)}
 #proofLightbox{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;display:none;align-items:center;justify-content:center;flex-direction:column}
 #proofLightbox img{max-width:90vw;max-height:85vh;border:2px solid var(--green);border-radius:12px;box-shadow:0 0 40px rgba(0,255,65,.3)}
-#restrictedModal,#premiumModal{position:fixed;inset:0;background:rgba(5,10,5,0.96);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+#restrictedModal{position:fixed;inset:0;background:rgba(5,10,5,0.96);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
 .restricted-box{background:#0a1210;border:1px solid #00FF41;border-radius:14px;max-width:520px;width:100%;padding:0;overflow:hidden;box-shadow:0 0 50px rgba(0,255,65,.25)}
 .restricted-head{background:#0f1f0f;padding:14px 18px;border-bottom:1px solid #1a3a1a;display:flex;justify-content:space-between;align-items:center}
 .restricted-body{padding:24px;text-align:center}
 .restricted-input{background:#000;border:1px solid #00FF41;border-radius:8px;color:#00FF41;padding:12px;width:100%;margin:16px 0;font-family:monospace;letter-spacing:2px;text-align:center}
 .restricted-input:focus{outline:none;box-shadow:0 0 15px rgba(0,255,65,.3)}
 #matrixCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:0.12;pointer-events:none}
+/* FACT TICKER - NEW */
 .fact-ticker-bar{background:#0e111a;border-bottom:1px solid #1f1f1f;overflow:hidden;white-space:nowrap;padding:6px 0;position:sticky;top:42px;z-index:10}
 .ticker-track{display:inline-block;white-space:nowrap;animation:tickerScroll 35s linear infinite;color:#a0a8b0;font-size:.72rem}
 .ticker-track span{margin-right:80px}
@@ -68,29 +68,6 @@ nav a, [onclick]{cursor:pointer !important}
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
-
-<!-- PREMIUM MODAL - NEW -->
-<div id="premiumModal">
-  <div class="restricted-box" style="border-color:#FFD54F">
-    <div class="restricted-head" style="background:#1a150a;border-color:#3a3010">
-      <small style="color:#FFD54F;font-weight:800;letter-spacing:1px">> PREMIUM_RESEARCH_DETECTED...</small>
-      <span onclick="closePremiumModal()" style="cursor:pointer;color:#666"><i class="bi bi-x-lg"></i></span>
-    </div>
-    <div class="restricted-body">
-      <div style="width:70px;height:70px;background:rgba(255,213,79,.1);border:1px solid #FFD54F;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px"><i class="bi bi-gem" style="font-size:2rem;color:#FFD54F"></i></div>
-      <h5 style="color:#FFD54F;font-weight:800;letter-spacing:2px">PREMIUM CONTENT</h5>
-      <div id="premiumTitle" style="color:#fff;font-weight:800;font-size:1.1rem;margin:8px 0">ADVANCED RESEARCH</div>
-      <small style="color:#888;font-size:.7rem;display:block;margin-bottom:12px">This writeup is my private research. Lab + tools cost me time & money.</small>
-      <div style="background:#000;border:1px solid #222;border-radius:8px;padding:10px;text-align:left;margin:12px 0">
-        <small style="color:#666;font-size:.65rem">> Price: $50 USD one-time<br>> Instant unlock after PayPal payment<br>> Access saved on this device forever</small>
-      </div>
-      <div id="paypal-button-container" style="margin:16px 0"></div>
-      <div id="premiumError" style="color:#ff5f56;font-size:.7rem;display:none;margin-bottom:8px">Payment failed. Try again.</div>
-      <small style="color:#444;font-size:.6rem;display:block;margin-top:12px">Powered by PayPal • Secure checkout • Contact on WhatsApp if issue</small>
-    </div>
-  </div>
-</div>
-
 <div id="restrictedModal">
   <div class="restricted-box">
     <div class="restricted-head">
@@ -140,7 +117,16 @@ nav a, [onclick]{cursor:pointer !important}
     </div>
   </div>
 </nav>
-<div class="fact-ticker-bar"><div class="ticker-track"><span>💡 <b>FACT:</b> 90% of security breaches start with phishing</span><span>🔐 <b>FACT:</b> 80% of breaches involve compromised credentials</span><span>⚠️ <b>FACT:</b> A cyber attack happens every 39 seconds</span><span>🛡️ <b>FACT:</b> Weak passwords cause 61% of data breaches</span></div></div>
+<!-- FACT TICKER - JUST BEFORE SEARCH BAR / SECOND NAV -->
+<div class="fact-ticker-bar">
+  <div class="ticker-track">
+    <span>💡 <b>FACT:</b> 90% of security breaches start with phishing</span>
+    <span>🔐 <b>FACT:</b> 80% of breaches involve compromised credentials</span>
+    <span>⚠️ <b>FACT:</b> A cyber attack happens every 39 seconds</span>
+    <span>🛡️ <b>FACT:</b> Weak passwords cause 61% of data breaches</span>
+    <span>💡 <b>FACT:</b> 90% of security breaches start with phishing</span>
+  </div>
+</div>
 <div class="collapse d-lg-none" id="mobileMenu" style="background:#0f0f0f;border-bottom:1px solid var(--border);position:sticky;top:42px;z-index:10">
   <div class="container py-3 d-flex flex-column gap-2">
     <a onclick="showPage('home'); closeMobile()" class="top-menu py-2">Home</a>
@@ -174,16 +160,51 @@ nav a, [onclick]{cursor:pointer !important}
 <span style="color:var(--green)">$ </span><span id="typewriter" style="color:#fff"></span><span class="cursor"></span>
 </div>
 </div>
-<script>const phrases = ["welcome here", "### who are you?", "ls ~/vault/ — exploring?", "sudo cat /etc/shadow 😏"];let phraseIndex=0,charIndex=0,isDeleting=false;const el=document.getElementById('typewriter');function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textContent=cur.substring(0,charIndex+1);charIndex++;if(charIndex===cur.length){setTimeout(()=>{isDeleting=true;typeLoop()},1800);return}}else{el.textContent=cur.substring(0,charIndex-1);charIndex--;if(charIndex===0){isDeleting=false;phraseIndex=(phraseIndex+1)%phrases.length}}setTimeout(typeLoop,isDeleting?40:90)}typeLoop();</script>
-<div class="d-flex justify-content-between align-items-center mb-2"><h6 id="vault" class="fw-bold mb-0"><span style="color:var(--green)">~/</span>vault <small class="text-muted">— auto from writeups.json</small></h6><small id="vaultCount" class="text-muted"></small></div>
+<script>
+const phrases = ["welcome here", "### who are you?", "ls ~/vault/ — exploring?", "sudo cat /etc/shadow 😏"];
+let phraseIndex=0,charIndex=0,isDeleting=false;const el=document.getElementById('typewriter');
+function typeLoop(){const cur=phrases[phraseIndex];if(!isDeleting){el.textContent=cur.substring(0,charIndex+1);charIndex++;if(charIndex===cur.length){setTimeout(()=>{isDeleting=true;typeLoop()},1800);return}}else{el.textContent=cur.substring(0,charIndex-1);charIndex--;if(charIndex===0){isDeleting=false;phraseIndex=(phraseIndex+1)%phrases.length}}setTimeout(typeLoop,isDeleting?40:90)}typeLoop();
+</script>
+<div class="d-flex justify-content-between align-items-center mb-2">
+<h6 id="vault" class="fw-bold mb-0"><span style="color:var(--green)">~/</span>vault <small class="text-muted">— auto from writeups.json</small></h6>
+<small id="vaultCount" class="text-muted"></small>
+</div>
 <div id="vaultGrid" class="row g-3 mb-3"></div>
 <div id="pagination" class="text-center mb-5"></div>
 <h6 class="fw-bold mb-3"><span style="color:var(--gold)">~/</span>manuals <small class="text-muted">— auto from cheatsheets.json</small></h6>
 <div id="manualsPreview" class="row g-3 mb-5"></div>
 </div>
-<div id="page-about" class="page-section"><h4 style="color:var(--green)">$ cat about.txt <small class="text-muted" style="font-size:.6rem">— auto from about.json</small></h4><div class="card-m mt-3" id="aboutCard"><div class="row g-4"><div class="col-md-8"><h5 id="aboutName" style="color:#fff">Loading...</h5><p id="aboutRole" class="small" style="color:var(--green)">PenTester | CTF Player</p><p id="aboutBio" class="mt-3">Loading about.json...</p><p id="aboutMission" class="text-muted small"></p><p><small id="aboutBadges" class="badge-h" style="color:var(--gold);border-color:var(--gold)">Top 3% THM | Hacker Rank HTB</small></p><button onclick="showPage('contact')" class="btn btn-sm mt-2" style="background:var(--green);color:#000;font-weight:800">Contact Me →</button></div><div class="col-md-4"><div class="card-m" style="background:#0a0a0a"><small class="text-muted">SKILLS // ARSENAL</small><div id="aboutSkills"></div><hr style="border-color:#222"><small class="text-muted d-block"><i class="bi bi-geo-alt"></i> <span id="aboutLocation">Nairobi, Kenya</span></small><small class="text-muted d-block mt-1"><i class="bi bi-shield-check"></i> <span id="aboutContactNote">Available for pentest</span></small></div></div></div></div></div>
+<div id="page-about" class="page-section">
+<h4 style="color:var(--green)">$ cat about.txt <small class="text-muted" style="font-size:.6rem">— auto from about.json</small></h4>
+<div class="card-m mt-3" id="aboutCard">
+  <div class="row g-4">
+    <div class="col-md-8">
+      <h5 id="aboutName" style="color:#fff">Loading...</h5>
+      <p id="aboutRole" class="small" style="color:var(--green)">PenTester | CTF Player</p>
+      <p id="aboutBio" class="mt-3">Loading about.json...</p>
+      <p id="aboutMission" class="text-muted small"></p>
+      <p><small id="aboutBadges" class="badge-h" style="color:var(--gold);border-color:var(--gold)">Top 3% THM | Hacker Rank HTB</small></p>
+      <button onclick="showPage('contact')" class="btn btn-sm mt-2" style="background:var(--green);color:#000;font-weight:800">Contact Me →</button>
+    </div>
+    <div class="col-md-4">
+      <div class="card-m" style="background:#0a0a0a">
+        <small class="text-muted">SKILLS // ARSENAL</small>
+        <div id="aboutSkills"></div>
+        <hr style="border-color:#222">
+        <small class="text-muted d-block"><i class="bi bi-geo-alt"></i> <span id="aboutLocation">Nairobi, Kenya</span></small>
+        <small class="text-muted d-block mt-1"><i class="bi bi-shield-check"></i> <span id="aboutContactNote">Available for pentest</span></small>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 <div id="page-posts" class="page-section"><h4 style="color:var(--green)">~/posts — All Writeups</h4><div id="vaultGridPosts" class="row g-3 mt-3"></div><div id="postsPagination" class="text-center mt-4 mb-3"></div></div>
-<div id="page-stats" class="page-section"><h4 style="color:var(--gold)">~/stats — Badges</h4><p class="text-muted small"><span id="statsCount">loading...</span> — auto from stats.json with proof</p><div id="statsGrid" class="row g-3 mt-3"></div><div id="statsPagination" class="text-center mt-4 mb-3"></div></div>
+<div id="page-stats" class="page-section">
+  <h4 style="color:var(--gold)">~/stats — Badges</h4>
+  <p class="text-muted small"><span id="statsCount">loading...</span> — auto from stats.json with proof</p>
+  <div id="statsGrid" class="row g-3 mt-3"></div>
+  <div id="statsPagination" class="text-center mt-4 mb-3"></div>
+</div>
 <div id="page-cheatsheets" class="page-section"><h4 style="color:var(--gold)">~/cheatsheets — Private Playbooks</h4><p class="text-muted small"><span id="cheatCount">loading...</span> — auto from cheatsheets.json</p><div id="cheatsGrid" class="row g-3 mt-3"></div><div id="cheatsPagination" class="text-center mt-4 mb-3"></div></div>
 <div id="page-tools" class="page-section"><h4 style="color:var(--green)">~/tools — Custom Tools</h4><p class="text-muted small"><span id="toolsCount">loading...</span> — auto from tools.json</p><div id="toolsGrid" class="row g-3 mt-3"></div><div id="toolsPagination" class="text-center mt-4 mb-3"></div></div>
 <div id="page-contact" class="page-section"><h4 style="color:var(--green)">~/contact — Let's Talk</h4><div class="row g-4 mt-2"><div class="col-md-6"><div class="card-m"><h6>Send me a message</h6><small class="text-muted">For pentest, CTF collab, or PSB system audit.</small><form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/?success=true" id="contactForm"><input type="hidden" name="form-name" value="contact" /><p style="display:none"><label>Don't fill this: <input name="bot-field" /></label></p><div class="mb-3"><label class="small text-muted">Email *</label><input type="email" name="email" class="form-control" placeholder="solomonkilonzo49@gmail.com" required style="background:#111;border:1px solid #1f1f1f;color:#ddd"></div><div class="mb-3"><label class="small text-muted">Phone Number</label><input type="tel" name="phone" class="form-control" placeholder="+254 797 003 045" style="background:#111;border:1px solid #1f1f1f;color:#ddd"></div><div class="mb-3"><label class="small text-muted">Message *</label><textarea name="message" class="form-control" rows="4" placeholder="Hey 0xSoloh, I need..." required style="background:#111;border:1px solid #1f1f1f;color:#ddd"></textarea></div><button type="submit" class="btn" style="background:#00FF41;color:#000;font-weight:800;width:100%;border-radius:8px;padding:12px">➤ Submit</button><div id="formSuccess" style="display:none;color:#00FF41;margin-top:10px;text-align:center;font-size:.9rem">✓ Message sent! I'll reply soon.</div></form></div></div><div class="col-md-6"><div class="card-m"><h6><i class="bi bi-whatsapp" style="color:#25D366"></i> Direct Contact</h6><div class="mt-3 d-grid gap-2"><a href="https://wa.me/254797003045" target="_blank" class="btn" style="background:#25D366;color:#000;font-weight:700"><i class="bi bi-whatsapp"></i> WhatsApp Chat</a><a href="https://mail.google.com/mail/?view=cm&fs=1&to=solomonkilonzo49@gmail.com" target="_blank" class="btn" style="background:#111;border:1px solid var(--border);color:#fff"><i class="bi bi-envelope"></i> solomonkilonzo49@gmail.com</a></div><hr style="border-color:#222"><small class="text-muted">Response time: <b style="color:var(--green)">~2 hours</b> (Nairobi time)</small></div></div></div></div>
@@ -197,11 +218,14 @@ nav a, [onclick]{cursor:pointer !important}
   const ctx=canvas.getContext('2d');
   function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;}
   resize(); window.addEventListener('resize',resize);
-  const chars="01"; const fontSize=14;
+  const chars="01";
+  const fontSize=14;
   let drops=Array(Math.floor(canvas.width/fontSize)).fill(0);
   function draw(){
-    ctx.fillStyle="rgba(8,8,8,0.08)"; ctx.fillRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle="#00FF41"; ctx.font=fontSize+"px monospace";
+    ctx.fillStyle="rgba(8,8,8,0.08)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="#00FF41";
+    ctx.font=fontSize+"px monospace";
     for(let i=0;i<drops.length;i++){
       const text=chars[Math.floor(Math.random()*chars.length)];
       ctx.fillText(text,i*fontSize,drops[i]*fontSize);
@@ -217,8 +241,6 @@ let allWriteups=[];let currentPage=1;const perPage=8;
 let postsPage=1;let statsData=[];let statsPage=1;let cheatsData=[];let cheatsPage=1;let toolsData=[];let toolsPage=1;
 const PAGE_SIZE=8;
 let currentRestrictedWriteup=null;
-let currentPremiumWriteup=null;
-
 async function loadAbout(){
   try{
     const res=await fetch('about.json'); const a=await res.json();
@@ -251,12 +273,10 @@ function renderVault(){
     let iconHtml='';if(p.image && p.image.trim() !== ""){iconHtml=`<img src="${p.image}" alt="${p.title}">`;}else{let emoji='💻';let bg='#111';const name=(p.file+' '+p.title).toLowerCase();if(name.includes('robot')){emoji='🤖';bg='#1a0a14';}else if(name.includes('wing')){emoji='🪟';bg='#0a141a';}else if(name.includes('timelapse')){emoji='⏱️';bg='#0a1a14';}else if(name.includes('layover')){emoji='✈️';bg='#0a141a';}else if(name.includes('creative')){emoji='🎨';bg='#1a1410';}else if(name.includes('zip')){emoji='🗜️';bg='#1a1410';}iconHtml=`<div style="width:140px;height:140px;border-radius:50%;background:${bg};border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">${emoji}</div>`;}
     const desc = p.desc||`Full walkthrough of ${p.title}`;const tags = p.tags||[p.platform,p.level].filter(Boolean);
     const isLocked = p.active || p.restricted;
-    const isPremium = p.premium;
-    let badge=''; if(isPremium) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">💎 PREMIUM $'+(p.price||50)+'</div>'; else if(isLocked) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">🔒 ACTIVE</div>';
-    return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isPremium?'border-color:#FFD54F':isLocked?'border-color:#FFD54F':''}"><div class="vault-img">${iconHtml}${badge}</div><div class="vault-body"><div class="vault-title">${isPremium?'💎 ':isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''} ${p.season?'· '+p.season:''}</div><div class="vault-desc">${desc.substring(0,90)}...</div><div class="mb-2">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isPremium?'var(--gold)':isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isPremium?'Buy $'+(p.price||50):isLocked?'Unlock':'Read'}</button></div></div></div>`;
+    return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isLocked?'border-color:#FFD54F':''}"><div class="vault-img">${iconHtml}${isLocked?'<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">🔒 ACTIVE</div>':''}</div><div class="vault-body"><div class="vault-title">${isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''} ${p.season?'· '+p.season:''}</div><div class="vault-desc">${desc.substring(0,90)}...</div><div class="mb-2">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isLocked?'Unlock':'Read'}</button></div></div></div>`;
   }).join('');
   if(grid) grid.innerHTML=html||'<small class=text-muted>No writeups yet</small>';
-  if(list) list.innerHTML=pageItems.map(p=>`<div class="col-md-6"><div class="card-m d-flex justify-content-between align-items-center"><div><small class="badge-h"><i class="bi bi-book"></i> ${p.platform} ${p.premium?'💎 PREMIUM':p.active||p.restricted?'🔒':''}</small><div class="fw-bold mt-1" style="font-size:.85rem">${p.title}</div></div><button onclick="openWriteup('${p.file}')" class="btn btn-sm ${p.premium?'btn-warning':p.active||p.restricted?'btn-outline-warning':'btn-outline-success'}"><i class="bi ${p.premium?'bi-gem':p.active||p.restricted?'bi-lock-fill':'bi-book'}"></i></button></div></div>`).join('');
+  if(list) list.innerHTML=pageItems.map(p=>`<div class="col-md-6"><div class="card-m d-flex justify-content-between align-items-center"><div><small class="badge-h"><i class="bi bi-book"></i> ${p.platform} ${p.active||p.restricted?'🔒':''}</small><div class="fw-bold mt-1" style="font-size:.85rem">${p.title}</div></div><button onclick="openWriteup('${p.file}')" class="btn btn-sm ${p.active||p.restricted?'btn-outline-warning':'btn-outline-success'}"><i class="bi ${p.active||p.restricted?'bi-lock-fill':'bi-book'}"></i></button></div></div>`).join('');
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goPage(n){currentPage=n;renderVault();document.getElementById('vault').scrollIntoView({behavior:'smooth'})}
@@ -266,58 +286,19 @@ function renderPostsPage(){
   const totalPages=Math.ceil(allWriteups.length/PAGE_SIZE)||1;const start=(postsPage-1)*PAGE_SIZE;const pageItems=allWriteups.slice(start,start+PAGE_SIZE);
   if(allWriteups.length===0){grid.innerHTML='<small class=text-muted>No writeups yet</small>';if(pag)pag.innerHTML='';return;}
   grid.innerHTML=pageItems.map(p=>{
-    const isLocked = p.active || p.restricted; const isPremium=p.premium;
-    let badge=''; if(isPremium) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">💎 PREMIUM</div>'; else if(isLocked) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">🔒 ACTIVE</div>';
-    return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isPremium||isLocked?'border-color:#FFD54F':''}"><div class="vault-img" style="position:relative">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`}${badge}</div><div class="vault-body"><div class="vault-title">${isPremium?'💎 ':isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isPremium||isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isPremium?'Buy $'+(p.price||50):isLocked?'Unlock':'Read'}</button></div></div></div>`;
+    const isLocked = p.active || p.restricted;
+    return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isLocked?'border-color:#FFD54F':''}"><div class="vault-img" style="position:relative">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`}${isLocked?'<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">🔒 ACTIVE</div>':''}</div><div class="vault-body"><div class="vault-title">${isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isLocked?'Unlock':'Read'}</button></div></div></div>`;
   }).join('');
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===postsPage?'active':''}" onclick="goPostsPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goPostsPage(n){postsPage=n;renderPostsPage();document.getElementById('page-posts').scrollIntoView({behavior:'smooth'})}
-
 async function openWriteup(file){
   let writeup = allWriteups.find(w => w.file === file);
   if(!writeup){ writeup = allWriteups.find(w => file.includes(w.file) || w.file.includes(file.split('/').pop())); }
-  if(!writeup) return;
-  // PREMIUM FIRST
-  if(writeup.premium){
-    const paid = localStorage.getItem('premium_paid_'+writeup.file);
-    if(!paid){ showPremiumModal(writeup); return; }
-  }
-  if(writeup.active || writeup.restricted){ showRestrictedModal(writeup); return; }
+  if(writeup && (writeup.active || writeup.restricted)){ showRestrictedModal(writeup); return; }
   try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/')) path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>{if(!r.ok) throw '';return r.text()});document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}
   document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)
 }
-
-function showPremiumModal(writeup){
-  currentPremiumWriteup = writeup;
-  document.getElementById('premiumTitle').textContent = writeup.title.toUpperCase();
-  document.getElementById('premiumModal').style.display='flex';
-  document.getElementById('paypal-button-container').innerHTML='';
-  // Render PayPal button
-  if(window.paypal){
-    paypal.Buttons({
-      style:{ layout:'vertical', color:'gold', shape:'rect', label:'paypal' },
-      createOrder: (data, actions) => {
-        return actions.order.create({
-          purchase_units: [{ amount: { value: String(writeup.price||50), currency_code:'USD' }, description: writeup.title }]
-        });
-      },
-      onApprove: (data, actions) => {
-        return actions.order.capture().then(details => {
-          localStorage.setItem('premium_paid_'+writeup.file, details.id);
-          document.getElementById('premiumModal').style.display='none';
-          alert('✅ Payment success! ID: '+details.id+' - Unlocking...');
-          forceOpenWriteup(writeup.file);
-        });
-      },
-      onError: (err)=>{ document.getElementById('premiumError').style.display='block'; console.log(err); }
-    }).render('#paypal-button-container');
-  } else {
-    document.getElementById('paypal-button-container').innerHTML='<small style="color:#ff5f56">PayPal SDK not loaded. Replace YOUR_PAYPAL_CLIENT_ID with your real Client ID.</small>';
-  }
-}
-function closePremiumModal(){ document.getElementById('premiumModal').style.display='none'; currentPremiumWriteup=null; }
-
 function showRestrictedModal(writeup){
   currentRestrictedWriteup = writeup;
   document.getElementById('restrictedTitle').textContent = writeup.title.toUpperCase();
@@ -349,7 +330,7 @@ async function forceOpenWriteup(file){
 }
 document.addEventListener('keydown', (e)=>{
   if(document.getElementById('restrictedModal').style.display==='flex' && e.key==='Enter'){ tryUnlock(); }
-  if(e.key==='Escape'){ closeRestrictedModal(); closePremiumModal(); }
+  if(e.key==='Escape'){ closeRestrictedModal(); }
 });
 async function openDoc(folder,file){if(!file) return;try{const txt=await fetch(folder+'/'+file).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80);}catch(e){ alert('Put '+file+' inside /'+folder+'/ folder'); }}
 async function loadCheatsheets(){
@@ -409,7 +390,17 @@ function renderStatsPage(){
   const totalPages=Math.ceil(statsData.length/PAGE_SIZE)||1;const start=(statsPage-1)*PAGE_SIZE;const pageItems=statsData.slice(start,start+PAGE_SIZE);
   if(count) count.textContent=`${statsData.length} badges • Page ${statsPage}/${totalPages}`;
   if(statsData.length===0){grid.innerHTML='<div class=col-12><div class=card-m text-center><small class=text-muted>No stats yet.</small></div></div>';if(pag)pag.innerHTML='';return;}
-  grid.innerHTML=pageItems.map(s=>`<div class="col-md-6 col-lg-3"><div class="card-m" style="height:100%"><div class="d-flex justify-content-between align-items-start"><div><small class="badge-h" style="color:var(--gold);border-color:var(--gold)">${s.platform}</small><h6 class="mt-2 fw-bold" style="font-size:.85rem">${s.rank}</h6><small class="text-muted" style="font-size:.65rem">${s.date||''}</small></div><i class="${s.icon||'bi bi-trophy'}" style="font-size:1.4rem;color:var(--gold)"></i></div>${s.proof?`<div class="mt-2" style="background:#000;border-radius:8px;padding:6px;text-align:center;border:1px solid #222"><img src="${s.proof}" onclick="showProof('${s.proof}')" style="max-width:100%;max-height:120px;border-radius:6px;cursor:zoom-in"><br><small style="color:var(--green);font-size:.6rem">Click proof</small></div>`:''}<div class="mt-2 d-flex gap-2"><a href="${s.link}" target="_blank" class="btn btn-sm w-100" style="background:#111;border:1px solid var(--border);color:#fff;font-size:.7rem">View Profile <i class="bi bi-box-arrow-up-right"></i></a></div></div></div>`).join('');
+  grid.innerHTML=pageItems.map(s=>`
+      <div class="col-md-6 col-lg-3">
+        <div class="card-m" style="height:100%">
+          <div class="d-flex justify-content-between align-items-start">
+            <div><small class="badge-h" style="color:var(--gold);border-color:var(--gold)">${s.platform}</small><h6 class="mt-2 fw-bold" style="font-size:.85rem">${s.rank}</h6><small class="text-muted" style="font-size:.65rem">${s.date||''}</small></div>
+            <i class="${s.icon||'bi bi-trophy'}" style="font-size:1.4rem;color:var(--gold)"></i>
+          </div>
+          ${s.proof?`<div class="mt-2" style="background:#000;border-radius:8px;padding:6px;text-align:center;border:1px solid #222"><img src="${s.proof}" onclick="showProof('${s.proof}')" style="max-width:100%;max-height:120px;border-radius:6px;cursor:zoom-in"><br><small style="color:var(--green);font-size:.6rem">Click proof</small></div>`:''}
+          <div class="mt-2 d-flex gap-2"><a href="${s.link}" target="_blank" class="btn btn-sm w-100" style="background:#111;border:1px solid var(--border);color:#fff;font-size:.7rem">View Profile <i class="bi bi-box-arrow-up-right"></i></a></div>
+        </div>
+      </div>`).join('');
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===statsPage?'active':''}" onclick="goStatsPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
 function goStatsPage(n){statsPage=n;renderStatsPage();document.getElementById('page-stats').scrollIntoView({behavior:'smooth'})}
@@ -448,8 +439,8 @@ function openSearch(){
       grid.innerHTML = `<div class="col-12 text-center py-4"><small class="text-muted">No results for "${q}"</small><br><button onclick="renderPostsPage()" class="btn btn-sm mt-2" style="background:var(--green);color:#000">Show All</button></div>`;
     } else {
       grid.innerHTML = filtered.map(p=>{
-        const isLocked = p.active||p.restricted; const isPremium=p.premium;
-        return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card"><div class="vault-img">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`}</div><div class="vault-body"><div class="vault-title">${isPremium?'💎 ':isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isPremium||isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800">${isPremium?'Buy $'+(p.price||50):isLocked?'Unlock':'Read'}</button></div></div></div>`;
+        const isLocked = p.active||p.restricted;
+        return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card"><div class="vault-img">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`}</div><div class="vault-body"><div class="vault-title">${isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800">${isLocked?'Unlock':'Read'}</button></div></div></div>`;
       }).join('');
     }
   },300);
