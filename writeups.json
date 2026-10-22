@@ -1,5 +1,17 @@
 [
   {
+    "title": "Book store machine writeup",
+    "file": "bookstore.md",
+    "platform": "TryHackMe",
+    "level": "Easy",
+    "date": "2026-10-22",
+    "tags": [
+      "Linux"
+    ],
+    "image": "images/evidence/bookstore.png",
+    "desc": ""
+  },
+  {
     "title": "Kiba Machine walkthrough",
     "file": "kiba.md",
     "platform": "TryHackMe",
