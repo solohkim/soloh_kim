@@ -156,6 +156,19 @@ nav a, [onclick]{cursor:pointer !important}
     </div>
   </div>
 </div>
+<div id="linuxTipModal" style="position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px">
+<div style="background:#0a0a0a;border:1px solid #00FF41;border-radius:12px;max-width:520px;width:100%;overflow:hidden">
+<div style="background:#111;padding:10px 14px;display:flex;justify-content:space-between"><small style="color:#00FF41;font-weight:800">0xSoloh@kali:~$ linux-tip --random</small><span onclick="closeLinuxTip()" style="cursor:pointer">X</span></div>
+<div style="padding:18px">
+<div style="background:#000;border:1px solid #222;border-radius:10px;padding:14px">
+<small style="color:#666">TIP #<span id="tipNum">1</span></small>
+<div style="color:#00FF41;margin-top:8px">$ <span id="tipCmd" style="color:#fff">pwd</span></div>
+<div id="tipDesc" style="color:#aaa;font-size:.78rem;margin-top:8px">Print Working Directory</div>
+<div style="margin-top:10px;background:#0f1410;border:1px dashed #333;padding:8px"><small style="color:#FFD54F">Try: <code id="tipExample" style="color:#00FF41">pwd</code></small></div>
+</div>
+<div style="display:flex;gap:8px;margin-top:12px"><input type="checkbox" id="dontShowTips"><label for="dontShowTips" style="color:#666;font-size:.68rem">Don't show again</label></div>
+<div style="display:flex;gap:8px;margin-top:12px"><button onclick="closeLinuxTipAndContinue()" style="background:#00FF41;color:#000;font-weight:800;padding:11px;border-radius:8px;width:100%;border:none">Continue Reading -></button><button onclick="nextLinuxTip()" style="background:#111;border:1px solid #333;color:#888;border-radius:8px;padding:11px">Shuffle</button></div>
+</div></div></div>
 
 <nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:11">
   <div class="d-flex align-items-center">
@@ -311,7 +324,13 @@ let postsPage=1;let statsData=[];let statsPage=1;let cheatsData=[];let cheatsPag
 const PAGE_SIZE=8;
 let currentRestrictedWriteup=null;
 let currentPremiumWriteup=null;
-
+const linuxTips=[{cmd:"pwd",desc:"Print Working Directory - where am I?",ex:"pwd"},{cmd:"ls -la",desc:"List all files incl hidden - recon 101",ex:"ls -la"},{cmd:"cat file.txt",desc:"Read file - like reading writeups",ex:"cat about.txt"},{cmd:"whoami",desc:"Who are you?",ex:"whoami"},{cmd:"id",desc:"User ID & groups - privesc check",ex:"id"},{cmd:"sudo -l",desc:"Check sudo privs",ex:"sudo -l"},{cmd:"grep -r 'flag' .",desc:"Search inside files",ex:"grep -r 'flag' ."}];
+let pendingAction=null,currentTipIndex=0;
+function showLinuxTip(next){if(localStorage.getItem('disableLinuxTips')==='1'){next();return;}pendingAction=next;currentTipIndex=Math.floor(Math.random()*linuxTips.length);renderLinuxTip();document.getElementById('linuxTipModal').style.display='flex';}
+function renderLinuxTip(){const t=linuxTips[currentTipIndex];document.getElementById('tipNum').textContent=currentTipIndex+1;document.getElementById('tipCmd').textContent=t.cmd;document.getElementById('tipDesc').textContent=t.desc;document.getElementById('tipExample').textContent=t.ex;}
+function nextLinuxTip(){currentTipIndex=(currentTipIndex+1)%linuxTips.length;renderLinuxTip();}
+function closeLinuxTip(){document.getElementById('linuxTipModal').style.display='none';pendingAction=null;}
+function closeLinuxTipAndContinue(){if(document.getElementById('dontShowTips').checked){localStorage.setItem('disableLinuxTips','1');}document.getElementById('linuxTipModal').style.display='none';if(pendingAction){const fn=pendingAction;pendingAction=null;fn();}}
 async function loadAbout(){
   try{
     const res=await fetch('about.json'); const a=await res.json();
@@ -372,16 +391,10 @@ function renderPostsPage(){
 function goPostsPage(n){postsPage=n;renderPostsPage();document.getElementById('page-posts').scrollIntoView({behavior:'smooth'})}
 
 async function openWriteup(file){
-  let writeup = allWriteups.find(w => w.file === file);
-  if(!writeup){ writeup = allWriteups.find(w => file.includes(w.file) || w.file.includes(file.split('/').pop())); }
-  if(!writeup) return;
-  if(writeup.premium){
-    const paid = localStorage.getItem('premium_paid_'+writeup.file);
-    if(!paid){ showPremiumModal(writeup); return; }
-  }
-  if(writeup.active || writeup.restricted){ showRestrictedModal(writeup); return; }
-  try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/')) path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>{if(!r.ok) throw '';return r.text()});document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}
-  document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)
+let writeup=allWriteups.find(w=>w.file===file);if(!writeup)return;
+if(writeup.premium){const paid=localStorage.getItem('premium_paid_'+writeup.file);if(!paid){showPremiumModal(writeup);return;}}
+if(writeup.active||writeup.restricted){showRestrictedModal(writeup);return;}
+showLinuxTip(async()=>{try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/'))path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)});
 }
 
 function showPremiumModal(writeup){
@@ -441,7 +454,7 @@ document.addEventListener('keydown', (e)=>{
   if(document.getElementById('premiumModal').style.display==='flex' && e.key==='Enter'){ verifyTxn(); }
   if(e.key==='Escape'){ closeRestrictedModal(); closePremiumModal(); closeCoffee(); }
 });
-async function openDoc(folder,file){if(!file) return;try{const txt=await fetch(folder+'/'+file).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80);}catch(e){ alert('Put '+file+' inside /'+folder+'/ folder'); }}
+async function openDoc(folder,file){if(!file)return;showLinuxTip(async()=>{try{const txt=await fetch(folder+'/'+file).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80);}catch(e){alert('Put '+file+' inside /'+folder);}});}
 async function loadCheatsheets(){
   try{
     const res=await fetch('cheatsheets.json'); 
