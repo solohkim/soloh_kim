@@ -6,7 +6,7 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
 :root{--green:#00FF41;--gold:#FFD54F;--bg:#080808;--card:#111;--border:#1f1f1f}
-body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace}
+body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;transition: background .3s, color .3s}
 .hero-terminal{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;box-shadow:0 0 30px rgba(0,255,65,.1)}
 .cursor::after{content:'█';animation:blink 1s infinite;color:var(--green)}
 @keyframes blink{50%{opacity:0}}
@@ -51,7 +51,6 @@ nav a, [onclick]{cursor:pointer !important}
 .form-hack:focus{outline:none;border-color:var(--green);box-shadow:0 0 12px rgba(0,255,65,.2)}
 </style></head><body>
 
-<!-- FIXED RESPONSIVE NAV - DESKTOP FULL, MOBILE WITH HAMBURGER -->
 <nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:11">
   <div class="d-flex align-items-center">
     <a onclick="showPage('home')" style="color:#fff;font-weight:800;text-decoration:none;margin-right:20px;cursor:pointer !important">0xSoloh</a>
@@ -63,22 +62,19 @@ nav a, [onclick]{cursor:pointer !important}
       <a onclick="showPage('cheatsheets')" id="nav-cheatsheets" class="top-menu">Cheatsheets</a>
       <a onclick="showPage('tools')" id="nav-tools" class="top-menu">Tools</a>
       <a onclick="showPage('contact')" id="nav-contact" class="top-menu">Contact</a>
-      <div class="dropdown d-inline">
-        <a class="dropdown-toggle top-menu" href="#" data-bs-toggle="dropdown" style="color:#ddd">Explore</a>
-        <ul class="dropdown-menu" style="background:#111;border:1px solid var(--border)">
-          <li><a class="dropdown-item" onclick="showPage('posts')" style="color:#ddd;cursor:pointer !important">/vault</a></li>
-          <li><a class="dropdown-item" onclick="showPage('cheatsheets')" style="color:#ddd;cursor:pointer !important">/cheatsheets</a></li>
-          <li><a class="dropdown-item" onclick="showPage('tools')" style="color:#ddd;cursor:pointer !important">/tools</a></li>
-          <li><a class="dropdown-item" onclick="showPage('contact')" style="color:#ddd;cursor:pointer !important">/contact</a></li>
-        </ul>
-      </div>
     </div>
   </div>
   <div class="d-flex align-items-center gap-3">
-    <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm d-none d-lg-inline-block" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:4px 12px"><i class="bi bi-whatsapp"></i> Chat</a>
+    <!-- Desktop icons WORKING -->
+    <div class="d-none d-lg-flex align-items-center gap-3">
+      <a onclick="openSearch()" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
+      <a onclick="toggleTheme()" style="color:var(--green);cursor:pointer !important"><i class="bi bi-brightness-high-fill fs-5" id="themeIconDesktop"></i></a>
+      <a href="https://wa.me/254797003045" target="_blank" class="btn btn-sm" style="background:var(--green);color:#000;font-weight:800;border-radius:20px;padding:4px 12px"><i class="bi bi-whatsapp"></i> Chat</a>
+    </div>
+    <!-- Mobile icons WORKING -->
     <div class="d-flex d-lg-none align-items-center gap-3">
-      <a onclick="showPage('posts')" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
-      <span style="color:var(--green)"><i class="bi bi-brightness-high-fill fs-5"></i></span>
+      <a onclick="openSearch()" style="color:#fff;cursor:pointer !important"><i class="bi bi-search fs-5"></i></a>
+      <a onclick="toggleTheme()" style="color:var(--green);cursor:pointer !important"><i class="bi bi-brightness-high-fill fs-5" id="themeIcon"></i></a>
       <button class="btn text-white p-0 border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mobileMenu"><i class="bi bi-list fs-2"></i></button>
     </div>
   </div>
@@ -220,6 +216,43 @@ function closeMobile(){
   var el=document.getElementById('mobileMenu');
   var bsCollapse=bootstrap.Collapse.getInstance(el);
   if(bsCollapse){bsCollapse.hide();} else { new bootstrap.Collapse(el,{toggle:false}).hide(); }
+}
+function openSearch(){
+  const q = prompt("🔍 Search writeups (e.g. 'robot', 'htb', 'ad'):");
+  if(!q) return;
+  showPage('posts');
+  setTimeout(()=>{
+    const filtered = allWriteups.filter(w => (w.title+" "+w.file+" "+w.platform).toLowerCase().includes(q.toLowerCase()));
+    const grid = document.getElementById('vaultGridPosts');
+    if(filtered.length===0){
+      grid.innerHTML = `<div class="col-12 text-center py-4"><small class="text-muted">No results for "${q}"</small><br><button onclick="renderVault()" class="btn btn-sm mt-2" style="background:var(--green);color:#000">Show All</button></div>`;
+    } else {
+      grid.innerHTML = filtered.map(p=>`<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card"><div class="vault-img">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`}</div><div class="vault-body"><div class="vault-title">${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:var(--green);color:#000;font-weight:800">Read</button></div></div></div>`).join('');
+    }
+  },300);
+}
+let lightMode=false;
+function toggleTheme(){
+  lightMode=!lightMode;
+  const iconMobile=document.getElementById('themeIcon');
+  const iconDesk=document.getElementById('themeIconDesktop');
+  if(lightMode){
+    document.documentElement.style.setProperty('--bg','#f5f5f5');
+    document.documentElement.style.setProperty('--card','#ffffff');
+    document.documentElement.style.setProperty('--border','#ddd');
+    document.body.style.color='#111';
+    document.body.style.background='#f5f5f5';
+    if(iconMobile) iconMobile.className='bi bi-moon-stars-fill fs-5';
+    if(iconDesk) iconDesk.className='bi bi-moon-stars-fill fs-5';
+  } else {
+    document.documentElement.style.setProperty('--bg','#080808');
+    document.documentElement.style.setProperty('--card','#111');
+    document.documentElement.style.setProperty('--border','#1f1f1f');
+    document.body.style.color='#ddd';
+    document.body.style.background='#080808';
+    if(iconMobile) iconMobile.className='bi bi-brightness-high-fill fs-5';
+    if(iconDesk) iconDesk.className='bi bi-brightness-high-fill fs-5';
+  }
 }
 </script>
 <script>
