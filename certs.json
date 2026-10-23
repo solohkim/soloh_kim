@@ -1,5 +1,12 @@
 [
   {
+    "name": "Cyber Security analyst",
+    "file": "certs/security.pdf",
+    "cat": "Certification",
+    "private": true,
+    "date": "2026-10-23"
+  },
+  {
     "name": "CV",
     "file": "certs/CV.pdf",
     "cat": "Academic",
