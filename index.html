@@ -387,7 +387,7 @@ function renderVault(){
   if(count) count.textContent=`${allWriteups.length} writeups • Page ${currentPage}/${totalPages}`;
   const html = pageItems.map(p=>{
     let iconHtml='';if(p.image && p.image.trim() !== ""){iconHtml=`<img src="${p.image}" alt="${p.title}">`;}else{let emoji='💻';let bg='#111';const name=(p.file+' '+p.title).toLowerCase();if(name.includes('robot')){emoji='🤖';bg='#1a0a14';}else if(name.includes('wing')){emoji='🪟';bg='#0a141a';}else if(name.includes('timelapse')){emoji='⏱️';bg='#0a1a14';}else if(name.includes('layover')){emoji='✈️';bg='#0a141a';}else if(name.includes('creative')){emoji='🎨';bg='#1a1410';}else if(name.includes('zip')){emoji='🗜️';bg='#1a1410';}iconHtml=`<div style="width:140px;height:140px;border-radius:50%;background:${bg};border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">${emoji}</div>`;}
-    const desc = p.desc||`Full walkthrough of ${p.title}`;const tags = p.tags||[p.platform,p.level].filter(Boolean);
+    const desc = p.desc || (['Caido','Tools','News','Research'].includes(p.platform) ? `${p.title} — beginner guide, install & usage tips` : `Full walkthrough of ${p.title}`); const tags = p.tags||[p.platform,p.level].filter(Boolean);
     const isLocked = p.active || p.restricted;
     const isPremium = p.premium;
     let badge=''; 

@@ -38,14 +38,12 @@ function startIdleTimer(){clearTimeout(idleTimer); idleTimer=setTimeout(lockAgai
 ['mousemove','keydown','click','scroll'].forEach(evt=>{document.addEventListener(evt, ()=>{if(document.getElementById('adminLock').style.display==='none'){startIdleTimer();}});});
 document.addEventListener('keydown', (e)=>{const lock=document.getElementById('adminLock'); if(e.key==='Enter' && lock && lock.style.display!=='none'){checkAdmin();}});
 </script>
-
 <div class="container py-4" style="max-width:800px">
 <h4 style="color:var(--green)"><i class="bi bi-shield-lock"></i> 0xSoloh Admin Panel — PREMIUM ADDED</h4>
 <div class="card-m py-2" style="background:#0a1a0a;border-color:#1a3a1a">
   <small id="loadStatus" style="color:#888">⏳ Waiting for unlock...</small>
   <button onclick="loadExistingFromServer()" class="btn btn-sm ms-2" style="background:#111;border:1px solid #333;color:#aaa;font-size:.7rem">↻ Reload</button>
 </div>
-
 <div class="mt-3 mb-3">
 <button class="nav-tab active" onclick="showTab('writeups')" id="t-writeups">Writeups (<span id="count-w">0</span>)</button>
 <button class="nav-tab" onclick="showTab('cheatsheets')" id="t-cheatsheets">Cheatsheets (<span id="count-c">0</span>)</button>
@@ -53,7 +51,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <button class="nav-tab" onclick="showTab('stats')" id="t-stats">Stats (<span id="count-s">0</span>)</button>
 <button class="nav-tab" onclick="showTab('about')" id="t-about" style="border-color:var(--gold);color:var(--gold)">About</button>
 </div>
-
 <div id="tab-writeups" class="tab">
 <div class="card-m">
 <h6 id="w-form-title">Add New Writeup</h6>
@@ -63,8 +60,7 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <select id="w-platform" class="form-hack mb-2"><option>HackTheBox</option><option>TryHackMe</option><option>Lab</option><option>Caido</option><option>News</option><option>Tools</option><option>Research</option></select>
 <input id="w-level" class="form-hack mb-2" placeholder="Level - Easy/Medium/Hard">
 <input id="w-tags" class="form-hack mb-2" placeholder="Tags comma - e.g. privesc,suid">
-
-<!-- ACTIVE LOCK - KEPT AS IS -->
+<input id="w-desc" class="form-hack mb-2" placeholder="Description - e.g. Modern Burp alternative guide, install & intercept">
 <div style="background:#0a0a0a;border:1px dashed #00FF41;border-radius:8px;padding:10px;margin-bottom:10px">
   <label style="cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:8px">
     <input type="checkbox" id="w-active" onchange="toggleActive()" style="accent-color:#00FF41;width:16px;height:16px">
@@ -76,8 +72,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
     <small style="color:#666;font-size:.65rem">If active, user must enter this key to view. This makes it HTB-compliant.</small>
   </div>
 </div>
-
-<!-- NEW: PREMIUM - ADDED WITHOUT REMOVING ANYTHING -->
 <div style="background:#0a0a0a;border:1px dashed #FFD54F;border-radius:8px;padding:10px;margin-bottom:10px">
   <label style="cursor:pointer;display:flex;align-items:center;gap:8px;margin-bottom:8px">
     <input type="checkbox" id="w-premium" onchange="togglePremium()" style="accent-color:#FFD54F;width:16px;height:16px">
@@ -88,7 +82,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
     <small style="color:#888;font-size:.65rem">If premium, user pays via your personal PayPal then enters Transaction ID. Access saved forever.</small>
   </div>
 </div>
-
 <label class="small text-muted mt-2">Evidence Image (optional)</label>
 <input type="file" id="w-image-file" accept="image/*" class="form-hack mb-2" onchange="handleWriteupImage(this)">
 <input id="w-image" class="form-hack mb-2" placeholder="Image path - e.g. images/evidence/robot.png">
@@ -97,7 +90,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </div>
 <div id="list-writeups"></div>
 </div>
-
 <div id="tab-cheatsheets" class="tab" style="display:none">
 <div class="card-m">
 <h6 id="c-form-title">Add Cheatsheet</h6>
@@ -110,7 +102,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </div>
 <div id="list-cheatsheets"></div>
 </div>
-
 <div id="tab-tools" class="tab" style="display:none">
 <div class="card-m">
 <h6 id="tl-form-title">Add Tool</h6>
@@ -124,7 +115,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </div>
 <div id="list-tools"></div>
 </div>
-
 <div id="tab-stats" class="tab" style="display:none">
 <div class="card-m">
 <h6 id="s-form-title">Add Stat / Badge</h6>
@@ -141,7 +131,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </div>
 <div id="list-stats"></div>
 </div>
-
 <div id="tab-about" class="tab" style="display:none">
 <div class="card-m">
 <h6 style="color:var(--gold)">Edit About</h6>
@@ -158,7 +147,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </div>
 <pre id="aboutPreview" style="background:#000;border:1px solid #222;border-radius:8px;padding:12px;color:#00FF41;font-size:.75rem;white-space:pre-wrap">Loading...</pre>
 </div>
-
 <hr style="border-color:#222" class="my-4">
 <div class="card-m">
 <h6>Export JSONs</h6>
@@ -176,7 +164,6 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </div>
 <a href="index.html" class="btn btn-sm mt-3" style="border:1px solid #333;color:#888">← Back</a>
 </div>
-
 <script>
 let data={
   writeups:JSON.parse(localStorage.getItem('w')||'[]'),
@@ -187,7 +174,6 @@ let data={
 };
 let editIndex={writeups:null,cheatsheets:null,tools:null,stats:null};
 let serverLoaded=false;
-
 function toggleActive(){
   const isActive = document.getElementById('w-active').checked;
   document.getElementById('w-active-fields').style.display = isActive ? 'block' : 'none';
@@ -196,7 +182,6 @@ function togglePremium(){
   const isPremium = document.getElementById('w-premium').checked;
   document.getElementById('w-premium-fields').style.display = isPremium ? 'block' : 'none';
 }
-
 async function loadExistingFromServer(){
   const status=document.getElementById('loadStatus');
   status.textContent='⏳ Loading...'; status.style.color='#FFD54F';
@@ -235,7 +220,6 @@ async function loadExistingFromServer(){
     status.style.color='#ff5f56';
   }
 }
-
 function fillAboutForm(a){
   document.getElementById('a-name').value=a.name||'';
   document.getElementById('a-fullName').value=a.fullName||'';
@@ -278,7 +262,7 @@ function addItem(type){
       date:new Date().toISOString().slice(0,10),
       tags:document.getElementById('w-tags').value.split(',').map(s=>s.trim()).filter(Boolean),
       image:document.getElementById('w-image').value||'',
-      desc:'',
+      desc:document.getElementById('w-desc').value||'',
       active:document.getElementById('w-active').checked,
       unlockKey:document.getElementById('w-unlock-key').value||'',
       season:document.getElementById('w-season').value||'',
@@ -326,6 +310,7 @@ function editItem(type,i){
     document.getElementById('w-level').value=item.level||'';
     document.getElementById('w-tags').value=(item.tags||[]).join(', ');
     document.getElementById('w-image').value=item.image||'';
+    document.getElementById('w-desc').value=item.desc||'';
     document.getElementById('w-active').checked=item.active||item.restricted||false;
     document.getElementById('w-unlock-key').value=item.unlockKey||'';
     document.getElementById('w-season').value=item.season||'';
@@ -384,7 +369,7 @@ function editItem(type,i){
 function cancelEdit(type){
   editIndex[type]=null;
   if(type==='writeups'){
-    document.getElementById('w-title').value=''; document.getElementById('w-file').value=''; document.getElementById('w-tags').value=''; document.getElementById('w-image').value=''; document.getElementById('w-level').value='';
+    document.getElementById('w-title').value=''; document.getElementById('w-file').value=''; document.getElementById('w-tags').value=''; document.getElementById('w-image').value=''; document.getElementById('w-level').value=''; document.getElementById('w-desc').value='';
     document.getElementById('w-active').checked=false; document.getElementById('w-unlock-key').value=''; document.getElementById('w-season').value=''; toggleActive();
     document.getElementById('w-premium').checked=false; document.getElementById('w-price').value='50'; togglePremium();
     document.getElementById('w-form-title').textContent='Add New Writeup'; document.getElementById('w-btn').textContent='+ Add Writeup'; document.getElementById('w-btn').style.background='var(--green)'; document.getElementById('w-editing').style.display='none'; document.getElementById('w-preview').style.display='none';
