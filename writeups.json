@@ -1,14 +1,39 @@
 [
   {
     "file": "writeups/caido.md",
-    "title": "Caido",
-    "platform": "HackTheBox",
-    "level": "Medium",
+    "title": "Getting started with caido",
+    "platform": "Caido",
+    "level": "Biginner",
     "date": "2026-10-23",
     "tags": [
-      "caido.md"
+      "Caido intutes"
     ],
-    "image": "writeups/images/caido.png"
+    "image": "images/evidence/caido.png",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": ""
+  },
+  {
+    "file": "writeups/room404.md",
+    "title": "Room 404",
+    "platform": "TryHackMe",
+    "level": "easy",
+    "date": "2026-10-23",
+    "tags": [
+      "linux"
+    ],
+    "image": "images/evidence/room404.png",
+    "premium": true,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": ""
   },
   {
     "file": "writeups/creative_thm.md",
