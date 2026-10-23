@@ -124,6 +124,65 @@ nav a, [onclick]{cursor:pointer !important}
   99%{ top:-100px; left:-1px; }
   100%{ top:-100px; left:calc(100% - 2px); }
 }
+/* 0xSoloh HACKER NAV - FIXED */
+.top-menu{
+  position: relative !important;
+  padding: 6px 10px !important;
+  transition: all 0.2s ease !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  cursor: pointer;
+}
+.top-menu:hover{
+  color: #ffeb3b !important;
+  text-shadow: 0 0 8px #ffeb3b, 0 0 15px #ffeb3b !important;
+  transform: translateY(-1px);
+}
+.top-menu::before{
+  content: '[';
+  position: absolute;
+  left: -4px;
+  opacity: 0;
+  color: #22c55e;
+  transition: 0.2s;
+}
+.top-menu::after{
+  content: ']';
+  position: absolute;
+  right: -4px;
+  opacity: 0;
+  color: #22c55e;
+  transition: 0.2s;
+}
+.top-menu:hover::before{ left: 0px; opacity: 1; }
+.top-menu:hover::after{ right: 0px; opacity: 1; }
+.top-menu.active{
+  color: #ffeb3b !important;
+  border-bottom: 2px solid #ffeb3b;
+  box-shadow: 0 4px 10px -4px #ffeb3b;
+}
+.top-menu:active{ animation: nav-glitch 0.2s linear; }
+@keyframes nav-glitch{
+  0%{ transform: translateX(0); }
+  25%{ transform: translateX(-2px); }
+  50%{ transform: translateX(2px); }
+  100%{ transform: translateX(0); }
+}
+
+/* TERMINAL CURSOR - separate element, no conflict */
+.term-cursor{
+  opacity: 0;
+  color: #22c55e;
+  margin-left: 2px;
+  font-weight: bold;
+}
+.term-tab:hover .term-cursor{
+  opacity: 1;
+  animation: term-blink 0.8s steps(2, start) infinite;
+}
+@keyframes term-blink{
+  0%,50%{ opacity:1; }
+  51%,100%{ opacity:0; }
+}
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
@@ -234,7 +293,7 @@ nav a, [onclick]{cursor:pointer !important}
       <a onclick="showPage('stats')" id="nav-stats" class="top-menu">Stats</a>
       <a onclick="showPage('cheatsheets')" id="nav-cheatsheets" class="top-menu">Cheatsheets</a>
       <a onclick="showPage('tools')" id="nav-tools" class="top-menu">Tools</a>
-      <a onclick="showPage('terminal')" id="nav-terminal" class="top-menu">Terminal</a>
+      <a onclick="showPage('terminal')" id="nav-terminal" class="top-menu term-tab">Terminal<span class="term-cursor">_</span></a>
       <a onclick="showPage('contact')" id="nav-contact" class="top-menu">Contact</a>
     </div>
   </div>
