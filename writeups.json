@@ -1,7 +1,7 @@
 [
   {
-    "title": "Getting started with caido",
     "file": "writeups/caido.md",
+    "title": "Getting started with caido",
     "platform": "Caido",
     "level": "Biginner",
     "date": "2026-10-23",
@@ -9,13 +9,31 @@
       "Caido intutes"
     ],
     "image": "writeups/images/caido.png",
-    "desc": "Find the usage of caido below",
+    "premium": false,
+    "price": 50,
     "active": false,
+    "restricted": false,
     "unlockKey": "",
     "season": "",
-    "restricted": false,
+    "desc": "Find the usage of caido below"
+  },
+  {
+    "file": "writeups/php2shell.md",
+    "title": "RCE - PHP2SHELL VULN \ud83d\udc7d",
+    "platform": "News",
+    "level": "php2shell vulnerability",
+    "date": "2026-10-23",
+    "tags": [
+      "security flaw"
+    ],
+    "image": "images/evidence/php2shell.png",
     "premium": false,
-    "price": 50
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "\u203c\ufe0f BREAKING - PHP releases emergency patches for two critical #PHP2Shell RCE flaws (CVSS 9.2) as early exploit attempts emerge."
   },
   {
     "file": "writeups/room404.md",
