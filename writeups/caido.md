@@ -1,97 +1,94 @@
-### Step 1: What Is Caido?
-Caido is a web security auditing toolkit that acts as an interception proxy between your browser (or other HTTP client) and your target web applications. It allows you to inspect, manipulate, and replay HTTP/S and WebSocket traffic in real-time, making it easier to discover and exploit security vulnerabilities. Sounds similarly like Burp Suite or ZAP, isn’t it? Why people choose Caido:
+Step 1: What Is Caido?
 
-```bash
-       Modern and lightweight
-       Easier for beginners
-       Ideal for manual testing and request manipulation
-       Actively developed and responsive to community feedback
-       ```
+Caido is a web security auditing toolkit that acts as an interception proxy between your browser and your target web applications. It allows you to inspect, manipulate, and replay HTTP/S and WebSocket traffic in real-time, making it easier to discover and exploit security vulnerabilities. Sounds similar to Burp Suite or ZAP, isn't it?
+
+**Why people choose Caido:**
+
+- Modern and lightweight
+- Easier for beginners
+- Ideal for manual testing and request manipulation
+- Actively developed and responsive to community feedback
 
 ### Step 2: Installing Caido
-Getting Caido up and running is straightforward:
 
-Download the latest installer or package for your OS from Caido’s official website or GitHub releases. Install .deb file via terminal: kali> sudo dpkg -i caido-desktop-v[version].deb
+Getting Caido up and running is straightforward.
 
-You can also get Caido from the Kali repository by entering:
+Download the latest installer from Caido's official website or GitHub releases. Install .deb via terminal:
 
-kali > sudo apt install caido
+```bash
+sudo dpkg -i caido-desktop-v0.55.3-linux-x86_64.deb
+```
+You can also get Caido from the Kali repository:
+sudo apt install caido
+![Caido Download](/writeups/images/caido1.png)
 
+After downloading, unpack as shown below:
 
-![scan](/writeups/images/caido1.png)
-
-After downloading, use the following command to unpack as shown below
-
-![scan](/writeups/images/caido2.png)
-
+![Unpacking Caido](/writeups/images/caido2.png)
 
 Launch Caido and start the instance by clicking on the Start button
 
-![scan](/writeups/images/caido3.png)
+![Start Instance](/writeups/images/caido3.png)
 
-kali > caido After that, you will be greeted by a screen like below.
+Then launch:
+caido
+You will be greeted by a screen like below.
 
-![scan](/writeups/images/caido4.png)
+![Caido Home](/writeups/images/caido4.png)
 
+Step 3: Navigation
 
-### Step 3: Navigation
+On the left-hand side of Caido is a navigation menu that contains the different feature interfaces.
 
-On the left-hand side of Caido is a navigation menu that contains the different feature interfaces. Clicking on a listed feature will present its own page.
+![Navigation](/writeups/images/caido5.png)
 
-![scan](/writeups/images/caido5.png)
+Step 4: Using Caido
 
-
-### Step 4: Using Caido
-The Intercept, Replay, and Automate feature interfaces allow you to view, modify, and control web traffic.
+The Intercept, Replay, and Automate features allow you to view, modify, and control web traffic.
 
 Intercept
-With Caido running and the proxy settings enabled, clicking the >> Forwarding button will switch Caido to || Queuing mode. In this mode, you can intercept requests before they are sent to the server or intercept responses before they are sent to your browser.
 
-From the Intercept interface, you can choose to intercept requests, responses, or both by clicking the corresponding buttons. A pause icon will appear when intercept is enabled, and two right-facing carets will appear when it is disabled.
+With Caido running and proxy enabled, clicking the >> Forwarding button will switch Caido to Queuing mode. You can intercept requests before they are sent to the server or intercept responses.
 
-![scan](/writeups/images/caido6.png)
+![Intercept Mode](/writeups/images/caido6.png)
 
+As traffic accumulates, you can view all intercepted requests and responses.
 
-As web traffic accumulates, you can view all intercepted requests and responses in the Intercept traffic tables.
+Replay
 
-### Replay
-By clicking on a request, you can send it to Replay using the keyboard shortcut Ctrl + R, or by right-cl! licking and selecting Send to Replay from the context menu.
+By clicking on a request, you can send it to Replay using `Ctrl + R`, or by right-clicking and selecting Send to Replay.
 
-![scan](/writeups/images/caido7.png)
+![Send to Replay](/writeups/images/caido7.png)
 
+Here, you can manipulate requests and view server responses.
 
+![Replay Editor](/writeups/images/caido8.png)
 
-Here, we can manipulate our requests and view the responses from the server.
+Step 5: Caido vs Burp Suite
 
-![scan](/writeups/images/caido8.png)
+![Caido vs Burp](/writeups/images/caido9.png)
 
+Project Management
 
-### step 5: Caido vs Burp Suite
-Up to this point, we’ve covered the basic functionality of Caido, similar to what’s available in tools like Burp Suite. Now, let’s look at some features that make it unique.
+Caido's built-in project management helps keep your work organized.
 
+![Project Management](/writeups/images/caido10.png)
 
-![scan](/writeups/images/caido9.png)
+Intuitive Filtering
 
+With HTTPQL, you can easily search and filter requests.
 
-### Project Management
-Caido’s built-in project management system helps keep your work organized and makes managing targets effortless. You can easily switch between different targets as needed.
+![HTTPQL Filtering](/writeups/images/caido11.png)
 
+Built for Speed
 
-![scan](/writeups/images/caido10.png)
+Built from the ground up in Rust to deliver fast experience with low memory usage.
 
-### Intuitive Filtering
-With HTTPQL, you can easily search and filter requests using a simple, user-friendly query language.
+![Performance](/writeups/images/caido12.png)
 
-![scan](/writeups/images/caido11.png)
+Summary
 
+At this point, you might think Caido doesn't offer anything significantly different from Burp Suite. However, I highly recommend installing Caido and trying it out yourself. It might just become your next go-to tool for web app hacking.
 
-### Built for Speed
-While Burp Suite struggles with resource efficiency, Caido is built from the ground up in Rust to deliver a fast experience with low memory usage and unparalleled performance.
+If you want to start learning web hacking, check out our Web App Hacking course.
 
-![scan](/writeups/images/caido12.png)
-
-
-### Summary
-At this point, you might think that Caido doesn’t offer anything significantly different from Burp Suite. However, I highly recommend installing Caido and trying it out for yourself—experiment with it. This article only scratches the surface of what Caido has to offer. It might just become your next go-to tool for web app hacking.
-
-If you want to start learning web hacking, check out our Web App Hacking course — it covers everything you need to know to begin.
