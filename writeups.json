@@ -18,6 +18,24 @@
     "desc": "Find the usage of caido below"
   },
   {
+    "file": "writeups/connected.md",
+    "title": "connected machine walkthrough",
+    "platform": "HackTheBox",
+    "level": "medium",
+    "date": "2026-10-23",
+    "tags": [
+      "linux"
+    ],
+    "image": "writeups/images/connected.png",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "connected full walkthrough machine......"
+  },
+  {
     "file": "writeups/layover-htb.md",
     "title": "Layover Htb",
     "platform": "HackTheBox",
