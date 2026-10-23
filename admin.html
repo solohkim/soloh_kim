@@ -50,6 +50,7 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <button class="nav-tab" onclick="showTab('tools')" id="t-tools">Tools (<span id="count-t">0</span>)</button>
 <button class="nav-tab" onclick="showTab('stats')" id="t-stats">Stats (<span id="count-s">0</span>)</button>
 <button class="nav-tab" onclick="showTab('about')" id="t-about" style="border-color:var(--gold);color:var(--gold)">About</button>
+<button class="nav-tab" onclick="showTab('certs')" id="t-certs" style="border-color:#00FF41;color:#00FF41">Certs (<span id="count-ce">0</span>)</button>
 </div>
 <div id="tab-writeups" class="tab">
 <div class="card-m">
@@ -147,6 +148,23 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 </div>
 <pre id="aboutPreview" style="background:#000;border:1px solid #222;border-radius:8px;padding:12px;color:#00FF41;font-size:.75rem;white-space:pre-wrap">Loading...</pre>
 </div>
+<div id="tab-certs" class="tab" style="display:none">
+<div class="card-m">
+<h6 id="ce-form-title" style="color:var(--green)">Add Cert / CV / Transcript</h6>
+<div id="ce-editing" style="display:none;background:#0a1a0a;border:1px solid #2a5a2a;border-radius:8px;padding:8px;margin-bottom:10px"><small style="color:var(--green)">✏️ Editing index <span id="ce-edit-index"></span></small> <button onclick="cancelEdit('certs')" class="btn btn-sm ms-2" style="background:#333;color:#fff;font-size:.65rem">Cancel</button></div>
+<input id="ce-name" class="form-hack mb-2" placeholder="Name - e.g. TryHackMe Top 3% / CV / Transcript">
+<select id="ce-cat" class="form-hack mb-2">
+  <option>TryHackMe</option><option>HackTheBox</option><option>Certification</option><option>Academic</option><option>CV</option><option>Other</option>
+</select>
+<input id="ce-file" class="form-hack mb-2" placeholder="File path - e.g. certs/thm-top3.png">
+<label class="small text-muted mt-2">Upload File (Image/PDF)</label>
+<input type="file" id="ce-file-input" accept="image/*,.pdf" class="form-hack mb-2" onchange="handleCertFile(this)">
+<div id="ce-preview" style="display:none;text-align:center;margin:8px 0"><small id="ce-preview-name" class="text-muted"></small></div>
+<label class="small text-muted mt-1" style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="ce-private" checked style="accent-color:#00FF41"> 🔒 View-only (public can't download, only you in admin can)</label>
+<button id="ce-btn" onclick="addItem('certs')" class="btn btn-sm w-100 mt-2" style="background:var(--green);color:#000;font-weight:800">+ Add to Vault</button>
+</div>
+<div id="list-certs"></div>
+</div>
 <hr style="border-color:#222" class="my-4">
 <div class="card-m">
 <h6>Export JSONs</h6>
@@ -156,6 +174,7 @@ document.addEventListener('keydown', (e)=>{const lock=document.getElementById('a
 <button onclick="exportJSON('tools')" class="btn btn-outline-success btn-sm">Download tools.json</button>
 <button onclick="exportJSON('stats')" class="btn btn-outline-warning btn-sm" style="border-color:var(--gold);color:var(--gold)">Download stats.json</button>
 <button onclick="exportJSON('about')" class="btn btn-sm" style="background:var(--gold);color:#000;font-weight:800">Download about.json</button>
+<button onclick="exportJSON('certs')" class="btn btn-outline-success btn-sm" style="border-color:#00FF41;color:#00FF41">Download certs.json</button>
 </div>
 <div class="mt-3">
   <label class="small text-muted">Import JSON manually:</label>
@@ -170,9 +189,10 @@ let data={
   cheatsheets:JSON.parse(localStorage.getItem('c')||'[]'),
   tools:JSON.parse(localStorage.getItem('t')||'[]'),
   stats:JSON.parse(localStorage.getItem('s')||'[]'),
-  about:JSON.parse(localStorage.getItem('about')||'null')
+  about:JSON.parse(localStorage.getItem('about')||'null'),
+  certs:JSON.parse(localStorage.getItem('ce')||'[]')
 };
-let editIndex={writeups:null,cheatsheets:null,tools:null,stats:null};
+let editIndex={writeups:null,cheatsheets:null,tools:null,stats:null,certs:null};
 let serverLoaded=false;
 function toggleActive(){
   const isActive = document.getElementById('w-active').checked;
@@ -186,7 +206,7 @@ async function loadExistingFromServer(){
   const status=document.getElementById('loadStatus');
   status.textContent='⏳ Loading...'; status.style.color='#FFD54F';
   try{
-    for(let type of ['writeups','cheatsheets','tools','stats']){
+    for(let type of ['writeups','cheatsheets','tools','stats','certs']){
       try{
         const res=await fetch(type+'.json?cachebust='+Date.now());
         if(res.ok){
@@ -194,7 +214,8 @@ async function loadExistingFromServer(){
           if(Array.isArray(json)&&json.length>0){
             if(!serverLoaded||data[type].length===0){
               data[type]=json;
-              localStorage.setItem(type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s',JSON.stringify(json));
+              const keyMap={writeups:'w',cheatsheets:'c',tools:'t',stats:'s',certs:'ce'};
+              localStorage.setItem(keyMap[type]||type,JSON.stringify(json));
             }
           }
         }
@@ -212,7 +233,7 @@ async function loadExistingFromServer(){
       }
     }catch(e){}
     serverLoaded=true;
-    status.textContent=`✅ Loaded: ${data.writeups.length} writeups, ${data.cheatsheets.length} cheatsheets, ${data.tools.length} tools, ${data.stats.length} stats`;
+    status.textContent=`✅ Loaded: ${data.writeups.length} writeups, ${data.cheatsheets.length} cheatsheets, ${data.tools.length} tools, ${data.stats.length} stats, ${data.certs.length} certs`;
     status.style.color='#00FF41';
     render();
   }catch(e){
@@ -298,6 +319,14 @@ function addItem(type){
     localStorage.setItem('s',JSON.stringify(data.stats));
     cancelEdit('stats');
   }
+  if(type==='certs'){
+    const name=document.getElementById('ce-name').value; const file=document.getElementById('ce-file').value;
+    if(!name||!file) return alert('Name + File needed');
+    item={name, file, cat:document.getElementById('ce-cat').value, private:document.getElementById('ce-private').checked, date:new Date().toISOString().slice(0,10)};
+    if(editIndex.certs!==null){data.certs[editIndex.certs]=item; editIndex.certs=null;}else{data.certs.unshift(item);}
+    localStorage.setItem('ce',JSON.stringify(data.certs));
+    cancelEdit('certs');
+  }
   render();
 }
 function editItem(type,i){
@@ -365,6 +394,19 @@ function editItem(type,i){
     showTab('stats');
     window.scrollTo({top:0,behavior:'smooth'});
   }
+  if(type==='certs'){
+    document.getElementById('ce-name').value=item.name||'';
+    document.getElementById('ce-cat').value=item.cat||'TryHackMe';
+    document.getElementById('ce-file').value=item.file||'';
+    document.getElementById('ce-private').checked=item.private||false;
+    document.getElementById('ce-form-title').textContent='✏️ Editing Cert';
+    document.getElementById('ce-btn').textContent='💾 Update Vault';
+    document.getElementById('ce-btn').style.background='#FFD54F';
+    document.getElementById('ce-editing').style.display='block';
+    document.getElementById('ce-edit-index').textContent=i;
+    showTab('certs');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
 }
 function cancelEdit(type){
   editIndex[type]=null;
@@ -386,23 +428,29 @@ function cancelEdit(type){
     document.getElementById('s-rank').value=''; document.getElementById('s-icon').value=''; document.getElementById('s-link').value=''; document.getElementById('s-proof').value='';
     document.getElementById('s-form-title').textContent='Add Stat / Badge'; document.getElementById('s-btn').textContent='+ Add Stat'; document.getElementById('s-editing').style.display='none'; document.getElementById('proofPreview').style.display='none';
   }
+  if(type==='certs'){
+    document.getElementById('ce-name').value=''; document.getElementById('ce-file').value=''; document.getElementById('ce-cat').value='TryHackMe'; document.getElementById('ce-private').checked=true;
+    document.getElementById('ce-form-title').textContent='Add Cert / CV / Transcript'; document.getElementById('ce-btn').textContent='+ Add to Vault'; document.getElementById('ce-btn').style.background='var(--green)'; document.getElementById('ce-editing').style.display='none'; document.getElementById('ce-preview').style.display='none';
+  }
 }
 function render(){
   document.getElementById('list-writeups').innerHTML=data.writeups.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>${x.premium?'💎':''}${x.active||x.restricted?'🔒':''} ${x.title} - ${x.file} ${x.premium?`[$${x.price||50}]`:''} ${x.season?`[${x.season}]`:''}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('writeups',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('writeups',${i})">x</span></div></div>`).join('');
   document.getElementById('list-cheatsheets').innerHTML=data.cheatsheets.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>${x.icon} ${x.title}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('cheatsheets',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('cheatsheets',${i})">x</span></div></div>`).join('');
   document.getElementById('list-tools').innerHTML=data.tools.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><span>🛠️ ${x.title}</span><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('tools',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('tools',${i})">x</span></div></div>`).join('');
   document.getElementById('list-stats').innerHTML=data.stats.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><div><b>${x.platform}</b> - ${x.rank}<br><small style="color:#666">${x.proof}</small></div><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('stats',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('stats',${i})">x</span></div></div>`).join('');
+  document.getElementById('list-certs').innerHTML=data.certs.map((x,i)=>`<div class="card-m small d-flex justify-content-between align-items-center"><div><b>${x.cat}</b> - ${x.name}<br><small style="color:#666">${x.file} ${x.private?'🔒 VIEW ONLY':''}</small></div><div><span style="cursor:pointer;color:var(--gold);margin-right:10px" onclick="editItem('certs',${i})"><i class="bi bi-pencil"></i> Edit</span><span style="cursor:pointer;color:#ff5f56" onclick="del('certs',${i})">x</span></div></div>`).join('');
   document.getElementById('count-w').textContent=data.writeups.length;
   document.getElementById('count-c').textContent=data.cheatsheets.length;
   document.getElementById('count-t').textContent=data.tools.length;
   document.getElementById('count-s').textContent=data.stats.length;
+  document.getElementById('count-ce').textContent=data.certs.length;
   if(data.about) document.getElementById('aboutPreview').textContent=JSON.stringify(data.about,null,2);
 }
 function del(type,i){
   if(!confirm('Delete?')) return;
   data[type].splice(i,1);
-  const key=type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s';
-  localStorage.setItem(key,JSON.stringify(data[type]));
+  const keyMap={writeups:'w',cheatsheets:'c',tools:'t',stats:'s',certs:'ce'};
+  localStorage.setItem(keyMap[type]||type,JSON.stringify(data[type]));
   if(editIndex[type]===i) cancelEdit(type);
   render();
 }
@@ -428,6 +476,12 @@ function handleWriteupImage(input){
   const reader=new FileReader();
   reader.onload=(e)=>{document.getElementById('w-preview-img').src=e.target.result; document.getElementById('w-preview').style.display='block';}; reader.readAsDataURL(file);
 }
+function handleCertFile(input){
+  const file=input.files[0]; if(!file) return;
+  document.getElementById('ce-file').value='certs/'+file.name;
+  document.getElementById('ce-preview').style.display='block';
+  document.getElementById('ce-preview-name').textContent=file.name+' - Move this file to /certs folder manually';
+}
 function importJSON(input){
   const file=input.files[0]; if(!file) return;
   const reader=new FileReader();
@@ -436,7 +490,12 @@ function importJSON(input){
       const json=JSON.parse(e.target.result);
       const type=file.name.replace('.json','');
       if(type==='about'){data.about=json; localStorage.setItem('about',JSON.stringify(json)); fillAboutForm(json); render(); return;}
-      if(data.hasOwnProperty(type)){data[type]=json; const key=type==='writeups'?'w':type==='cheatsheets'?'c':type==='tools'?'t':'s'; localStorage.setItem(key,JSON.stringify(json)); render();}
+      if(data.hasOwnProperty(type)){
+        data[type]=json; 
+        const keyMap={writeups:'w',cheatsheets:'c',tools:'t',stats:'s',certs:'ce'};
+        localStorage.setItem(keyMap[type]||type,JSON.stringify(json)); 
+        render();
+      }
     }catch(err){alert('Invalid JSON');}
   }; reader.readAsText(file);
 }
