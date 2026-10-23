@@ -1,5 +1,16 @@
 [
   {
+    "file": "writeups/caido.md",
+    "title": "Caido",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-23",
+    "tags": [
+      "caido.md"
+    ],
+    "image": "writeups/images/caido.png"
+  },
+  {
     "file": "writeups/creative_thm.md",
     "title": "Creative Thm",
     "platform": "TryHackMe",
