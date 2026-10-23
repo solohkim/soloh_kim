@@ -26,7 +26,7 @@
     "tags": [
       "security flaw"
     ],
-    "image": "images/evidence/php2shell.png",
+    "image": "writeups/images/php2shell.png",
     "premium": false,
     "price": 50,
     "active": false,
