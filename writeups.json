@@ -18,6 +18,24 @@
     "desc": "Find the usage of caido below"
   },
   {
+    "file": "writeups/layover-htb.md",
+    "title": "Layover Htb",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-23",
+    "tags": [
+      "layover"
+    ],
+    "image": "images/evidence/layover.png",
+    "premium": false,
+    "price": 50,
+    "active": true,
+    "restricted": true,
+    "unlockKey": "root1",
+    "season": "season 10",
+    "desc": ""
+  },
+  {
     "file": "writeups/php2shell.md",
     "title": "RCE - PHP2SHELL VULN \ud83d\udc7d",
     "platform": "News",
@@ -70,17 +88,6 @@
     "unlockKey": "root1",
     "season": "season10",
     "desc": ""
-  },
-  {
-    "file": "writeups/layover-htb.md",
-    "title": "Layover Htb",
-    "platform": "HackTheBox",
-    "level": "Medium",
-    "date": "2026-10-22",
-    "tags": [
-      "layover"
-    ],
-    "image": "images/evidence/layover.png"
   },
   {
     "file": "writeups/mr-robot-suid.md",
