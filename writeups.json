@@ -1,7 +1,7 @@
 [
   {
-    "file": "writeups/caido.md",
     "title": "Getting started with caido",
+    "file": "writeups/caido.md",
     "platform": "Caido",
     "level": "Biginner",
     "date": "2026-10-23",
@@ -9,13 +9,13 @@
       "Caido intutes"
     ],
     "image": "writeups/images/caido.png",
-    "premium": false,
-    "price": 50,
+    "desc": "Find the usage of caido below",
     "active": false,
-    "restricted": false,
     "unlockKey": "",
     "season": "",
-    "desc": "Find the usgae of caido below"
+    "restricted": false,
+    "premium": false,
+    "price": 50
   },
   {
     "file": "writeups/room404.md",
