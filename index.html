@@ -212,6 +212,15 @@ body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;tran
   0%,50%{ opacity:1; }
   51%,100%{ opacity:0; }
 }
+.sec-rotate{
+  display: inline-block;
+  animation: sec-spin 2.5s linear infinite;
+  filter: drop-shadow(0 0 6px #22c55e);
+}
+@keyframes sec-spin{
+  from{ transform: rotate(0deg); }
+  to{ transform: rotate(360deg); }
+}
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
@@ -366,7 +375,7 @@ body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;tran
 </div>
 <nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:#000;border-bottom:1px solid var(--border);position:sticky;top:78px;z-index:9">
 <a href="https://wa.me/254797003045?text=Hey%200xSoloh%20%2C%20I%20saw%20your%20portfolio" target="_blank" style="text-decoration:none;color:inherit;cursor:pointer !important">
-<div><b style="color:var(--green)">0x</b><b>Soloh</b> <span class="badge-h" style="color:var(--green)">TOP 3% THM</span> <i class="bi bi-whatsapp ms-1" style="color:var(--green)"></i></div>
+<div><b style="color:var(--green)">0x</b><b>Soloh</b> <span class="badge-h" style="color:var(--green)">TOP 3% THM</span> <i class="bi bi-shield-lock-fill ms-1 sec-rotate" style="color: var(--green)"></i></div>
 </a>
 <div class="d-flex gap-3 small align-items-center">
 <a onclick="showPage('posts')" id="nav-posts" class="vault-path">/vault</a>
