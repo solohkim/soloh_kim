@@ -1,4 +1,4 @@
-Step 1: What Is Caido?
+### Step 1: What Is Caido?
 
 Caido is a web security auditing toolkit that acts as an interception proxy between your browser and your target web applications. It allows you to inspect, manipulate, and replay HTTP/S and WebSocket traffic in real-time, making it easier to discover and exploit security vulnerabilities. Sounds similar to Burp Suite or ZAP, isn't it?
 
