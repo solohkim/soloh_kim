@@ -1,7 +1,9 @@
 [
-  { "name": "THM Top 3%", "file": "certs/thm-top3.png", "cat": "THM" },
-  { "name": "CV - Solomon Kim", "file": "certs/cv.pdf", "cat": "CV" },
-  { "name": "Transcript", "file": "certs/transcript.pdf", "cat": "Academic" },
-  { "name": "Cisco Intro to Cybersecurity", "file": "certs/cisco.pdf", "cat": "Cisco" },
-  { "name": "Google Cybersecurity Cert", "file": "certs/google.pdf", "cat": "Google" }
+  {
+    "name": "CV",
+    "file": "certs/CV.pdf",
+    "cat": "Academic",
+    "private": true,
+    "date": "2026-10-23"
+  }
 ]
