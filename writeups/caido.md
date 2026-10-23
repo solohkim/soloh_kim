@@ -36,13 +36,13 @@ You will be greeted by a screen like below.
 
 ![Caido Home](/writeups/images/caido4.png)
 
-Step 3: Navigation
+### Step 3: Navigation
 
 On the left-hand side of Caido is a navigation menu that contains the different feature interfaces.
 
 ![Navigation](/writeups/images/caido5.png)
 
-Step 4: Using Caido
+### Step 4: Using Caido
 
 The Intercept, Replay, and Automate features allow you to view, modify, and control web traffic.
 
@@ -64,7 +64,7 @@ Here, you can manipulate requests and view server responses.
 
 ![Replay Editor](/writeups/images/caido8.png)
 
-Step 5: Caido vs Burp Suite
+### Step 5: Caido vs Burp Suite
 
 ![Caido vs Burp](/writeups/images/caido9.png)
 
@@ -86,7 +86,7 @@ Built from the ground up in Rust to deliver fast experience with low memory usag
 
 ![Performance](/writeups/images/caido12.png)
 
-Summary
+### Summary
 
 At this point, you might think Caido doesn't offer anything significantly different from Burp Suite. However, I highly recommend installing Caido and trying it out yourself. It might just become your next go-to tool for web app hacking.
 
