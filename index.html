@@ -81,6 +81,29 @@ nav a, [onclick]{cursor:pointer !important}
 #restrictedModal .restricted-head,#premiumModal .restricted-head{position:sticky;top:0;z-index:5;background:#0f1f0f!important}
 #restrictedModal .restricted-body,#premiumModal .restricted-body{overflow-y:auto;max-height:calc(85vh - 80px);padding:16px}
 #restrictedModal .close-x,#premiumModal .close-x{width:36px;height:36px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;cursor:pointer;border:2px solid #FF8C42}
+.kimsec-terminal-wrap{
+  position:relative;
+  border-radius:16px;
+  padding:2px;
+  overflow:hidden;
+}
+.kimsec-terminal-wrap::before{
+  content:"";
+  position:absolute;
+  top:-50%;left:-50%;
+  width:200%;height:200%;
+  background:conic-gradient(from 0deg,transparent 0deg,transparent 320deg,#ffeb3b 360deg);
+  animation:kimsec-rotate 3s linear infinite;
+}
+.kimsec-terminal-wrap .hero-terminal{
+  position:relative;
+  z-index:1;
+  border-radius:14px;
+}
+@keyframes kimsec-rotate{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
@@ -245,13 +268,15 @@ nav a, [onclick]{cursor:pointer !important}
 </nav>
 <div class="container py-4" style="max-width:1100px">
 <div id="page-home" class="page-section active">
-<div class="hero-terminal mb-4">
+<div class="kimsec-terminal-wrap mb-4">
+  <div class="hero-terminal">
 <div class="d-flex gap-2 mb-3"><span style="width:12px;height:12px;background:#ff5f56;border-radius:50%"></span><span style="width:12px;height:12px;background:#ffbd2e;border-radius:50%"></span><span style="width:12px;height:12px;background:#27c93f;border-radius:50%"></span><small class="ms-2" style="color:#555">0xSoloh@kali:~</small></div>
 <div class="mono" style="color:#ccc;line-height:1.8;font-size:.9rem">
 <span style="color:var(--green)">$ whoami</span><br>><span id="whoamiText"> Soloh Kim — PenTester | CTF Player | Murang'a PSB eCitizen Dev</span><br><br>
 <span style="color:var(--green)">$ cat mission.txt</span><br>><span id="missionText"> Break to Secure. Web Exploitation, PrivEsc, OSINT, AD attacks.</span><br><br>
 <span style="color:var(--green)">$ </span><span id="typewriter" style="color:#fff"></span><span class="cursor"></span>
-</div>
+  </div>
+  </div>
 </div>
 <script>
 const phrases = ["welcome here", "### who are you?", "ls ~/vault/ — exploring?", "sudo cat /etc/shadow 😏"];
