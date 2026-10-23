@@ -170,13 +170,10 @@ nav a, [onclick]{cursor:pointer !important}
 
 /* TERMINAL CURSOR - separate element, no conflict */
 .term-cursor{
-  opacity: 0;
+  opacity: 1;
   color: #22c55e;
   margin-left: 2px;
   font-weight: bold;
-}
-.term-tab:hover .term-cursor{
-  opacity: 1;
   animation: term-blink 0.8s steps(2, start) infinite;
 }
 @keyframes term-blink{
