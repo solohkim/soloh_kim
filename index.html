@@ -81,30 +81,48 @@ nav a, [onclick]{cursor:pointer !important}
 #restrictedModal .restricted-head,#premiumModal .restricted-head{position:sticky;top:0;z-index:5;background:#0f1f0f!important}
 #restrictedModal .restricted-body,#premiumModal .restricted-body{overflow-y:auto;max-height:calc(85vh - 80px);padding:16px}
 #restrictedModal .close-x,#premiumModal .close-x{width:36px;height:36px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;cursor:pointer;border:2px solid #FF8C42}
+
 .kimsec-terminal-wrap{
   position:relative;
   border-radius:16px;
   background:#0f0f0f;
+  border:1px solid #222;
   overflow:hidden;
+}
+.kimsec-terminal-wrap::before{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:3px;
+  background:#ffeb3b;
+  box-shadow:0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
+  top:0; left:0; z-index:3;
+  animation: kimsec-h 3s linear infinite;
 }
 .kimsec-terminal-wrap::after{
   content:"";
   position:absolute;
-  width:80px;
-  height:3px;
+  width:3px;
+  height:100px;
   background:#ffeb3b;
   box-shadow:0 0 10px #ffeb3b, 0 0 20px #ffeb3b;
-  top:0;
-  left:0;
-  animation: kimsec-run 4s linear infinite;
-  z-index:2;
+  top:0; left:0; z-index:3;
+  animation: kimsec-v 3s linear infinite;
+  animation-delay: 0.75s;
 }
-@keyframes kimsec-run{
-  0%{ top:0; left:0; transform:translateX(0); }
-  25%{ top:0; left:100%; transform:translateX(-100%); }
-  50%{ top:100%; left:100%; transform:translate(-100%, -100%); }
-  75%{ top:100%; left:0; transform:translateY(-100%); }
-  100%{ top:0; left:0; }
+@keyframes kimsec-h{
+  0%{ left:-100px; top:-1px; }
+  49%{ left:100%; top:-1px; }
+  50%{ left:100%; top:calc(100% - 2px); }
+  99%{ left:-100px; top:calc(100% - 2px); }
+  100%{ left:-100px; top:-1px; }
+}
+@keyframes kimsec-v{
+  0%{ top:-100px; left:calc(100% - 2px); }
+  49%{ top:100%; left:calc(100% - 2px); }
+  50%{ top:100%; left:-1px; }
+  99%{ top:-100px; left:-1px; }
+  100%{ top:-100px; left:calc(100% - 2px); }
 }
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
