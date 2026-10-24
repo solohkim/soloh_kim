@@ -1,22 +1,67 @@
-<!doctype html><html><head><meta charset="utf-8"><title>0xSoloh Viewer - READ ONLY</title>
+<!doctype html><html><head><meta charset="utf-8">
+<title>0xSoloh Viewer - READ ONLY</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<style>body{background:#080808;color:#ddd;font-family:monospace;margin:0} #viewer{max-width:900px;margin:20px auto} canvas{width:100%;background:#fff;margin-bottom:10px;border-radius:8px} .bar{background:#111;border-bottom:1px solid #222;padding:10px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:10}</style>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+body{background:#080808;color:#ddd;font-family:monospace;margin:0}
+#viewer{max-width:900px;margin:20px auto;padding:20px}
+canvas{width:100%;background:#fff;margin-bottom:10px;border-radius:8px}
+.bar{background:#111;border-bottom:1px solid #222;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+#md{line-height:1.6;color:#ccc} #md h1,#md h2{color:#00FF41}
+button#shareBtn{background:#00FF41;color:#000;border:0;padding:7px 14px;border-radius:8px;font-weight:bold;cursor:pointer;font-family:monospace}
+</style>
 </head><body oncontextmenu="return false">
-<div class="bar"><small style="color:#00FF41">0xSoloh // READ-ONLY VIEWER</small><small style="color:#666">Download disabled for public</small></div>
-<div id="viewer"></div>
+
+<div class="bar">
+  <small style="color:#00FF41">0xSoloh // READ-ONLY</small>
+  <div style="display:flex;gap:12px;align-items:center">
+    <button id="shareBtn">🔗 Share</button>
+    <small style="color:#666">No Download</small>
+  </div>
+</div>
+
+<div id="viewer"><div id="md">Loading...</div></div>
+
 <script>
-const url = new URLSearchParams(location.search).get('file');
+const params = new URLSearchParams(location.search);
+const fileUrl = params.get('file');
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
 (async()=>{
- if(!url) return;
- const pdf = await pdfjsLib.getDocument(url).promise;
- for(let i=1;i<=pdf.numPages;i++){
-  const page = await pdf.getPage(i);
-  const vp = page.getViewport({scale:1.5});
-  const c = document.createElement('canvas'); const ctx=c.getContext('2d');
-  c.width=vp.width; c.height=vp.height;
-  document.getElementById('viewer').appendChild(c);
-  await page.render({canvasContext:ctx,viewport:vp}).promise;
+ if(!fileUrl) { document.getElementById('md').innerHTML="No file."; return; }
+
+ // --- SHARE LOGIC ---
+ const slug = fileUrl.split('/').pop().replace('.md','').replace('.pdf','');
+ const shareUrl = `https://kimsec.netlify.app/w/${slug}/`;
+ document.getElementById('shareBtn').onclick = async () => {
+   if(navigator.share){
+     try{ await navigator.share({title: slug + " | 0xSoloh", url: shareUrl}); } catch(e){}
+   } else {
+     await navigator.clipboard.writeText(shareUrl);
+     const b=document.getElementById('shareBtn');
+     b.textContent="✅ Copied!";
+     setTimeout(()=>b.textContent="🔗 Share",2000);
+   }
+ };
+ document.title = slug + " | 0xSoloh";
+
+ // --- RENDER LOGIC ---
+ if(fileUrl.endsWith('.pdf')){
+   const pdf = await pdfjsLib.getDocument(fileUrl).promise;
+   document.getElementById('md').innerHTML="";
+   for(let i=1;i<=pdf.numPages;i++){
+     const page = await pdf.getPage(i);
+     const vp = page.getViewport({scale:1.5});
+     const c = document.createElement('canvas'); const ctx=c.getContext('2d');
+     c.width=vp.width; c.height=vp.height;
+     document.getElementById('viewer').appendChild(c);
+     await page.render({canvasContext:ctx,viewport:vp}).promise;
+   }
+ } else {
+   // .md file
+   const res = await fetch(fileUrl);
+   const text = await res.text();
+   document.getElementById('md').innerHTML = marked.parse(text);
  }
 })();
 </script></body></html>
