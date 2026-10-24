@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset="utf-8">
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://kimsec.netlify.app/labs/reset/">
 <meta property="og:title" content="Reset | 0xSoloh">
@@ -9,9 +9,35 @@
 <meta name="twitter:description" content="**Reset | TryHackMe | Walkthrough**    **1. Initial Access**  **nmap -p- -v -sSCV --min-rate 1000 TARGET\_IP**  **-p- → Scan all ports (1–65535).**  **-v → Verb">
 <meta name="twitter:image" content="https://kimsec.netlify.app/writeups/images/reset.png">
 <title>Reset | 0xSoloh</title>
-<meta http-equiv="refresh" content="0; url=/?lab=reset">
-</head><body style="background:#080808;color:#00FF41;font-family:monospace;padding:40px;text-align:center">
-<p>Redirecting to Reset...</p>
-<p><a href="https://kimsec.netlify.app/?lab=reset" style="color:#00FF41">Click here if not redirected — BACK goes to kimsec.netlify.app</a></p>
-<script>window.location.replace("https://kimsec.netlify.app/?lab=reset");</script>
+<meta http-equiv="refresh" content="3; url=https://kimsec.netlify.app/?lab=reset">
+<style>
+body{margin:0;background:#000;color:#00FF41;font-family:'JetBrains Mono',monospace;overflow:hidden}
+#matrix{position:fixed;inset:0;opacity:.12}
+.terminal{position:relative;z-index:2;max-width:620px;margin:12vh auto;padding:22px;background:rgba(10,10,10,.92);border:1px solid #00FF41;border-radius:14px;box-shadow:0 0 50px rgba(0,255,65,.25)}
+.bar{height:9px;background:#111;border:1px solid #222;border-radius:20px;overflow:hidden;margin:16px 0}
+.fill{height:100%;width:0%;background:linear-gradient(90deg,#00FF41,#FFD54F);animation:load 2.4s forwards}
+@keyframes load{0%{width:0%} 30%{width:45%} 70%{width:86%} 100%{width:100%}}
+.cursor::after{content:'█';animation:blink 1s infinite}@keyframes blink{50%{opacity:0}}
+a{color:#FFD54F;text-decoration:none}a:hover{text-decoration:underline}
+</style>
+</head><body>
+<canvas id="matrix"></canvas>
+<div class="terminal">
+<div style="display:flex;gap:6px;margin-bottom:14px"><span style="width:11px;height:11px;background:#ff5f56;border-radius:50%"></span><span style="width:11px;height:11px;background:#ffbd2e;border-radius:50%"></span><span style="width:11px;height:11px;background:#27c93f;border-radius:50%"></span><small style="color:#555;margin-left:8px">0xSoloh@vault:~ — decrypting</small></div>
+<div id="type" style="min-height:110px;line-height:1.6"></div>
+<div class="bar"><div class="fill"></div></div>
+<small id="status" style="color:#888">> decrypting writeup... [HTB:// ACTIVE]</small>
+<br><br>
+<a href="https://kimsec.netlify.app/?lab=reset">Click here if not redirected — BACK goes to kimsec.netlify.app</a>
+</div>
+<script>
+const c=document.getElementById('matrix'),x=c.getContext('2d');
+function r(){c.width=innerWidth;c.height=innerHeight}r();addEventListener('resize',r);
+let d=Array(Math.floor(c.width/14)).fill(0);
+setInterval(()=>{x.fillStyle='rgba(0,0,0,.08)';x.fillRect(0,0,c.width,c.height);x.fillStyle='#00FF41';x.font='14px monospace';d.forEach((v,i)=>{x.fillText(String.fromCharCode(33+Math.random()*90),i*14,v*14);if(v*14>c.height&&Math.random()>.975)d[i]=0;d[i]++})},50);
+const lines=[`$ ./vault --open reset`,`> locating reset.md in ~/vault... FOUND`,`> bypassing paywall... OK`,`> injecting writeup...`];
+let li=0,ci=0;const el=document.getElementById('type');
+function type(){if(li>=lines.length){document.getElementById('status').innerHTML='> <b style="color:#00FF41">ACCESS GRANTED</b> - Redirecting to Reset...';return}const cur=lines[li];if(ci==0){el.innerHTML+= (li>0?'<br>':'') }if(ci<cur.length){el.innerHTML+=cur[ci];ci++;setTimeout(type,28)}else{el.innerHTML+='<br>';li++;ci=0;setTimeout(type,280)}}type();
+setTimeout(()=>{window.location.replace("https://kimsec.netlify.app/?lab=reset");},2600);
+</script>
 </body></html>
