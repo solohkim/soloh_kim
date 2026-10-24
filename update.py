@@ -48,7 +48,7 @@ def make_lab_page(p):
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="{image_url}">
 <title>{title} | 0xSoloh</title>
-<meta http-equiv="refresh" content="4; url=https://kimsec.netlify.app/?lab={slug}">
+<meta http-equiv="refresh" content="5.5; url=https://kimsec.netlify.app/?lab={slug}">
 <style>
 body{{margin:0;background:#000;color:#00FF41;font-family:'JetBrains Mono',monospace;overflow:hidden}}
 #matrix{{position:fixed;inset:0;opacity:.12}}
@@ -79,7 +79,7 @@ let d=Array(Math.floor(c.width/14)).fill(0);
 setInterval(()=>{{x.fillStyle='rgba(0,0,0,.08)';x.fillRect(0,0,c.width,c.height);x.fillStyle='#00FF41';x.font='14px monospace';d.forEach((v,i)=>{{x.fillText(String.fromCharCode(33+Math.random()*90),i*14,v*14);if(v*14>c.height&&Math.random()>.975)d[i]=0;d[i]++}})}},50);
 const lines=[`$ ./vault --open {slug}`,`> locating {slug}.md in ~/vault... FOUND`,`> bypassing paywall... OK`,`> injecting writeup...`];
 let li=0,ci=0;const el=document.getElementById('type');
-function type(){{if(li>=lines.length){{showGranted();return}}const cur=lines[li];if(ci==0){{el.innerHTML+= (li>0?'<br>':'') }}if(ci<cur.length){{el.innerHTML+=cur[ci];ci++;setTimeout(type,28)}}else{{el.innerHTML+='<br>';li++;ci=0;setTimeout(type,280)}}}}type();
+function type(){{if(li>=lines.length){{showGranted();return}}const cur=lines[li];if(ci==0){{el.innerHTML+= (li>0?'<br>':'') }}if(ci<cur.length){{el.innerHTML+=cur[ci];ci++;setTimeout(type,18)}}else{{el.innerHTML+='<br>';li++;ci=0;setTimeout(type,180)}}}}type();
 function showGranted(){{
 document.getElementById('status').innerHTML='> <b style="color:#00FF41">ACCESS GRANTED</b> - Redirecting to {title}...';
 document.getElementById('granted').style.display='grid';
