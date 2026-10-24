@@ -805,6 +805,21 @@ function shareLab(slug){
     alert('Share link copied! Paste on WhatsApp to see cover: ' + url);
   }
 }
+
+function injectShareButtons(){
+  document.querySelectorAll('.vault-card').forEach((card, i)=>{
+    if(card.querySelector('.share-lab-btn')) return;
+    let slug = (window.allWriteups && allWriteups[i] && allWriteups[i].slug) ? allWriteups[i].slug : (allWriteups[i] ? allWriteups[i].file.split('/').pop().replace('.md','') : 'layover');
+    let btn = document.createElement('button');
+    btn.className = 'share-lab-btn';
+    btn.innerHTML = '↗';
+    btn.style.cssText = 'position:absolute;bottom:10px;right:10px;z-index:20;background:#111;border:1px solid #00FF41;color:#00FF41;width:30px;height:30px;border-radius:50%;cursor:pointer';
+    btn.onclick = (e)=>{ e.stopPropagation(); shareLab(slug); };
+    let imgDiv = card.querySelector('.vault-img');
+    if(imgDiv){ imgDiv.style.position='relative'; imgDiv.appendChild(btn); }
+  });
+}
+setInterval(injectShareButtons, 1500);
 </script>
 <script src="certs.js"></script>
 </body></html>
