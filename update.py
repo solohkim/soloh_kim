@@ -37,7 +37,6 @@ def make_lab_page(p):
     else:
         image_url = image or "https://kimsec.netlify.app/writeups/images/logo.png"
     url = f"https://kimsec.netlify.app/labs/{slug}/"
-    # --- COOL HACKER LOADER - ONLY THIS PART CHANGED ---
     html = f'''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="article">
 <meta property="og:url" content="{url}">
@@ -49,19 +48,22 @@ def make_lab_page(p):
 <meta name="twitter:description" content="{desc}">
 <meta name="twitter:image" content="{image_url}">
 <title>{title} | 0xSoloh</title>
-<meta http-equiv="refresh" content="3; url=https://kimsec.netlify.app/?lab={slug}">
+<meta http-equiv="refresh" content="4; url=https://kimsec.netlify.app/?lab={slug}">
 <style>
 body{{margin:0;background:#000;color:#00FF41;font-family:'JetBrains Mono',monospace;overflow:hidden}}
 #matrix{{position:fixed;inset:0;opacity:.12}}
-.terminal{{position:relative;z-index:2;max-width:620px;margin:12vh auto;padding:22px;background:rgba(10,10,10,.92);border:1px solid #00FF41;border-radius:14px;box-shadow:0 0 50px rgba(0,255,65,.25)}}
+.terminal{{position:relative;z-index:2;max-width:620px;margin:12vh auto;padding:22px;background:rgba(10,10,10,.92);border:1px solid #00FF41;border-radius:14px;box-shadow:0 0 50px rgba(0,255,65,.25);transition:transform .1s}}
 .bar{{height:9px;background:#111;border:1px solid #222;border-radius:20px;overflow:hidden;margin:16px 0}}
 .fill{{height:100%;width:0%;background:linear-gradient(90deg,#00FF41,#FFD54F);animation:load 2.4s forwards}}
 @keyframes load{{0%{{width:0%}} 30%{{width:45%}} 70%{{width:86%}} 100%{{width:100%}}}}
-.cursor::after{{content:'█';animation:blink 1s infinite}}@keyframes blink{{50%{{opacity:0}}}}
 a{{color:#FFD54F;text-decoration:none}}a:hover{{text-decoration:underline}}
+#granted{{position:fixed;inset:0;z-index:10;display:none;place-items:center;background:rgba(0,0,0,.88);}}
+#granted h1{{font-size:54px;color:#00FF41;text-shadow:0 0 20px #00FF41,0 0 60px #00FF41;letter-spacing:6px;animation:glitch .15s infinite}}
+@keyframes glitch{{0%{{transform:translate(0)}} 20%{{transform:translate(-3px,2px);text-shadow:3px 0 #ff00ff, -3px 0 #00ffff}} 40%{{transform:translate(3px,-2px)}} 60%{{transform:translate(-1px,1px)}} 100%{{transform:translate(0)}}}}
 </style>
 </head><body>
 <canvas id="matrix"></canvas>
+<div id="granted"><h1>ACCESS GRANTED</h1></div>
 <div class="terminal">
 <div style="display:flex;gap:6px;margin-bottom:14px"><span style="width:11px;height:11px;background:#ff5f56;border-radius:50%"></span><span style="width:11px;height:11px;background:#ffbd2e;border-radius:50%"></span><span style="width:11px;height:11px;background:#27c93f;border-radius:50%"></span><small style="color:#555;margin-left:8px">0xSoloh@vault:~ — decrypting</small></div>
 <div id="type" style="min-height:110px;line-height:1.6"></div>
@@ -77,8 +79,12 @@ let d=Array(Math.floor(c.width/14)).fill(0);
 setInterval(()=>{{x.fillStyle='rgba(0,0,0,.08)';x.fillRect(0,0,c.width,c.height);x.fillStyle='#00FF41';x.font='14px monospace';d.forEach((v,i)=>{{x.fillText(String.fromCharCode(33+Math.random()*90),i*14,v*14);if(v*14>c.height&&Math.random()>.975)d[i]=0;d[i]++}})}},50);
 const lines=[`$ ./vault --open {slug}`,`> locating {slug}.md in ~/vault... FOUND`,`> bypassing paywall... OK`,`> injecting writeup...`];
 let li=0,ci=0;const el=document.getElementById('type');
-function type(){{if(li>=lines.length){{document.getElementById('status').innerHTML='> <b style="color:#00FF41">ACCESS GRANTED</b> - Redirecting to {title}...';return}}const cur=lines[li];if(ci==0){{el.innerHTML+= (li>0?'<br>':'') }}if(ci<cur.length){{el.innerHTML+=cur[ci];ci++;setTimeout(type,28)}}else{{el.innerHTML+='<br>';li++;ci=0;setTimeout(type,280)}}}}type();
-setTimeout(()=>{{window.location.replace("https://kimsec.netlify.app/?lab={slug}");}},2600);
+function type(){{if(li>=lines.length){{showGranted();return}}const cur=lines[li];if(ci==0){{el.innerHTML+= (li>0?'<br>':'') }}if(ci<cur.length){{el.innerHTML+=cur[ci];ci++;setTimeout(type,28)}}else{{el.innerHTML+='<br>';li++;ci=0;setTimeout(type,280)}}}}type();
+function showGranted(){{
+document.getElementById('status').innerHTML='> <b style="color:#00FF41">ACCESS GRANTED</b> - Redirecting to {title}...';
+document.getElementById('granted').style.display='grid';
+setTimeout(()=>{{window.location.replace("https://kimsec.netlify.app/?lab={slug}");}},1100);
+}}
 </script>
 </body></html>'''
     folder_path = os.path.join(LABS_DIR, slug)
@@ -149,4 +155,4 @@ for p in data:
 
 print(f"✅ Done! {len(files)} writeups - preserved {len(old_data)//3} old entries with premium/active flags")
 print("Premium writeups:", [d["file"] for d in data if d.get("premium")])
-print(f"✅ Created {len(data)} lab share pages in /{LABS_DIR}/ with own og:image + hacker loader")
+print(f"✅ Created {len(data)} lab share pages in /{LABS_DIR}/ with own og:image + hacker loader + ACCESS GRANTED")
