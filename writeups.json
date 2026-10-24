@@ -9,6 +9,7 @@
       "Caido intutes"
     ],
     "image": "writeups/images/caido.png",
+    "slug": "caido",
     "premium": false,
     "price": 50,
     "active": false,
@@ -27,6 +28,7 @@
       "linux"
     ],
     "image": "writeups/images/connected.png",
+    "slug": "connected",
     "premium": false,
     "price": 50,
     "active": false,
@@ -45,6 +47,7 @@
       "layover"
     ],
     "image": "images/evidence/layover.png",
+    "slug": "layover-htb",
     "premium": false,
     "price": 50,
     "active": true,
@@ -63,6 +66,7 @@
       "security flaw"
     ],
     "image": "writeups/images/php2shell.png",
+    "slug": "php2shell",
     "premium": false,
     "price": 50,
     "active": false,
@@ -81,6 +85,7 @@
       "linux"
     ],
     "image": "images/evidence/room404.png",
+    "slug": "room404",
     "premium": true,
     "price": 50,
     "active": false,
@@ -99,6 +104,7 @@
       "creative_thm.md"
     ],
     "image": "writeups/images/creative_thm.png",
+    "slug": "creative_thm",
     "premium": true,
     "price": 50,
     "active": true,
@@ -116,7 +122,8 @@
     "tags": [
       "mr"
     ],
-    "image": ""
+    "image": "logo.jpeg",
+    "slug": "mr-robot-suid"
   },
   {
     "file": "writeups/reset.md",
@@ -127,7 +134,8 @@
     "tags": [
       "reset.md"
     ],
-    "image": "writeups/images/reset.png"
+    "image": "writeups/images/reset.png",
+    "slug": "reset"
   },
   {
     "file": "writeups/cupidbot.md",
@@ -138,7 +146,8 @@
     "tags": [
       "cupidbot.md"
     ],
-    "image": "writeups/images/cupidbot.png"
+    "image": "writeups/images/cupidbot.png",
+    "slug": "cupidbot"
   },
   {
     "file": "writeups/superspam.md",
@@ -149,7 +158,8 @@
     "tags": [
       "superspam.md"
     ],
-    "image": "writeups/images/superspam.png"
+    "image": "writeups/images/superspam.png",
+    "slug": "superspam"
   },
   {
     "file": "writeups/timelapse-ad.md",
@@ -160,7 +170,8 @@
     "tags": [
       "timelapse"
     ],
-    "image": ""
+    "image": "logo.jpeg",
+    "slug": "timelapse-ad"
   },
   {
     "file": "writeups/wingdata-htb.md",
@@ -171,7 +182,8 @@
     "tags": [
       "wingdata"
     ],
-    "image": "writeups/images/wingdata.png"
+    "image": "writeups/images/wingdata.png",
+    "slug": "wingdata-htb"
   },
   {
     "file": "writeups/xss-to-rce.md",
@@ -182,6 +194,7 @@
     "tags": [
       "xss"
     ],
-    "image": ""
+    "image": "logo.jpeg",
+    "slug": "xss-to-rce"
   }
 ]

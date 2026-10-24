@@ -1,0 +1,41 @@
+<!doctype html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RCE - PHP2SHELL VULN 👽 | 0xSoloh</title>
+<meta property="og:title" content="RCE - PHP2SHELL VULN 👽 | 0xSoloh" />
+<meta property="og:description" content="‼️ BREAKING - PHP releases emergency patches for two critical #PHP2Shell RCE flaws (CVSS 9.2) as early exploit attempts emerge." />
+<meta property="og:image" content="https://kimsec.netlify.app/writeups/images/php2shell.png" />
+<meta property="og:url" content="https://kimsec.netlify.app/labs/php2shell/" />
+<meta property="og:type" content="article" />
+<meta name="twitter:card" content="summary_large_image" />
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+body{background:#080808;color:#ddd;font-family:monospace;margin:0}
+.bar{background:#111;border-bottom:1px solid #222;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}
+#content{max-width:900px;margin:20px auto;padding:20px;line-height:1.7;color:#ccc}
+#content h1,#content h2{color:#00FF41}
+button#shareBtn{background:#00FF41;color:#000;border:0;padding:7px 14px;border-radius:8px;font-weight:bold;cursor:pointer}
+a{color:#00FF41}
+</style>
+</head>
+<body>
+<div class="bar">
+  <a href="/" style="color:#00FF41;text-decoration:none">← 0xSoloh</a>
+  <button id="shareBtn">🔗 Share RCE - PHP2SHELL VULN 👽</button>
+</div>
+<div id="content">Loading RCE - PHP2SHELL VULN 👽...</div>
+<script>
+const slug = "php2shell";
+const shareUrl = "https://kimsec.netlify.app/labs/"+slug+"/";
+document.getElementById('shareBtn').onclick = async () => {
+  if(navigator.share){ await navigator.share({title: "RCE - PHP2SHELL VULN 👽 | 0xSoloh", url: shareUrl}); }
+  else { await navigator.clipboard.writeText(shareUrl); 
+    const b=document.getElementById('shareBtn'); b.textContent="✅ Copied!"; setTimeout(()=>b.textContent="🔗 Share",2000);
+  }
+};
+fetch("/writeups/php2shell.md").then(r=>r.text()).then(t=>{
+  document.getElementById('content').innerHTML = marked.parse(t);
+}).catch(()=>{ document.getElementById('content').innerHTML="Failed to load."; });
+</script>
+</body></html>
