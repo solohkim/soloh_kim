@@ -801,6 +801,22 @@ function shareLab(slug){
   if(navigator.share){ navigator.share({title: slug + ' | 0xSoloh', url: url}); }
   else { navigator.clipboard.writeText(url); alert('Share link copied: ' + url); }
 }
+// AUTO-OPEN when coming from /labs/{slug}/
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const labSlug = params.get('lab');
+  if(labSlug){
+    setTimeout(()=>{
+      const list = (typeof allWriteups!=='undefined' && allWriteups.length ? allWriteups : []);
+      const p = list.find(x=> x.slug===labSlug || x.file.toLowerCase().includes(labSlug.toLowerCase()));
+      const fileToOpen = p ? p.file : `writeups/${labSlug}.md`;
+      if(typeof openWriteup==='function'){
+        openWriteup(fileToOpen);
+        history.replaceState(null,'','/');
+      }
+    }, 1000);
+  }
+})();
 </script>
 <script src="certs.js"></script>
 </body></html>
