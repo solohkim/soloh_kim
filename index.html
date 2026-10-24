@@ -801,21 +801,31 @@ function shareLab(slug){
   if(navigator.share){ navigator.share({title: slug + ' | 0xSoloh', url: url}); }
   else { navigator.clipboard.writeText(url); alert('Share link copied: ' + url); }
 }
-// AUTO-OPEN when coming from /labs/{slug}/
+// AUTO-OPEN when coming from /labs/{slug}/ — FIXED
 (function(){
   const params = new URLSearchParams(window.location.search);
   const labSlug = params.get('lab');
-  if(labSlug){
-    setTimeout(()=>{
-      const list = (typeof allWriteups!=='undefined' && allWriteups.length ? allWriteups : []);
-      const p = list.find(x=> x.slug===labSlug || x.file.toLowerCase().includes(labSlug.toLowerCase()));
-      const fileToOpen = p ? p.file : `writeups/${labSlug}.md`;
-      if(typeof openWriteup==='function'){
-        openWriteup(fileToOpen);
-        history.replaceState(null,'','/');
-      }
-    }, 1000);
+  if(!labSlug) return;
+
+  function tryOpen(attempts){
+    if(attempts <= 0) return;
+    const list = (typeof allWriteups !== 'undefined' ? allWriteups : []);
+    if(list.length === 0){
+      // json not loaded yet, wait
+      setTimeout(()=>tryOpen(attempts-1), 500);
+      return;
+    }
+    const p = list.find(x=> x.slug===labSlug || x.file.toLowerCase().includes(labSlug.toLowerCase()));
+    const fileToOpen = p ? p.file : `writeups/${labSlug}.md`;
+    if(typeof forceOpenWriteup === 'function'){
+      forceOpenWriteup(fileToOpen);
+    } else if(typeof openWriteup === 'function'){
+      openWriteup(fileToOpen);
+    }
+    history.replaceState(null,'','/');
   }
+  // start after 1 sec, retry 20 times
+  setTimeout(()=>tryOpen(20), 800);
 })();
 </script>
 <script src="certs.js"></script>
