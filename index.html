@@ -224,6 +224,8 @@ body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;tran
   0%{ transform: rotateY(0deg); }
   100%{ transform: rotateY(360deg); }
 }
+.share-lab-btn{position:absolute;bottom:8px;right:8px;z-index:9;background:#111;border:1px solid #00FF41;color:#00FF41;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1}
+.share-lab-btn:hover{background:#00FF41;color:#000}
 </style></head><body>
 <canvas id="matrixCanvas"></canvas>
 <div id="proofLightbox" onclick="this.style.display='none'"><img id="lbImg"><small style="color:var(--green);margin-top:10px">Click anywhere to close</small></div>
@@ -561,7 +563,8 @@ function renderVault(){
     let badge=''; 
     if(isPremium) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">💎 PREMIUM $'+(p.price||50)+'</div>'; 
     else if(isLocked) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">🔒 ACTIVE</div>';
-    return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isPremium?'border-color:#FFD54F':isLocked?'border-color:#FFD54F':''}"><div class="vault-img">${iconHtml}${badge}</div><div class="vault-body"><div class="vault-title">${isPremium?'💎 ':isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''} ${p.season?'· '+p.season:''}</div><div class="vault-desc">${desc.substring(0,90)}...</div><div class="mb-2">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isPremium?'var(--gold)':isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isPremium?'Buy $'+(p.price||50):isLocked?'Unlock':'Read'}</button></div></div></div>`;
+    const slug = p.slug || p.file.split('/').pop().replace('.md','');
+const shareBtn = '<button class="share-lab-btn" onclick="event.stopPropagation(); shareLab(\''+slug+'\')">↗</button>';return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isPremium?'border-color:#FFD54F':isLocked?'border-color:#FFD54F':''}"><div class="vault-img" style="position:relative">${iconHtml}${badge}${shareBtn}</div><div class="vault-body"><div class="vault-title">${isPremium?'💎 ':isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''} ${p.season?'· '+p.season:''}</div><div class="vault-desc">${desc.substring(0,90)}...</div><div class="mb-2">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isPremium?'var(--gold)':isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isPremium?'Buy $'+(p.price||50):isLocked?'Unlock':'Read'}</button></div></div></div>`;
   }).join('');
   if(grid) grid.innerHTML=html||'<small class=text-muted>No writeups yet</small>';
   if(list) list.innerHTML=pageItems.map(p=>`<div class="col-md-6"><div class="card-m d-flex justify-content-between align-items-center"><div><small class="badge-h"><i class="bi bi-book"></i> ${p.platform} ${p.premium?'💎 PREMIUM':p.active||p.restricted?'🔒':''}</small><div class="fw-bold mt-1" style="font-size:.85rem">${p.title}</div></div><button onclick="openWriteup('${p.file}')" class="btn btn-sm ${p.premium?'btn-warning':p.active||p.restricted?'btn-outline-warning':'btn-outline-success'}"><i class="bi ${p.premium?'bi-gem':p.active||p.restricted?'bi-lock-fill':'bi-book'}"></i></button></div></div>`).join('');
@@ -578,7 +581,8 @@ function renderPostsPage(){
     let badge=''; 
     if(isPremium) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">💎 PREMIUM</div>'; 
     else if(isLocked) badge='<div style="position:absolute;top:10px;right:10px;background:#FFD54F;color:#000;font-size:.6rem;padding:2px 7px;border-radius:20px;font-weight:800">🔒 ACTIVE</div>';
-    return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isPremium||isLocked?'border-color:#FFD54F':''}"><div class="vault-img" style="position:relative">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`}${badge}</div><div class="vault-body"><div class="vault-title">${isPremium?'💎 ':isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isPremium||isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isPremium?'Buy $'+(p.price||50):isLocked?'Unlock':'Read'}</button></div></div></div>`;
+    const slug = p.slug || p.file.split('/').pop().replace('.md','');
+const shareBtn = '<button class="share-lab-btn" onclick="event.stopPropagation(); shareLab(\''+slug+'\')">↗</button>';return `<div class="col-lg-3 col-md-4 col-sm-6"><div class="vault-card" style="${isPremium||isLocked?'border-color:#FFD54F':''}"><div class="vault-img" style="position:relative">${p.image?`<img src="${p.image}" style="width:140px;height:140px;border-radius:50%;border:4px solid #7AC74F;object-fit:cover">`:`<div style="width:140px;height:140px;border-radius:50%;background:#111;border:4px solid #7AC74F;display:flex;align-items:center;justify-content:center;font-size:3.2rem">💻</div>`}${badge}${shareBtn}</div><div class="vault-body"><div class="vault-title">${isPremium?'💎 ':isLocked?'🔒 ':''}${p.title}</div><div class="vault-meta">${p.date||''} · ${p.platform||''}</div><button onclick="openWriteup('${p.file}')" class="btn btn-sm w-100" style="background:${isPremium||isLocked?'var(--gold)':'var(--green)'};color:#000;font-weight:800;margin-top:auto">${isPremium?'Buy $'+(p.price||50):isLocked?'Unlock':'Read'}</button></div></div></div>`;
   }).join('');
   if(pag){if(totalPages>1){let b='';for(let i=1;i<=totalPages;i++){b+=`<button class="pag-btn ${i===postsPage?'active':''}" onclick="goPostsPage(${i})">${i}</button>`}pag.innerHTML=b}else{pag.innerHTML=''}}
 }
@@ -791,6 +795,11 @@ if(window.location.search.includes('success=true')){
   if(msgBox) msgBox.style.display='block';
   if(typeof showPage === 'function'){ showPage('contact'); }
   setTimeout(()=>{document.getElementById('page-contact')?.scrollIntoView({behavior:'smooth'});}, 500);
+}
+function shareLab(slug){
+  const url = 'https://kimsec.netlify.app/labs/' + slug + '/';
+  if(navigator.share){ navigator.share({title: slug + ' | 0xSoloh', url: url}); }
+  else { navigator.clipboard.writeText(url); alert('Share link copied: ' + url); }
 }
 </script>
 <script src="certs.js"></script>

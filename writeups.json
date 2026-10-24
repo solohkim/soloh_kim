@@ -9,6 +9,7 @@
       "Caido intutes"
     ],
     "image": "writeups/images/caido.png",
+    "slug": "caido",
     "premium": false,
     "price": 50,
     "active": false,
@@ -27,6 +28,7 @@
       "linux"
     ],
     "image": "writeups/images/connected.png",
+    "slug": "connected",
     "premium": false,
     "price": 50,
     "active": false,
@@ -45,13 +47,14 @@
       "layover"
     ],
     "image": "images/evidence/layover.png",
+    "slug": "layover-htb",
     "premium": false,
     "price": 50,
     "active": true,
     "restricted": true,
     "unlockKey": "root1",
     "season": "season 10",
-    "desc": ""
+    "desc": "**WELCOME TO LAYOVER LAB**    **###   NMAP COMMAND**  **1. Initial Enumeration**  **I started with a standard service enumeration using Nmap.**    **The command used was nmap -sC -sV <TARGET\\_IP>.**  "
   },
   {
     "file": "writeups/php2shell.md",
@@ -63,6 +66,7 @@
       "security flaw"
     ],
     "image": "writeups/images/php2shell.png",
+    "slug": "php2shell",
     "premium": false,
     "price": 50,
     "active": false,
@@ -81,13 +85,14 @@
       "linux"
     ],
     "image": "images/evidence/room404.png",
+    "slug": "room404",
     "premium": true,
     "price": 50,
     "active": false,
     "restricted": false,
     "unlockKey": "",
     "season": "",
-    "desc": ""
+    "desc": "***Room 404 | TryHackMe | Walkthrough***  ![byte](/writeups/images/room4041.png)    https://tryhackme.com/room/hh-room404-804573bf   ![dump](/writeups/images/room4042.png)  ### 1.Create a Python virtu"
   },
   {
     "file": "writeups/creative_thm.md",
@@ -99,13 +104,14 @@
       "creative_thm.md"
     ],
     "image": "writeups/images/creative_thm.png",
+    "slug": "creative-thm",
     "premium": true,
     "price": 50,
     "active": true,
     "restricted": true,
     "unlockKey": "root1",
     "season": "season10",
-    "desc": ""
+    "desc": "**# Creative | TryHackMe Write-Up**    Hey, I am back with another write-up. Try this room and many more at TryHackMe!!!    ## NMAP Scan    ![scan](/writeups/images/creative1.png)    nmap -sV -sC \\[IP"
   },
   {
     "file": "writeups/mr-robot-suid.md",
@@ -116,7 +122,9 @@
     "tags": [
       "mr"
     ],
-    "image": ""
+    "image": "",
+    "slug": "mr-robot-suid",
+    "desc": "# Mr Robot \u2014 SUID nmap to Root **Platform:** TryHackMe | **Difficulty:** Easy  ## Recon nmap -sV target...  ## PrivEsc Found SUID nmap: `nmap --interactive -> !sh`  ## Mitigation Remove SUID, use capa"
   },
   {
     "file": "writeups/reset.md",
@@ -127,7 +135,9 @@
     "tags": [
       "reset.md"
     ],
-    "image": "writeups/images/reset.png"
+    "image": "writeups/images/reset.png",
+    "slug": "reset",
+    "desc": "**Reset | TryHackMe | Walkthrough**    **1. Initial Access**  **nmap -p- -v -sSCV --min-rate 1000 TARGET\\_IP**  **-p- \u2192 Scan all ports (1\u201365535).**  **-v \u2192 Verbose mode, shows more details during the "
   },
   {
     "file": "writeups/cupidbot.md",
@@ -138,7 +148,9 @@
     "tags": [
       "cupidbot.md"
     ],
-    "image": "writeups/images/cupidbot.png"
+    "image": "writeups/images/cupidbot.png",
+    "slug": "cupidbot",
+    "desc": "**CupidBot | TryHackMe | Walkthrough**    **This provided is a classic case of**    **Direct Prompt Injection, specifically using a technique called \u201cPersona Adoption\u201d or \u201cRole Play.\u201d**    **1. Person"
   },
   {
     "file": "writeups/superspam.md",
@@ -149,7 +161,9 @@
     "tags": [
       "superspam.md"
     ],
-    "image": "writeups/images/superspam.png"
+    "image": "writeups/images/superspam.png",
+    "slug": "superspam",
+    "desc": "Initial Access  nmap -sC -sV -p- -A -T4 superspam.thm  \\-sC \u2192 Runs the default NSE scripts (like ftp-anon, http-title, vnc-info, etc.)  \\-sV \u2192 Detects service versions (e.g., Apache 2.4.29, OpenSSH 7."
   },
   {
     "file": "writeups/timelapse-ad.md",
@@ -160,7 +174,9 @@
     "tags": [
       "timelapse"
     ],
-    "image": ""
+    "image": "",
+    "slug": "timelapse-ad",
+    "desc": ""
   },
   {
     "file": "writeups/wingdata-htb.md",
@@ -171,7 +187,9 @@
     "tags": [
       "wingdata"
     ],
-    "image": "writeups/images/wingdata.png"
+    "image": "writeups/images/wingdata.png",
+    "slug": "wingdata-htb",
+    "desc": "### INTRO  A walkthrough of the HackTheBox 'WingData' machine. This write-up covers initial access, privilege escalation, and post-exploitation techniques.   ### Key Highlights Ready to take on the Wi"
   },
   {
     "file": "writeups/xss-to-rce.md",
@@ -182,6 +200,8 @@
     "tags": [
       "xss"
     ],
-    "image": ""
+    "image": "",
+    "slug": "xss-to-rce",
+    "desc": ""
   }
 ]
