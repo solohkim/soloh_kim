@@ -19,6 +19,25 @@
     "desc": "# Mr Robot \u2014 SUID nmap to Root **Platform:** TryHackMe | **Difficulty:** Easy  ## Recon nmap -sV target...  ## PrivEsc Found SUID nmap: `nmap --interactive -> !sh`  ## Mitigation Remove SUID, use capa"
   },
   {
+    "file": "writeups/xss-to-rce.md",
+    "title": "Xss To Rce",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-25",
+    "tags": [
+      "xss"
+    ],
+    "image": "images/evidence/rce.png",
+    "slug": "xss-to-rce",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": ""
+  },
+  {
     "file": "writeups/caido.md",
     "title": "Getting started with caido",
     "platform": "Caido",
@@ -196,18 +215,5 @@
     "image": "writeups/images/wingdata.png",
     "slug": "wingdata-htb",
     "desc": "### INTRO  A walkthrough of the HackTheBox 'WingData' machine. This write-up covers initial access, privilege escalation, and post-exploitation techniques.   ### Key Highlights Ready to take on the Wi"
-  },
-  {
-    "file": "writeups/xss-to-rce.md",
-    "title": "Xss To Rce",
-    "platform": "HackTheBox",
-    "level": "Medium",
-    "date": "2026-10-21",
-    "tags": [
-      "xss"
-    ],
-    "image": "",
-    "slug": "xss-to-rce",
-    "desc": ""
   }
 ]
