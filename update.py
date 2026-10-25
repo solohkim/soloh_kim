@@ -103,6 +103,9 @@ for f in files:
     img = old.get("image", "")
     possible = f"writeups/images/{f.replace('.md','.png')}"
     possible2 = f"writeups/images/{f.replace('.md','.jpg')}"
+    # === NEW FIX ADDED: if old image was logo.png, force re-detect real image ===
+    if img and "logo.png" in img:
+        img = ""
     if not img and os.path.exists(possible):
         img = possible
     if not img and os.path.exists(possible2):
