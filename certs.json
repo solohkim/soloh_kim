@@ -1,5 +1,12 @@
 [
   {
+    "name": "Degree",
+    "file": "certs/degree.pdf",
+    "cat": "Academic",
+    "private": true,
+    "date": "2026-10-25"
+  },
+  {
     "name": "Cisco ethical hacker",
     "file": "certs/ethicalhacker.pdf",
     "cat": "Certification",
