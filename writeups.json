@@ -1,5 +1,24 @@
 [
   {
+    "file": "writeups/mr-robot-suid.md",
+    "title": "Mr Robot Suid",
+    "platform": "HackTheBox",
+    "level": "Medium",
+    "date": "2026-10-25",
+    "tags": [
+      "mr"
+    ],
+    "image": "images/evidence/mrrobot.png",
+    "slug": "mr-robot-suid",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "# Mr Robot \u2014 SUID nmap to Root **Platform:** TryHackMe | **Difficulty:** Easy  ## Recon nmap -sV target...  ## PrivEsc Found SUID nmap: `nmap --interactive -> !sh`  ## Mitigation Remove SUID, use capa"
+  },
+  {
     "file": "writeups/caido.md",
     "title": "Getting started with caido",
     "platform": "Caido",
@@ -58,7 +77,7 @@
   },
   {
     "file": "writeups/php2shell.md",
-    "title": "RCE - PHP2SHELL VULN 👽",
+    "title": "RCE - PHP2SHELL VULN \ud83d\udc7d",
     "platform": "News",
     "level": "php2shell vulnerability",
     "date": "2026-10-23",
@@ -73,7 +92,7 @@
     "restricted": false,
     "unlockKey": "",
     "season": "",
-    "desc": "‼️ BREAKING - PHP releases emergency patches for two critical #PHP2Shell RCE flaws (CVSS 9.2) as early exploit attempts emerge."
+    "desc": "\u203c\ufe0f BREAKING - PHP releases emergency patches for two critical #PHP2Shell RCE flaws (CVSS 9.2) as early exploit attempts emerge."
   },
   {
     "file": "writeups/room404.md",
@@ -114,24 +133,6 @@
     "desc": "**# Creative | TryHackMe Write-Up**    Hey, I am back with another write-up. Try this room and many more at TryHackMe!!!    ## NMAP Scan    ![scan](/writeups/images/creative1.png)    nmap -sV -sC \\[IP"
   },
   {
-    "title": "Mr Robot Suid",
-    "file": "writeups/mr-robot-suid.md",
-    "platform": "HackTheBox",
-    "level": "Medium",
-    "date": "2026-10-25",
-    "tags": [
-      "mr"
-    ],
-    "image": "images/evidence/mrrobot.png",
-    "desc": "# Mr Robot — SUID nmap to Root **Platform:** TryHackMe | **Difficulty:** Easy  ## Recon nmap -sV target...  ## PrivEsc Found SUID nmap: `nmap --interactive -> !sh`  ## Mitigation Remove SUID, use capa",
-    "active": false,
-    "unlockKey": "",
-    "season": "",
-    "restricted": false,
-    "premium": false,
-    "price": 50
-  },
-  {
     "file": "writeups/reset.md",
     "title": "Reset",
     "platform": "HackTheBox",
@@ -142,7 +143,7 @@
     ],
     "image": "writeups/images/reset.png",
     "slug": "reset",
-    "desc": "**Reset | TryHackMe | Walkthrough**    **1. Initial Access**  **nmap -p- -v -sSCV --min-rate 1000 TARGET\\_IP**  **-p- → Scan all ports (1–65535).**  **-v → Verbose mode, shows more details during the "
+    "desc": "**Reset | TryHackMe | Walkthrough**    **1. Initial Access**  **nmap -p- -v -sSCV --min-rate 1000 TARGET\\_IP**  **-p- \u2192 Scan all ports (1\u201365535).**  **-v \u2192 Verbose mode, shows more details during the "
   },
   {
     "file": "writeups/cupidbot.md",
@@ -155,7 +156,7 @@
     ],
     "image": "writeups/images/cupidbot.png",
     "slug": "cupidbot",
-    "desc": "**CupidBot | TryHackMe | Walkthrough**    **This provided is a classic case of**    **Direct Prompt Injection, specifically using a technique called “Persona Adoption” or “Role Play.”**    **1. Person"
+    "desc": "**CupidBot | TryHackMe | Walkthrough**    **This provided is a classic case of**    **Direct Prompt Injection, specifically using a technique called \u201cPersona Adoption\u201d or \u201cRole Play.\u201d**    **1. Person"
   },
   {
     "file": "writeups/superspam.md",
@@ -168,7 +169,7 @@
     ],
     "image": "writeups/images/superspam.png",
     "slug": "superspam",
-    "desc": "Initial Access  nmap -sC -sV -p- -A -T4 superspam.thm  \\-sC → Runs the default NSE scripts (like ftp-anon, http-title, vnc-info, etc.)  \\-sV → Detects service versions (e.g., Apache 2.4.29, OpenSSH 7."
+    "desc": "Initial Access  nmap -sC -sV -p- -A -T4 superspam.thm  \\-sC \u2192 Runs the default NSE scripts (like ftp-anon, http-title, vnc-info, etc.)  \\-sV \u2192 Detects service versions (e.g., Apache 2.4.29, OpenSSH 7."
   },
   {
     "file": "writeups/timelapse-ad.md",
