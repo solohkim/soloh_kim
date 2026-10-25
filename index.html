@@ -228,55 +228,41 @@ body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;tran
 .share-lab-btn:hover{background:#00FF41;color:#000}
 
 /* --- ONLY ADDITION: HORIZONTAL LOCK FIX - DOESN'T REMOVE ANYTHING --- */
-/* === FINAL: WHOLE HEADER STATIC WHILE SCROLLING === */
+/* === FINAL FIX — HEADER FIXED STATIC === */
 html, body{
-  overflow-x:hidden !important;
+  overflow-x: clip !important;
   max-width:100vw !important;
 }
 
-/* Make the 3 bars act as one fixed header */
-nav.py-2.px-3.d-flex.justify-content-between.align-items-center:nth-of-type(1){
-  position:sticky !important;
+#kimsecStickyHeader{
+  position: fixed !important;
   top:0 !important;
-  z-index:1001 !important;
-}
-.fact-ticker-bar{
-  position:sticky !important;
-  top:42px !important;
-  z-index:1000 !important;
-  max-width:100vw !important;
+  left:0 !important;
+  right:0 !important;
   width:100% !important;
-  overflow:hidden !important;
-}
-nav.py-2.px-3.d-flex.justify-content-between.align-items-center:nth-of-type(2){
-  position:sticky !important;
-  top:71px !important; /* 42px + 29px ticker */
-  z-index:999 !important;
-  background:#000 !important;
-  border-bottom:1px solid #1f1f1f !important;
-}
-
-/* On mobile, hamburger menu also stays in header */
-#mobileMenu{
-  position:sticky !important;
-  top:42px !important;
   z-index:1000 !important;
+  background:#080808 !important;
+  box-shadow:0 8px 25px rgba(0,0,0,.9);
 }
 
-/* Ensure page content doesn't go under header */
+/* inner bars don't need sticky now — they are inside fixed */
+#kimsecStickyHeader nav,
+#kimsecStickyHeader .fact-ticker-bar,
+#kimsecStickyHeader #mobileMenu{
+  position: relative !important;
+  top:auto !important;
+}
+
+/* push content down so it doesn't hide under fixed header */
 .container.py-4{
+  padding-top: 115px !important;
   position:relative;
   z-index:1;
 }
 
-/* Keep /terminal visible + no horizontal wiggle */
-nav.py-2.px-3.d-flex.justify-content-between.align-items-center:nth-of-type(2){
-  overflow-x:auto !important;
-  white-space:nowrap !important;
-  scrollbar-width:none;
+@media (max-width: 992px){
+  .container.py-4{ padding-top: 110px !important; }
 }
-nav.py-2.px-3.d-flex.justify-content-between.align-items-center:nth-of-type(2)::-webkit-scrollbar{display:none;}
-nav.py-2.px-3.d-flex.justify-content-between.align-items-center:nth-of-type(2) .d-flex.gap-3{flex-shrink:0; white-space:nowrap;}
 
 @keyframes tickerScroll{
   0%{transform:translateX(0)}
@@ -381,7 +367,8 @@ nav.py-2.px-3.d-flex.justify-content-between.align-items-center:nth-of-type(2) .
 <div style="display:flex;gap:8px;margin-top:12px"><button onclick="closeLinuxTipAndContinue()" style="background:#00FF41;color:#000;font-weight:800;padding:11px;border-radius:8px;width:100%;border:none">Continue Reading -></button><button onclick="nextLinuxTip()" style="background:#111;border:1px solid #333;color:#888;border-radius:8px;padding:11px">Shuffle</button></div>
 </div></div></div>
 
-<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a2a0a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1000">
+<div id="kimsecStickyHeader">
+<nav class="py-2 px-3 d-flex justify-content-between align-items-center" style="background:linear-gradient(90deg,#2a1a0a 0%, #1a1a1a 50%, #1a1a1a 100%);border-bottom:1px solid var(--border);">
   <div class="d-flex align-items-center">
     <a onclick="showPage('home')" style="color:#fff;font-weight:800;text-decoration:none;margin-right:20px;cursor:pointer">0xSoloh</a>
     <div class="d-none d-lg-flex align-items-center">
@@ -446,6 +433,7 @@ nav.py-2.px-3.d-flex.justify-content-between.align-items-center:nth-of-type(2) .
 <a onclick="showPage('terminal')" id="nav-terminal" class="vault-path">/terminal<span class="term-cursor">_</span></a>
 </div>
 </nav>
+</div>
 <div class="container py-4" style="max-width:1100px">
 <div id="page-home" class="page-section active">
 <div class="kimsec-terminal-wrap mb-4">
