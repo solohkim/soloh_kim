@@ -254,14 +254,17 @@ html, body{
 }
 
 /* push content down so it doesn't hide under fixed header */
+/* push content down so it doesn't hide under fixed header */
 .container.py-4{
-  padding-top: 115px !important;
+  padding-top: 135px !important;
   position:relative;
   z-index:1;
 }
 
 @media (max-width: 992px){
-  .container.py-4{ padding-top: 110px !important; }
+  .container.py-4{ 
+    padding-top: 145px !important; 
+  }
 }
 
 @keyframes tickerScroll{
