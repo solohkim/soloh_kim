@@ -652,19 +652,22 @@ const shareBtn = '<button class="share-lab-btn" onclick="event.stopPropagation()
 function goPostsPage(n){postsPage=n;renderPostsPage();document.getElementById('page-posts').scrollIntoView({behavior:'smooth'})}
 
 async function openWriteup(file){
-  // --- FIX MR ROBOT LOGO FOR SHARE ---
   let writeup=allWriteups.find(w=>w.file===file);if(!writeup)return;
   if(writeup.image){
     let ogImg=document.querySelector('meta[property="og:image"]');
     if(ogImg){
       let imgPath=writeup.image;
-      if(!imgPath.startsWith('http')) imgPath='https://kimsec.netlify.app/'+imgPath.replace('./','').replace(/^\/+/,'');
+      if(!imgPath.startsWith('http')){
+        imgPath='https://kimsec.netlify.app/'+imgPath.replace('./','').replace(/^\/+/,'');
+      }
       ogImg.content=imgPath;
     }
     let ogTitle=document.querySelector('meta[property="og:title"]');
     if(ogTitle) ogTitle.content=writeup.title+" | 0xSoloh";
   }
-  if(writeup.premium){const paid=localStorage...
+  if(writeup.premium){const paid=localStorage.getItem('premium_paid_'+writeup.file);if(!paid){showPremiumModal(writeup);return;}}
+  if(writeup.active||writeup.restricted){showRestrictedModal(writeup);return;}
+  showLinuxTip(async()=>{try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/'))path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>r.text());document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)});
 }
 
 function showPremiumModal(writeup){
@@ -714,21 +717,21 @@ function tryUnlock(){
   }
 }
 async function forceOpenWriteup(file){
-  // --- FIX MR ROBOT LOGO FOR SHARE ---
   let writeup=allWriteups.find(w=>w.file===file);
   if(writeup && writeup.image){
-    let ogImg = document.querySelector('meta[property="og:image"]');
+    let ogImg=document.querySelector('meta[property="og:image"]');
     if(ogImg){
-      let imgPath = writeup.image;
+      let imgPath=writeup.image;
       if(!imgPath.startsWith('http')){
-        imgPath = 'https://kimsec.netlify.app/' + imgPath.replace('./','').replace(/^\/+/,'');
+        imgPath='https://kimsec.netlify.app/'+imgPath.replace('./','').replace(/^\/+/,'');
       }
-      ogImg.content = imgPath;
+      ogImg.content=imgPath;
     }
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if(ogTitle) ogTitle.content = writeup.title + " | 0xSoloh";
+    let ogTitle=document.querySelector('meta[property="og:title"]');
+    if(ogTitle) ogTitle.content=writeup.title+" | 0xSoloh";
   }
-  try{let path=file.replace...
+  try{let path=file.replace('writeups/writeups/','writeups/');if(!path.startsWith('writeups/'))path='writeups/'+path.split('/').pop();const txt=await fetch(path).then(r=>{if(!r.ok)throw'';return r.text()});document.getElementById('mdContent').innerHTML=marked.parse(txt);}catch(e){document.getElementById('mdContent').innerHTML=`<pre>Could not load ${file}</pre>`;}
+  document.getElementById('reader').style.display='block';window.scrollTo(0,document.getElementById('reader').offsetTop-80)
 }
 function openCoffee(){ document.getElementById('coffeeModal').style.display='flex'; }
 function closeCoffee(){ document.getElementById('coffeeModal').style.display='none'; }
