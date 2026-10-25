@@ -49,7 +49,15 @@ body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;tran
   gap: 18px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 15px;
+  flex-wrap: nowrap !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.vault-nav::-webkit-scrollbar{ display:none; }
+.vault-path{ flex-shrink:0 !important; white-space:nowrap !important; }
 .vault-path{
   color: #6b7280;
   cursor: pointer !important;
@@ -254,16 +262,25 @@ html, body{
 }
 
 /* push content down so it doesn't hide under fixed header */
-/* push content down so it doesn't hide under fixed header */
 .container.py-4{
-  padding-top: 135px !important;
+  padding-top: 125px !important;
   position:relative;
   z-index:1;
 }
 
+/* SECOND NAV SCROLLABLE - keeps static header */
+#kimsecStickyHeader nav:nth-of-type(2){
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  scrollbar-width: none;
+}
+#kimsecStickyHeader nav:nth-of-type(2)::-webkit-scrollbar{ display:none; }
+
 @media (max-width: 992px){
   .container.py-4{ 
-    padding-top: 145px !important; 
+    padding-top: 125px !important; 
   }
 }
 
