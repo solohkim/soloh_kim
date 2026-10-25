@@ -98,12 +98,17 @@ body{background:var(--bg);color:#ddd;font-family:'JetBrains Mono',monospace;tran
 .restricted-input{background:#000;border:1px solid #00FF41;border-radius:8px;color:#00FF41;padding:12px;width:100%;margin:16px 0;font-family:monospace;letter-spacing:2px;text-align:center}
 .restricted-input:focus{outline:none;box-shadow:0 0 15px rgba(0,255,65,.3)}
 #matrixCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:-1;opacity:0.12;pointer-events:none}
-.fact-ticker-bar{background:#0e111a;border-bottom:1px solid #1f1f1f;overflow:hidden;white-space:nowrap;padding:6px 0;position:sticky;top:42px;z-index:10}
-.ticker-track{display:inline-block;white-space:nowrap;animation:tickerScroll 35s linear infinite;color:#a0a8b0;font-size:.72rem}
+html, body{overflow-x:hidden;max-width:100vw;width:100%}
+body{position:relative}
+.container, .row{max-width:100%;overflow-x:hidden}
+.row{--bs-gutter-x:1rem;margin-left:0;margin-right:0}
+.fact-ticker-bar{background:#0e111a;border-bottom:1px solid #1f1f1f;overflow:hidden;white-space:nowrap;padding:6px 0;position:sticky;top:42px;z-index:10;width:100%;max-width:100vw}
+.ticker-track{display:inline-block;white-space:nowrap;animation:tickerScroll 35s linear infinite;color:#a0a8b0;font-size:.72rem;will-change:transform}
 .ticker-track span{margin-right:80px}
 .ticker-track span b{color:#00FF41}
-@keyframes tickerScroll{0%{transform:translateX(100vw)}100%{transform:translateX(-100%)}}
+@keyframes tickerScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .fact-ticker-bar:hover .ticker-track{animation-play-state:paused}
+.kimsec-terminal-wrap, .hero-terminal{max-width:100%;overflow:hidden}
 /* FIX FOR COFFEE MODAL - X VISIBLE + SCROLLABLE */
 #coffeeModal .restricted-box{max-height:85vh;overflow:hidden;display:flex;flex-direction:column}
 #coffeeModal .restricted-head{position:sticky;top:0;z-index:5;background:#1a1008!important}
