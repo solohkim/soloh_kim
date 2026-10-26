@@ -1,6 +1,14 @@
 [
   {
     "platform": "TryHackMe",
+    "rank": "Hard",
+    "icon": "🤖",
+    "link": "https://tryhackme.com/room/plantphotographer?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
+    "proof": "images/evidence/plant.png",
+    "date": "2026-10-26"
+  },
+  {
+    "platform": "TryHackMe",
     "rank": "ohsint",
     "icon": "🤖",
     "link": "https://tryhackme.com/room/ohsint?utm_campaign=social_share&utm_medium=social&utm_content=share-completed-room&utm_source=copy&sharerId=6797826daba75da46f147865",
