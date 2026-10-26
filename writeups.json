@@ -1,5 +1,24 @@
 [
   {
+    "file": "writeups/plant.md",
+    "title": "Plant Photographer",
+    "platform": "TryHackMe",
+    "level": "Hard",
+    "date": "2026-10-26",
+    "tags": [
+      "Linux"
+    ],
+    "image": "images/evidence/plant.png",
+    "slug": "plant",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "Full walkthrough of plantphotographer machine......"
+  },
+  {
     "file": "writeups/mr-robot-suid.md",
     "title": "Mr Robot Suid",
     "platform": "HackTheBox",
