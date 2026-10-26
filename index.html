@@ -263,9 +263,13 @@ html, body{
 
 /* push content down so it doesn't hide under fixed header */
 .container.py-4{
-  padding-top: 125px !important;
+  padding-top: 155px !important;
   position:relative;
   z-index:1;
+}
+
+.kimsec-terminal-wrap{
+  margin-top: 12px !important;
 }
 
 /* SECOND NAV SCROLLABLE - keeps static header */
@@ -279,8 +283,8 @@ html, body{
 #kimsecStickyHeader nav:nth-of-type(2)::-webkit-scrollbar{ display:none; }
 
 @media (max-width: 992px){
-  .container.py-4{ 
-    padding-top: 125px !important; 
+  .container.py-4{
+    padding-top: 155px !important;
   }
 }
 
@@ -917,4 +921,14 @@ function shareLab(slug){
 })();
 </script>
 <script src="certs.js"></script>
+<script>
+function showYellow(){
+  const h=document.getElementById('kimsecStickyHeader');
+  const c=document.querySelector('.container.py-4');
+  if(h && c) c.style.paddingTop=(h.offsetHeight+20)+'px';
+}
+window.addEventListener('load',showYellow);
+window.addEventListener('resize',showYellow);
+setTimeout(showYellow, 600);
+</script>
 </body></html>
