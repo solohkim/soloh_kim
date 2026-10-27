@@ -1,5 +1,11 @@
 [
   {
+    "title": "SQL-Map Pentesting",
+    "icon": "🕸️",
+    "desc": "show casing how sql-map pentesting works",
+    "file": "sqlmap.md"
+  },
+  {
     "title": "Basic linux commands",
     "icon": "👽",
     "desc": "Top 100 Linux Commands Every Sysadmin Should Know",
