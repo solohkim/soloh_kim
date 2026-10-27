@@ -33,6 +33,20 @@ if(!fileUrl){
 }
 
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+// ADDED: Canvas watermark that burns into export
+function addWatermark(c) {
+  const ctx = c.getContext('2d');
+  ctx.save();
+  ctx.globalAlpha = 0.18;
+  ctx.font = 'bold ' + (c.width/22) + 'px monospace';
+  ctx.fillStyle = '#00ff41';
+  ctx.rotate(-0.5);
+  ctx.fillText('0xSoloh • kimsec.netlify.app • READ-ONLY', 40, c.height/2);
+  ctx.fillText(new Date().toLocaleDateString(), 40, c.height/2 + 50);
+  ctx.restore();
+}
+
 (async()=>{
  const pdf = await pdfjsLib.getDocument(fileUrl).promise;
  for(let i=1;i<=pdf.numPages;i++){
@@ -42,6 +56,7 @@ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/p
   c.width=vp.width; c.height=vp.height;
   document.getElementById('viewer').appendChild(c);
   await page.render({canvasContext:ctx,viewport:vp}).promise;
+  addWatermark(c);
  }
 })();
 
