@@ -19,8 +19,12 @@ canvas{width:100%;background:#fff;margin-bottom:10px;border-radius:8px;pointer-e
 const params = new URLSearchParams(location.search).get('file') || '';
 let raw = params.trim();
 
+// FIX: Extract filename if main site sends /certs/xxx.pdf
+if(raw.includes('/')) raw = raw.split('/').pop();
+raw = decodeURIComponent(raw);
+
 // Security: block path traversal
-if(!raw || raw.includes('..') || raw.includes('/') || raw.includes('\\')){
+if(!raw || raw.includes('..') || raw.includes('\\')){
   document.getElementById('viewer').innerHTML = '<p style="text-align:center;margin-top:100px;color:#ff0">Invalid file.</p>';
   throw new Error('Blocked');
 }
