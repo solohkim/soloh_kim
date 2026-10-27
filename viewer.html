@@ -1,15 +1,40 @@
 <!doctype html><html><head><meta charset="utf-8"><title>0xSoloh Viewer - READ ONLY</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-<style>body{background:#080808;color:#ddd;font-family:monospace;margin:0} #viewer{max-width:900px;margin:20px auto} canvas{width:100%;background:#fff;margin-bottom:10px;border-radius:8px} .bar{background:#111;border-bottom:1px solid #222;padding:10px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:10}</style>
+<meta name="robots" content="noindex, nofollow">
+<style>
+body{background:#080808;color:#ddd;font-family:monospace;margin:0;user-select:none} 
+#viewer{max-width:900px;margin:20px auto;position:relative} 
+canvas{width:100%;background:#fff;margin-bottom:10px;border-radius:8px;pointer-events:none} 
+.bar{background:#111;border-bottom:1px solid #222;padding:10px;display:flex;justify-content:space-between;position:sticky;top:0;z-index:10}
+#watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-30deg);font-size:70px;color:rgba(255,255,0,0.07);pointer-events:none;z-index:9;font-weight:bold}
+#shield{position:fixed;inset:0;z-index:8}
+</style>
 </head><body oncontextmenu="return false">
 <div class="bar"><small style="color:#00FF41">0xSoloh // READ-ONLY VIEWER</small><small style="color:#666">Download disabled for public</small></div>
+<div id="watermark">0xSoloh • VERIFIED</div>
+<div id="shield"></div>
 <div id="viewer"></div>
 <script>
-const url = new URLSearchParams(location.search).get('file');
+// 1. WHITELIST - prevents open redirect
+const ALLOWED = {
+  'ethicalhacker': '/certs/Ethicalhacker.pdf',
+  'degree': '/certs/degree.pdf',
+  'cybershujaa': '/certs/cybershujaa.pdf',
+  'cv': '/certs/cv.pdf'
+};
+
+const params = new URLSearchParams(location.search).get('file') || '';
+let key = params.toLowerCase().replace('certs%2f','').replace('certs/','').replace('.pdf','').trim();
+let fileUrl = ALLOWED[key];
+
+if(!fileUrl){
+  document.getElementById('viewer').innerHTML = '<p style="text-align:center;margin-top:100px;color:#ff0">Invalid file. Contact 0xSoloh for access.</p>';
+  throw new Error('Blocked');
+}
+
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 (async()=>{
- if(!url) return;
- const pdf = await pdfjsLib.getDocument(url).promise;
+ const pdf = await pdfjsLib.getDocument(fileUrl).promise;
  for(let i=1;i<=pdf.numPages;i++){
   const page = await pdf.getPage(i);
   const vp = page.getViewport({scale:1.5});
@@ -19,4 +44,13 @@ pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/p
   await page.render({canvasContext:ctx,viewport:vp}).promise;
  }
 })();
+
+// 2. HARD BLOCKS
+document.addEventListener('contextmenu', e=>e.preventDefault());
+document.addEventListener('dragstart', e=>e.preventDefault());
+document.addEventListener('keydown', e=>{
+  if((e.ctrlKey && ['s','p','u','c','a'].includes(e.key.toLowerCase())) || e.key==='PrintScreen' || e.key==='F12'){
+    e.preventDefault(); return false;
+  }
+});
 </script></body></html>
