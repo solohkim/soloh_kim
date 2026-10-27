@@ -15,55 +15,58 @@ canvas{width:100%;background:#fff;margin-bottom:10px;border-radius:8px;pointer-e
 <div id="shield"></div>
 <div id="viewer"></div>
 <script>
-// 1. WHITELIST - prevents open redirect
-const ALLOWED = {
-  'ethicalhacker': '/certs/Ethicalhacker.pdf',
-  'degree': '/certs/degree.pdf',
-  'cybershujaa': '/certs/security.pdf',
-  'cv': '/certs/resume.pdf'
-};
-
+// AUTO-SCAN MODE - any file in /certs/ works automatically
 const params = new URLSearchParams(location.search).get('file') || '';
-let key = params.toLowerCase().replace('certs%2f','').replace('certs/','').replace('.pdf','').trim();
-let fileUrl = ALLOWED[key];
+let raw = params.trim();
 
-if(!fileUrl){
-  document.getElementById('viewer').innerHTML = '<p style="text-align:center;margin-top:100px;color:#ff0">Invalid file. Contact 0xSoloh for access.</p>';
+// Security: block path traversal
+if(!raw || raw.includes('..') || raw.includes('/') || raw.includes('\\')){
+  document.getElementById('viewer').innerHTML = '<p style="text-align:center;margin-top:100px;color:#ff0">Invalid file.</p>';
   throw new Error('Blocked');
 }
 
+// Auto-add .pdf if not present, sanitize name
+if(!raw.toLowerCase().endsWith('.pdf')) raw += '.pdf';
+if(!/^[a-zA-Z0-9._-]+\.pdf$/i.test(raw)){
+  document.getElementById('viewer').innerHTML = '<p style="text-align:center;margin-top:100px;color:#ff0">Invalid filename.</p>';
+  throw new Error('Blocked');
+}
+
+let fileUrl = '/certs/' + raw;
+
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// ADDED: Canvas watermark that burns into export
 function addWatermark(c) {
   const ctx = c.getContext('2d');
   ctx.save();
-  ctx.globalAlpha = 0.35; // was 0.18 - now more visible
+  ctx.globalAlpha = 0.35;
   ctx.font = 'bold ' + (c.width/18) + 'px monospace';
   ctx.fillStyle = '#00ff41';
   ctx.rotate(-0.45);
-  // shadow for readability
   ctx.shadowColor = 'rgba(0,0,0,0.8)';
   ctx.shadowBlur = 2;
   ctx.fillText('0xSoloh • kimsec.netlify.app • READ-ONLY', 60, c.height/2.2);
-  ctx.fillText('10/27/2026 • VERIFIED', 60, c.height/2.2 + 55);
+  ctx.fillText(new Date().toLocaleDateString() + ' • VERIFIED', 60, c.height/2.2 + 55);
   ctx.restore();
 }
 
 (async()=>{
- const pdf = await pdfjsLib.getDocument(fileUrl).promise;
- for(let i=1;i<=pdf.numPages;i++){
-  const page = await pdf.getPage(i);
-  const vp = page.getViewport({scale:1.5});
-  const c = document.createElement('canvas'); const ctx=c.getContext('2d');
-  c.width=vp.width; c.height=vp.height;
-  document.getElementById('viewer').appendChild(c);
-  await page.render({canvasContext:ctx,viewport:vp}).promise;
-  addWatermark(c);
+ try{
+  const pdf = await pdfjsLib.getDocument(fileUrl).promise;
+  for(let i=1;i<=pdf.numPages;i++){
+   const page = await pdf.getPage(i);
+   const vp = page.getViewport({scale:1.5});
+   const c = document.createElement('canvas'); const ctx=c.getContext('2d');
+   c.width=vp.width; c.height=vp.height;
+   document.getElementById('viewer').appendChild(c);
+   await page.render({canvasContext:ctx,viewport:vp}).promise;
+   addWatermark(c);
+  }
+ }catch(e){
+  document.getElementById('viewer').innerHTML = '<p style="text-align:center;margin-top:100px;color:#ff0">File not found in vault: '+raw+'</p>';
  }
 })();
 
-// 2. HARD BLOCKS
 document.addEventListener('contextmenu', e=>e.preventDefault());
 document.addEventListener('dragstart', e=>e.preventDefault());
 document.addEventListener('keydown', e=>{
