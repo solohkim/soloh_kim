@@ -259,11 +259,7 @@ If you enjoyed this article and want to dive deeper into cybersecurity topics, f
 
 
 
-👉 Check out my GitBook for more insights
 
-
-
-👉 Watch my videos on YouTube: AnuragSec
 
 
 
@@ -307,7 +303,7 @@ The room was nice I enjoyed doing this room
 
 
 
-If you enjoyed this article and want to dive deeper into cybersecurity topics, feel free to explore my detailed write-ups on GitBook. I cover a range of topics including vulnerability assessments, penetration testing techniques, and security methodologies.
+If you enjoyed this article and want to dive deeper into cybersecurity topics, feel free to explore my other writeups. I cover a range of topics including vulnerability assessments, penetration testing techniques, and security methodologies.
 
 
 
