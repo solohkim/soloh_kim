@@ -1,5 +1,24 @@
 [
   {
+    "file": "writeups/corruption.md",
+    "title": "skillbit corruption",
+    "platform": "Lab",
+    "level": "easy",
+    "date": "2026-11-03",
+    "tags": [
+      "forensics"
+    ],
+    "image": "images/evidence/corruption.png",
+    "slug": "corruption",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "Below is a writeup for a challenge lab in skillbit known as corruption"
+  },
+  {
     "file": "writeups/plant.md",
     "title": "Plant Photographer",
     "platform": "TryHackMe",
