@@ -19,6 +19,25 @@
     "desc": "Below is a writeup for a challenge lab in skillbit known as corruption"
   },
   {
+    "file": "writeups/door.md",
+    "title": "Door to Door",
+    "platform": "Lab",
+    "level": "medium",
+    "date": "2026-11-03",
+    "tags": [
+      "web-app"
+    ],
+    "image": "images/evidence/door.png",
+    "slug": "door",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "Full walkthrough of door to door lab challenge by skillbit.........."
+  },
+  {
     "file": "writeups/plant.md",
     "title": "Plant Photographer",
     "platform": "TryHackMe",
