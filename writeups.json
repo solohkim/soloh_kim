@@ -1,5 +1,24 @@
 [
   {
+    "file": "writeups/database.md",
+    "title": "Database Beta Haste",
+    "platform": "Lab",
+    "level": "Easy",
+    "date": "2026-11-04",
+    "tags": [
+      "Database enum"
+    ],
+    "image": "images/evidence/database.png",
+    "slug": "database",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "Below we are going to enumerate a database and see what is inside it...."
+  },
+  {
     "file": "writeups/corruption.md",
     "title": "skillbit corruption",
     "platform": "Lab",
