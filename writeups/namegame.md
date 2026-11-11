@@ -52,15 +52,36 @@ tshark -r capture.pcap \
   | tr -d '\n' \
   | xxd -r -p
 ```
-
-| Code | Explanation |
-| --- | --- |
-| `tshark -r capture.pcap` | Reads the packet capture. |
-| `-Y 'dns.qry.name contains "totallynotac2"'` | Applies a Wireshark display filter. |
-| `-T fields -e dns.qry.name` | Outputs selected fields and prints the queried domain names. |
-| `sed 's/\.totallynotac2.*//'` | Strips the domain suffix. |
-| `tr -d '\n'` | Removes newlines to join the hex. |
-| `xxd -r -p` | Converts hex back to data. |
+<table style="width:100%; border-collapse: collapse; border: 1px solid #00ff00;">
+  <tr>
+    <th style="border: 1px solid #00ff00; padding: 8px; text-align: left;">Code</th>
+    <th style="border: 1px solid #00ff00; padding: 8px; text-align: left;">Explanation</th>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #00ff00; padding: 8px;"><code>tshark -r capture.pcap</code></td>
+    <td style="border: 1px solid #00ff00; padding: 8px;">Reads the packet capture.</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #00ff00; padding: 8px;"><code>-Y 'dns.qry.name contains "totallynotac2"'</code></td>
+    <td style="border: 1px solid #00ff00; padding: 8px;">Applies a Wireshark display filter.</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #00ff00; padding: 8px;"><code>-T fields -e dns.qry.name</code></td>
+    <td style="border: 1px solid #00ff00; padding: 8px;">Outputs selected fields and prints the queried domain names.</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #00ff00; padding: 8px;"><code>sed 's/\.totallynotac2.*//'</code></td>
+    <td style="border: 1px solid #00ff00; padding: 8px;">Strips the domain suffix.</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #00ff00; padding: 8px;"><code>tr -d '\n'</code></td>
+    <td style="border: 1px solid #00ff00; padding: 8px;">Removes newlines to join the hex.</td>
+  </tr>
+  <tr>
+    <td style="border: 1px solid #00ff00; padding: 8px;"><code>xxd -r -p</code></td>
+    <td style="border: 1px solid #00ff00; padding: 8px;">Converts hex back to data.</td>
+  </tr>
+</table>
 
 
 ![flag](/writeups/images/gname3.png)
