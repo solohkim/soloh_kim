@@ -1,5 +1,24 @@
 [
   {
+    "file": "writeups/namegame.md",
+    "title": "Name - Game CTF",
+    "platform": "Lab",
+    "level": "medium",
+    "date": "2026-11-11",
+    "tags": [
+      "dns forensics"
+    ],
+    "image": "images/evidence/namegame.png",
+    "slug": "namegame",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "Here we dive in to a CTF lab walkthrough named: Name - Game, a skillbit lab showcasing a dns forensics from a pcap file....."
+  },
+  {
     "file": "writeups/database.md",
     "title": "Database Beta Haste",
     "platform": "Lab",
