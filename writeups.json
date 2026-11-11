@@ -1,5 +1,24 @@
 [
   {
+    "file": "writeups/deaddrop.md",
+    "title": "Dead drop CTF",
+    "platform": "Lab",
+    "level": "medium",
+    "date": "2026-11-11",
+    "tags": [
+      "Forensics"
+    ],
+    "image": "images/evidence/deaddrop.png",
+    "slug": "deaddrop",
+    "premium": false,
+    "price": 50,
+    "active": false,
+    "restricted": false,
+    "unlockKey": "",
+    "season": "",
+    "desc": "Let's discover what's hidden in the pcap file. By Skill bit labs dead drop..."
+  },
+  {
     "file": "writeups/namegame.md",
     "title": "Name - Game CTF",
     "platform": "Lab",
