@@ -53,17 +53,14 @@ tshark -r capture.pcap \
   | xxd -r -p
 ```
 
-```text
--r capture.pcap: Reads the packet capture.
-
--Y: Applies a Wireshark display filter.
-
-dns.qry.name: Selects DNS query names.
-
--T fields: Outputs selected fields.
-
--e dns.qry.name: Prints the queried domain names.
-```
+| Code | Explanation |
+| --- | --- |
+| `tshark -r capture.pcap` | Reads the packet capture. |
+| `-Y 'dns.qry.name contains "totallynotac2"'` | Applies a Wireshark display filter. |
+| `-T fields -e dns.qry.name` | Outputs selected fields and prints the queried domain names. |
+| `sed 's/\.totallynotac2.*//'` | Strips the domain suffix. |
+| `tr -d '\n'` | Removes newlines to join the hex. |
+| `xxd -r -p` | Converts hex back to data. |
 
 
 ![flag](/writeups/images/gname3.png)
